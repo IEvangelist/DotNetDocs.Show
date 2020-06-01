@@ -8,10 +8,22 @@ a, .btn-link {
     color: #0366d6;
 }
 
+.list {
+    padding-left: 1rem !important;
+}
+
+.no-bullets {
+    list-style-type: none;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
+}
+
+input:not(:disabled):hover {
+    cursor: pointer;
 }
 
 app {

@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.ProtectedBrowserStorage
+@inject ProtectedLocalStorage LocalStore
+
+<li>
+    <input type="checkbox" id="@TaskId" @bind="@IsCompleted" />
+    <span class="pl-1">@Task</span>
+</li>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    [Parameter]
+    public MarkupString Task { get; set; }
+
+    bool _isCompleted;
+    bool IsCompleted
+    {
+        get => _isCompleted;
+        set
+        {
+            _isCompleted = value;
+            OnTaskStatusChanged();
+        }
+    }
+
+    string TaskId => $"task-{Id}";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        IsCompleted = await LocalStore.GetAsync<bool>(TaskId);
+        if (IsCompleted)
+        {
+            StateHasChanged();
+        }
+
+        await base.OnParametersSetAsync();
+    }
+
+    protected ValueTask OnTaskStatusChanged() => LocalStore.SetAsync(TaskId, IsCompleted);
+}

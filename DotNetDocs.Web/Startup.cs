@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DotNetDocs.Services.Extensions;
+using Microsoft.AspNetCore.ResponseCompression;
+using System.Linq;
 
 namespace DotNetDocs.Web
 {
@@ -17,6 +19,10 @@ namespace DotNetDocs.Web
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddProtectedBrowserStorage();
+            services.AddResponseCompression(opts =>
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" }));
             services.AddDotNetDocsShowServices(_configuration);
         }
 
