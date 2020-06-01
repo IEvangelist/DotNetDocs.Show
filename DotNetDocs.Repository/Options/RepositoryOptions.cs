@@ -4,8 +4,8 @@
     {
         public string CosmosConnectionString { get; set; } = null!;
 
-        public string DatabaseId { get; set; } = null!;
+        public string DatabaseId { get; set; } = "DotNetDocs";
 
-        public string ContainerId { get; set; } = null!;
+        public string ContainerId { get; set; } = "Development";
     }
 }

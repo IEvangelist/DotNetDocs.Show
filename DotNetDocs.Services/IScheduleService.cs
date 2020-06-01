@@ -1,16 +1,20 @@
 ﻿using DotNetDocs.Services.Models;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DotNetDocs.Services
 {
     public interface IScheduleService
     {
-        ValueTask<ScheduledShow> CreateShowAsync(ScheduledShow show);
+        ValueTask<DocsShow> CreateShowAsync(DocsShow show);
 
-        ValueTask<ScheduledShow?> GetShowAsync(string id);
+        ValueTask<IEnumerable<DocsShow>> GetAllAsync(DateTime since);
 
-        ValueTask<ScheduledShow> UpdateShowAsync(ScheduledShow show);
+        ValueTask<DocsShow?> GetShowAsync(string id);
 
-        ValueTask<ScheduledShow> DeleteShowAsync(string id);
+        ValueTask<DocsShow> UpdateShowAsync(DocsShow show);
+
+        ValueTask<DocsShow> DeleteShowAsync(string id);
     }
 }

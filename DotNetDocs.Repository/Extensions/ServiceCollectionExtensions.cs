@@ -7,7 +7,7 @@ namespace DotNetDocs.Repository.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddGitHubRepository(
+        public static IServiceCollection AddCosmosDbRepository(
             this IServiceCollection services,
             IConfiguration configuration) =>
             services.AddSingleton<ICosmosContainerProvider, CosmosContainerProvider>()

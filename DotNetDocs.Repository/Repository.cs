@@ -22,8 +22,8 @@ namespace DotNetDocs.Repository
         {
             try
             {
-                var container = _containerProvider.GetContainer();
-                var response = await container.ReadItemAsync<T>(id, new PartitionKey(id));
+                Container? container = _containerProvider.GetContainer();
+                ItemResponse<T>? response = await container.ReadItemAsync<T>(id, new PartitionKey(id));
 
                 return response.Resource;
             }
@@ -46,7 +46,7 @@ namespace DotNetDocs.Repository
                 var results = new List<T>();
                 while (iterator.HasMoreResults)
                 {
-                    foreach (var result in await iterator.ReadNextAsync())
+                    foreach (T result in await iterator.ReadNextAsync())
                     {
                         results.Add(result);
                     }
@@ -62,8 +62,8 @@ namespace DotNetDocs.Repository
 
         public async ValueTask<T> CreateAsync(T value)
         {
-            var container = _containerProvider.GetContainer();
-            var response = await container.CreateItemAsync(value, value.PartitionKey);
+            Container? container = _containerProvider.GetContainer();
+            ItemResponse<T>? response = await container.CreateItemAsync(value, value.PartitionKey);
 
             return response.Resource;
         }
@@ -73,16 +73,16 @@ namespace DotNetDocs.Repository
 
         public async ValueTask<T> UpdateAsync(T value)
         {
-            var container = _containerProvider.GetContainer();
-            var response = await container.UpsertItemAsync<T>(value, value.PartitionKey);
+            Container? container = _containerProvider.GetContainer();
+            ItemResponse<T>? response = await container.UpsertItemAsync<T>(value, value.PartitionKey);
 
             return response.Resource;
         }
 
         public async ValueTask<T> DeleteAsync(string id)
         {
-            var container = _containerProvider.GetContainer();
-            var response = await container.DeleteItemAsync<T>(id, new PartitionKey(id));
+            Container? container = _containerProvider.GetContainer();
+            ItemResponse<T>? response = await container.DeleteItemAsync<T>(id, new PartitionKey(id));
 
             return response.Resource;
         }

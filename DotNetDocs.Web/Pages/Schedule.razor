@@ -1,0 +1,41 @@
+﻿@page "/schedule"
+
+@using DotNetDocs.Web.Shared
+@using DotNetDocs.Services
+@using DotNetDocs.Services.Models
+
+@inject IScheduleService ScheduleService
+
+<div class="jumbotron">
+    <div class="container">
+        <div class="next-episode text-center">
+            <p>Check back here to watch &amp; ask questions then!</p>
+        </div>
+    </div>
+</div>
+@if (_shows == null)
+{
+    <div class="d-flex align-items-center">
+        <strong>Loading...</strong>
+        <div class="spinner-border text-primary ml-auto" role="status" aria-hidden="true"></div>
+    </div>
+}
+else
+{
+    <div class="row">
+        @foreach (var show in _shows.OrderByDescending(show => show.Date))
+        {
+            <ShowDetails Model="show" />
+        }
+    </div>
+}
+
+@code {
+    private IEnumerable<DocsShow> _shows;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load the latest twelve episodes
+        _shows = await ScheduleService.GetAllAsync(DateTime.Now.AddDays(12 * 7));
+    }
+}

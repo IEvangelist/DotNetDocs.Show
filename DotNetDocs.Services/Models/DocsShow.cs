@@ -5,9 +5,15 @@ using System.Linq;
 
 namespace DotNetDocs.Services.Models
 {
-    public class ScheduledShow : Document
+    public class DocsShow : Document
     {
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
+
+        public bool IsScheduled => Date.HasValue;
+
+        public bool IsInFuture => Date > DateTimeOffset.Now;
+
+        public bool IsNew => !IsInFuture && Date.HasValue && (DateTimeOffset.Now - Date.Value).TotalDays <= 14;
 
         public IEnumerable<Person> Guests { get; set; } = Enumerable.Empty<Person>();
 
