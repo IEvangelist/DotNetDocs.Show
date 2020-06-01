@@ -1,11 +1,11 @@
 ﻿using DotNetDocs.Repository.Providers;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace DotNetDocs.Repository
@@ -13,10 +13,12 @@ namespace DotNetDocs.Repository
     public class Repository<T> : IRepository<T> where T : Document
     {
         readonly ICosmosContainerProvider _containerProvider;
+        readonly ILogger<T> _logger;
 
         public Repository(
-            ICosmosContainerProvider containerProvider) =>
-            _containerProvider = containerProvider ?? throw new ArgumentNullException(nameof(containerProvider));
+            ICosmosContainerProvider containerProvider,
+            ILogger<T> logger) =>
+            (_containerProvider, _logger) = (containerProvider, logger);
 
         public async ValueTask<T?> GetAsync(string id)
         {
@@ -27,8 +29,9 @@ namespace DotNetDocs.Repository
 
                 return response.Resource;
             }
-            catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+            catch (CosmosException ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return default;
             }
         }
@@ -54,8 +57,9 @@ namespace DotNetDocs.Repository
 
                 return results;
             }
-            catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+            catch (CosmosException ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return Enumerable.Empty<T>();
             }
         }
