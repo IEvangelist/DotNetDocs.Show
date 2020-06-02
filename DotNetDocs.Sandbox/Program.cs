@@ -24,19 +24,9 @@ namespace DotNetDocs.Sandbox
                     #region Add show
                     //var show = new DocsShow
                     //{
-                    //    Date = GetCentralTimeZoneDateTime(new DateTime(2020, 5, 28, 11, 00, 00)).LocalTime,
-                    //    Title = "",
-                    //    Url = "https://www.twitch.tv/videos/634482950",
-                    //    Guests = new List<Person>
-                    //    {
-                    //        new Person
-                    //        {
-                    //            FirstName = "",
-                    //            LastName = "",
-                    //            Email = "",
-                    //            TwitterHandle = ""
-                    //        }
-                    //    }
+                    //    Date = GetCentralTimeZoneDateTime(new DateTime(2020, 5, 21, 11, 00, 00)).LocalTime,
+                    //    Title = "Build 2020 Recap",
+                    //    Url = "https://www.twitch.tv/videos/627661338"
                     //};
 
                     //_ = await scheduleService.CreateShowAsync(show);
@@ -50,7 +40,7 @@ namespace DotNetDocs.Sandbox
 
                     #region Read shows
                     TwitchService twitchService = services.GetService<TwitchService>();
-                    IEnumerable<DocsShow> shows = await scheduleService.GetAllAsync(DateTime.Now.AddDays(-(12 * 7)));
+                    IEnumerable<DocsShow> shows = await scheduleService.GetAllAsync(DateTime.Now.AddDays(-(40 * 7)));
                     foreach (DocsShow show in shows)
                     {
                         if (show.ShowImage is null && !show.IsInFuture && show.Url != "https://www.twitch.tv/thedotnetdocs")
@@ -61,7 +51,7 @@ namespace DotNetDocs.Sandbox
                                 var video = await twitchService.GetTwitchVideoAsync(id);
                                 if (video is null) continue;
 
-                                var url = video.thumbnails.medium.FirstOrDefault()?.url;
+                                var url = RandomElement(video.thumbnails.large).url;
                                 if (url is null) continue;
 
                                 show.ShowImage = url;
@@ -122,5 +112,10 @@ namespace DotNetDocs.Sandbox
                 WritePersonDetails(guest, "Guest");
             }
         }
+
+        static readonly Random s_random = new Random((int)DateTime.Now.Ticks);
+
+        internal static T RandomElement<T>(IReadOnlyList<T> array) =>
+            array[s_random.Next(array.Count)];
     }
 }

@@ -38,5 +38,11 @@
             TwitterHandle = "@davidpine7",
             IsBlueBadge = true
         };
+
+        public static readonly Person DotNetDocs = new Person
+        {
+            FirstName = ".NET",
+            LastName = "Docs"
+        };
     }
 }
