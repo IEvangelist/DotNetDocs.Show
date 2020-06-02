@@ -1,0 +1,32 @@
+﻿@using DotNetDocs.Services.Models
+
+<div class="col-sm-6 col-md-4">
+    <div class="thumbnail youtube-show bottom-buffer center-block">
+        <a href="@Show.Url" title="Watch this episode">
+            <div>
+                <img class="img-responsive center-block" src="@Show.ShowImage" alt="Thumbnail of episode" />
+            </div>
+        </a>
+        <div class="caption text-center">
+            <h3>
+                <a href="@Show.Url" title="Watch this episode">
+                    @Show.Title<br />
+                </a>
+                <span class="show-date">@Show.IsScheduled ?  Show.Date.ToString("MMM dd, yyyy") : "TBD"</span>
+                @if (Show.IsInFuture)
+                {
+                    <span class="label label-danger label-upcoming-show">Upcoming</span>
+                }
+                @if (Show.IsNew)
+                {
+                    <span class="label label-success label-new-show">New</span>
+                }
+            </h3>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public DocsShow Show { get; set; } = null!;
+}
