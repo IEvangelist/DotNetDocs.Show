@@ -31,8 +31,7 @@ a, .btn-link {
 
 .grid {
     display: grid;
-    width: 100vw;
-    height: 100vh;
+    height: 90vh;
     align-items: center;
     text-align: center;
     overflow: hidden;

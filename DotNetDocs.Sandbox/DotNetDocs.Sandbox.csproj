@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DotNetDocs.Repository\DotNetDocs.Repository.csproj" />
     <ProjectReference Include="..\DotNetDocs.Services\DotNetDocs.Services.csproj" />
   </ItemGroup>
 

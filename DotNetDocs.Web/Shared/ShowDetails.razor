@@ -2,7 +2,7 @@
 @using DotNetDocs.Web.Extensions
 
 <div class="card mb-4">
-    <img class="card-img-top img-fluid" src='@(Show.ShowImage ?? $"https://via.placeholder.com/250x165/783bd2/000000?text=.NET%20docs")' alt="Thumbnail of episode">
+    <img class="card-img-top img-fluid" src='@(Show.ShowImage ?? $"https://via.placeholder.com/250x165/783bd2/fff?text=.NET%20docs%20show")' alt="Thumbnail of episode">
     <div class="card-body">
         <h5 class="card-title">
             <a href="@Show.Url" title="Watch this episode">
@@ -11,7 +11,7 @@
         </h5>
         <p class="card-text">
             @(Show.ToGeneralDescription())
-            <br>
+            <hr>
             @foreach (var tag in Show.Tags)
             {
                 <span class="badge badge-dotnet">@tag</span>
@@ -22,7 +22,7 @@
         <small class="text-muted">@(Show.IsScheduled ?  Show.Date!.Value.ToString("MMM dd, yyyy") : "TBD")</small>
         @if (Show.IsInFuture)
         {
-            <span class="badge badge-info float-right">Upcoming</span>
+            <a href="@(Show.AddToGoogleCalendar())" target="_blank" class="float-right">Add to calendar?</a>
         }
         else if (Show.IsNew)
         {

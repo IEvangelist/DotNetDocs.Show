@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using DotNetDocs.Repository;
 using DotNetDocs.Services;
 using DotNetDocs.Services.Extensions;
 using DotNetDocs.Services.Models;
@@ -47,9 +49,30 @@ namespace DotNetDocs.Sandbox
                     #endregion // end add show
 
                     #region Read shows
+                    TwitchService twitchService = services.GetService<TwitchService>();
                     IEnumerable<DocsShow> shows = await scheduleService.GetAllAsync(DateTime.Now.AddDays(-(12 * 7)));
                     foreach (DocsShow show in shows)
                     {
+                        if (show.ShowImage is null && !show.IsInFuture && show.Url != "https://www.twitch.tv/thedotnetdocs")
+                        {
+                            var videoUri = new Uri(show.Url);
+                            if (int.TryParse(videoUri.Segments.Last(), out int id))
+                            {
+                                var video = await twitchService.GetTwitchVideoAsync(id);
+                                if (video is null) continue;
+
+                                var url = video.thumbnails.medium.FirstOrDefault()?.url;
+                                if (url is null) continue;
+
+                                show.ShowImage = url;
+                                var updatedShow = await scheduleService.UpdateShowAsync(show);
+                                if (updatedShow.ShowImage == show.ShowImage)
+                                {
+                                    Console.WriteLine($"Updated show iamge URL!");
+                                }
+                            }
+                        }
+
                         WriteShowDetails(show);
                     }
                     #endregion // end read shows
@@ -99,21 +122,5 @@ namespace DotNetDocs.Sandbox
                 WritePersonDetails(guest, "Guest");
             }
         }
-    }
-
-    struct DateTimeWithZone
-    {
-        public DateTimeWithZone(DateTime dateTime, TimeZoneInfo timeZone)
-        {
-            var dateTimeUnspec = DateTime.SpecifyKind(dateTime, DateTimeKind.Unspecified);
-            UniversalTime = TimeZoneInfo.ConvertTimeToUtc(dateTimeUnspec, timeZone);
-            TimeZone = timeZone;
-        }
-
-        public DateTime UniversalTime { get; }
-
-        public TimeZoneInfo TimeZone { get; }
-
-        public DateTime LocalTime => TimeZoneInfo.ConvertTime(UniversalTime, TimeZone);
     }
 }
