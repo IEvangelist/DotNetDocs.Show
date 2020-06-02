@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\DotNetDocs.Services\DotNetDocs.Services.csproj" />
-    <ProjectReference Include="..\Shared\DotNetDocs.Wasm.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
