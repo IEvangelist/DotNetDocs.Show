@@ -10,7 +10,8 @@ namespace DotNetDocs.Repository.Extensions
         public static IServiceCollection AddCosmosDbRepository(
             this IServiceCollection services,
             IConfiguration configuration) =>
-            services.AddSingleton<ICosmosContainerProvider, CosmosContainerProvider>()
+            services.AddLogging()
+                    .AddSingleton<ICosmosContainerProvider, CosmosContainerProvider>()
                     .AddSingleton(typeof(IRepository<>), typeof(Repository<>))
                     .Configure<RepositoryOptions>(
                         configuration.GetSection(nameof(RepositoryOptions)));

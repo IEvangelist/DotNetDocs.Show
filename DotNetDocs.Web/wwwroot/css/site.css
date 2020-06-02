@@ -1,5 +1,9 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+:root {
+    --dotnet-color: #783bd2;
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -8,9 +12,60 @@ a, .btn-link {
     color: #0366d6;
 }
 
+    a, a:hover {
+        color: rgb(38, 124, 178);
+    }
+
 .list {
     padding-left: 1rem !important;
 }
+
+.text-dotnet {
+    color: var(--dotnet-color) !important;
+}
+
+.badge-dotnet {
+    color: #fff;
+    background-color: var(--dotnet-color);
+}
+
+.grid {
+    display: grid;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    grid-template-rows: 1fr 6fr 1fr;
+    grid-template-columns: repeat(3, 2fr);
+    grid-gap: 1em;
+}
+
+.grid-logo {
+    grid-row: 2;
+    grid-column: 2;
+    padding: 1.5rem;
+}
+
+.preparing-for-blast-off {
+    animation: rumble .16s infinite alternate;
+}
+
+@keyframes rumble {
+    0% {
+        transform: translate(-1px, 9px) rotate(14deg);
+    }
+    33% {
+        transform: translate(-1px, 11px) rotate(16deg);
+    }
+    66% {
+        transform: translate(1px, 11px) rotate(14deg);
+    }
+    100% {
+        transform: translate(1px, 9px) rotate(16deg);
+    }
+}
+
 
 .no-bullets {
     list-style-type: none;
@@ -24,6 +79,51 @@ a, .btn-link {
 
 input:not(:disabled):hover {
     cursor: pointer;
+}
+
+.thumbnail .caption h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.show > a > div {
+    background: #000;
+}
+
+.show > a:hover img {
+    opacity: 0.6;
+}
+
+.show .show-date {
+    font-size: 0.8em;
+}
+
+.label-new-show, .label-upcoming-show {
+    font-size: 0.6em;
+}
+
+@media (max-width: 768px) {
+    .show {
+        max-width: 480px;
+    }
+}
+
+@media (min-width: 768px) {
+    .show {
+        height: 360px;
+    }
+}
+
+@media (min-width: 992px) {
+    .show {
+        height: 320px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .show {
+        height: 360px;
+    }
 }
 
 app {

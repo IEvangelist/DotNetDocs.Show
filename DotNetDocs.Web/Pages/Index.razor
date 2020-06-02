@@ -1,5 +1,45 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@using DotNetDocs.Web.Extensions
+@using DotNetDocs.Web.Shared
+@using DotNetDocs.Services
+@using DotNetDocs.Services.Models
 
-Welcome to your new app.
+@inject IScheduleService ScheduleService
+
+@if (_shows == null)
+{
+    <LoadingIndicator />
+}
+else if (!_shows.Any())
+{
+    <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+        <strong>😥</strong> No scheduled shows... check back later!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+else
+{
+    <div class="card-deck">
+        @foreach (var (show, index) in
+            _shows.OrderByDescending(show => show.Date)
+                  .Select((show, index) => (show, index)))
+        {
+            <ShowDetails Show="show" Index="index" />
+        }
+    </div>
+}
+
+@code {
+    private IEnumerable<DocsShow> _shows = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2000);
+
+        // Load the latest twelve episodes
+        _shows = await ScheduleService.GetAllAsync(DateTime.Now.AddDays(-(12 * 7)));
+    }
+}
