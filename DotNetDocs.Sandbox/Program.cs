@@ -25,16 +25,16 @@ namespace DotNetDocs.Sandbox
                     //var show = new DocsShow
                     //{
                     //    Date = GetCentralTimeZoneDateTime(new DateTime(2020, 5, 28, 11, 00, 00)).LocalTime,
-                    //    Title = "eShopOnWeb with Steve Smith (@ardalis)",
+                    //    Title = "",
                     //    Url = "https://www.twitch.tv/videos/634482950",
                     //    Guests = new List<Person>
                     //    {
                     //        new Person
                     //        {
-                    //            FirstName = "Steve",
-                    //            LastName = "Smith",
-                    //            Email = "steve@kentsmiths.com",
-                    //            TwitterHandle = "@ardalis"
+                    //            FirstName = "",
+                    //            LastName = "",
+                    //            Email = "",
+                    //            TwitterHandle = ""
                     //        }
                     //    }
                     //};
