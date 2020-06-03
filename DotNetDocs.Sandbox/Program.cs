@@ -51,7 +51,7 @@ namespace DotNetDocs.Sandbox
                                 var video = await twitchService.GetTwitchVideoAsync(id);
                                 if (video is null) continue;
 
-                                var url = RandomElement(video.thumbnails.large).url;
+                                var url = RandomElement(video.Thumbnails.Large).Url;
                                 if (url is null) continue;
 
                                 show.ShowImage = url;
