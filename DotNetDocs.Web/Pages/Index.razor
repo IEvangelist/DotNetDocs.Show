@@ -1,10 +1,11 @@
 ﻿@page "/"
 
-@using DotNetDocs.Web.Shared
-@using DotNetDocs.Services
 @using DotNetDocs.Services.Models
+@using DotNetDocs.Web.Shared
+@using DotNetDocs.Web.Workers
+@using Microsoft.Extensions.Caching.Memory
 
-@inject IScheduleService ScheduleService
+@inject IMemoryCache Cache
 
 @if (_shows == null)
 {
@@ -23,8 +24,8 @@ else
 {
     <div class="card-deck">
         @foreach (var (show, index) in
-            _shows.OrderByDescending(show => show.Date)
-                  .Select((show, index) => (show, index)))
+             _shows.OrderByDescending(show => show.Date)
+                   .Select((show, index) => (show, index)))
         {
             <ShowDetails Show="show" Index="index" />
         }
@@ -34,11 +35,8 @@ else
 @code {
     private IEnumerable<DocsShow> _shows = null!;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await Task.Delay(2000);
-
-        // Load the latest twelve episodes
-        _shows = await ScheduleService.GetAllAsync(DateTime.Now.AddDays(-(12 * 7)));
+        _shows = Cache.Get<IEnumerable<DocsShow>>(CacheKeys.ShowSchedule);
     }
 }

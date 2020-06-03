@@ -1,11 +1,12 @@
+using System.Linq;
+using DotNetDocs.Services.Extensions;
+using DotNetDocs.Web.Workers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DotNetDocs.Services.Extensions;
-using Microsoft.AspNetCore.ResponseCompression;
-using System.Linq;
 
 namespace DotNetDocs.Web
 {
@@ -17,6 +18,7 @@ namespace DotNetDocs.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddProtectedBrowserStorage();
@@ -24,6 +26,7 @@ namespace DotNetDocs.Web
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" }));
             services.AddDotNetDocsShowServices(_configuration);
+            services.AddHostedService<ScheduleWorker>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
