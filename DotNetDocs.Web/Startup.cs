@@ -1,8 +1,12 @@
 using System.Linq;
 using DotNetDocs.Services.Extensions;
 using DotNetDocs.Web.Workers;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,14 +16,24 @@ namespace DotNetDocs.Web
 {
     public class Startup
     {
-        private readonly IConfiguration _configuration;
+        readonly IConfiguration _configuration;
 
         public Startup(IConfiguration configuration) => _configuration = configuration;
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
+                .AddAzureAD(options => _configuration.Bind("AzureAd", options));
+
+            services.AddControllersWithViews(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
+
             services.AddMemoryCache();
-            services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddProtectedBrowserStorage();
             services.AddResponseCompression(opts =>
@@ -44,8 +58,11 @@ namespace DotNetDocs.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });

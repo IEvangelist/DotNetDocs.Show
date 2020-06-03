@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.Encodings.Web;
 using DotNetDocs.Repository;
 using DotNetDocs.Services.Models;
@@ -13,9 +12,9 @@ namespace DotNetDocs.Web.Extensions
     {
         internal static string AddToGoogleCalendar(this DocsShow show)
         {
-            // Reference: http://stackoverflow.com/a/21653600/22941
             var date = new DateTimeWithZone(show.Date!.Value, TimeZoneInfo.Local).UniversalTime;
 
+            // Reference: http://stackoverflow.com/a/21653600/22941
             var from = UrlEncoder.Default.Encode($"{date:yyyyMMddTHHmmssZ}");
             var to = UrlEncoder.Default.Encode($"{date.AddHours(1):yyyyMMddTHHmmssZ}");
             var text = UrlEncoder.Default.Encode($"The .NET docs show - live with {show.Guests.ToCommaSeparatedString(false)}.");

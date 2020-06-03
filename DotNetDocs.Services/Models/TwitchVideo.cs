@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 
 namespace DotNetDocs.Services.Models
 {
-
     public class TwitchVideo
     {
         [JsonProperty("_id")]

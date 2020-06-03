@@ -1,5 +1,7 @@
 ﻿@page "/"
 
+@attribute [AllowAnonymous]
+
 @using DotNetDocs.Services.Models
 @using DotNetDocs.Web.Shared
 @using DotNetDocs.Web.Workers
@@ -24,8 +26,8 @@ else
 {
     <div class="card-deck">
         @foreach (var (show, index) in
-             _shows.OrderByDescending(show => show.Date)
-                   .Select((show, index) => (show, index)))
+           _shows.OrderByDescending(show => show.Date)
+                 .Select((show, index) => (show, index)))
         {
             <ShowDetails Show="show" Index="index" />
         }
