@@ -2,7 +2,9 @@
 @using DotNetDocs.Web.Extensions
 
 <div class="card mb-4">
-    <img class="card-img-top img-fluid" src='@(Show.ShowImage ?? $"https://via.placeholder.com/250x165/783bd2/fff?text=.NET%20docs%20show")' alt="Thumbnail of episode">
+    <a href="@Show.Url" title="Watch this episode">
+        <img class="card-img-top img-fluid" src='@(Show.ShowImage ?? $"https://via.placeholder.com/250x165/783bd2/fff?text=.NET%20docs%20show")' alt="Thumbnail of episode">
+    </a>
     <div class="card-body">
         <h5 class="card-title">
             <a href="@Show.Url" title="Watch this episode">
@@ -14,7 +16,7 @@
             <hr>
             @foreach (var tag in Show.Tags)
             {
-                <span class="badge badge-dotnet">@tag</span>
+            <span class="badge badge-dotnet">@tag</span>
             }
         </p>
     </div>
@@ -22,29 +24,29 @@
         <small class="text-muted">@(Show.IsScheduled ?  Show.Date!.Value.ToString("MMM dd, yyyy") : "TBD")</small>
         @if (Show.IsInFuture)
         {
-            <a href="@(Show.AddToGoogleCalendar())" target="_blank" class="float-right">Add to calendar?</a>
+        <a href="@(Show.AddToGoogleCalendar())" target="_blank" class="float-right">Add to calendar?</a>
         }
         else if (Show.IsNew)
         {
-            <span class="badge badge-success float-right">New</span>
+        <span class="badge badge-success float-right">New</span>
         }
     </div>
 </div>
 @if (IsDivisableBy(1))
 {
-    <div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 1 on sm--></div>
+<div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 1 on sm--></div>
 }
 @if (IsDivisableBy(2))
 {
-    <div class="w-100 d-none d-md-block d-lg-none"><!-- wrap every 2 on md--></div>
+<div class="w-100 d-none d-md-block d-lg-none"><!-- wrap every 2 on md--></div>
 }
 @if (IsDivisableBy(3))
 {
-    <div class="w-100 d-none d-lg-block d-xl-none"><!-- wrap every 3 on lg--></div>
+<div class="w-100 d-none d-lg-block d-xl-none"><!-- wrap every 3 on lg--></div>
 }
 @if (IsDivisableBy(4))
 {
-    <div class="w-100 d-none d-xl-block"><!-- wrap every 5 on xl--></div>
+<div class="w-100 d-none d-xl-block"><!-- wrap every 5 on xl--></div>
 }
 
 @code {
