@@ -2,6 +2,22 @@
 
 <div class="main">
     <div class="top-row px-4">
+        <AuthorizeView>
+            <Authorized>
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Home
+                </NavLink>
+                <NavLink class="nav-link" href="admin">
+                    <span class="oi oi-lock-unlocked" aria-hidden="true"></span> Admin
+                </NavLink>
+                <a class="btn btn-dark" href="AzureAD/Account/SignOut"
+                   role="button" title="@($"Click to sign out {context.User.Identity.Name}")">
+                    <img src="ms-symbol.png" /> &nbsp; Sign out
+                </a>
+            </Authorized>
+            <NotAuthorized></NotAuthorized>
+        </AuthorizeView>
+
         <a href="https://www.twitch.tv/thedotnetdocs" target="_blank">
             <svg width="114" height="38">
                 <image xlink:href="twitch-logo.svg" width="114" height="38"></image>

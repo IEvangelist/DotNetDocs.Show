@@ -1,0 +1,33 @@
+﻿@inherits ShowsComponent
+@using DotNetDocs.Web.Extensions
+
+@if (Shows == null)
+{
+    <LoadingIndicator />
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Date</th>
+                <th scope="col">Video URL</th>
+                <th scope="col">Guests</th>
+                <th scope="col">Hosts</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var show in Shows)
+        {
+            <tr>
+                <td>@(show.Title)</td>
+                <td>@($"{show.Date:MMM dd, yyyy}")</td>
+                <td>@(show.Url)</td>
+                <td>@(show.Guests.ToCommaSeparatedString(false))</td>
+                <td>@(show.Hosts.ToCommaSeparatedString(false))</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
