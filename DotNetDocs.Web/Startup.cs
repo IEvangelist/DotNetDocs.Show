@@ -26,12 +26,10 @@ namespace DotNetDocs.Web
                 .AddAzureAD(options => _configuration.Bind("AzureAd", options));
 
             services.AddControllersWithViews(options =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));
-            });
+                options.Filters.Add(
+                    new AuthorizeFilter(new AuthorizationPolicyBuilder()
+                        .RequireAuthenticatedUser()
+                        .Build())));
 
             services.AddMemoryCache();
             services.AddServerSideBlazor();
@@ -57,9 +55,9 @@ namespace DotNetDocs.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
