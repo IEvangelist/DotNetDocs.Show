@@ -1,11 +1,15 @@
 ﻿@page "/admin"
 
 <AuthorizeView>
+    <NotAuthorized>
+        <div class="text-center">
+            <a class="btn btn-lg btn-dark" href="AzureAD/Account/SignIn" role="button">
+                <img src="ms-symbol.png" /> &nbsp; Cool Microsoft Employees 🤓
+            </a>
+        </div>
+    </NotAuthorized>
     <Authorized>
         Hello, @context.User.Identity.Name!
         <a href="AzureAD/Account/SignOut">Log out</a>
     </Authorized>
-    <NotAuthorized>
-        <a href="AzureAD/Account/SignIn">Log in</a>
-    </NotAuthorized>
 </AuthorizeView>
