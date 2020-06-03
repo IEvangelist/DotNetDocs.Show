@@ -14,11 +14,7 @@ namespace DotNetDocs.Web.Extensions
         internal static string AddToGoogleCalendar(this DocsShow show)
         {
             // Reference: http://stackoverflow.com/a/21653600/22941
-            var centralTimeZone = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time")
-                : TimeZoneInfo.FindSystemTimeZoneById("America/Matamoros");
-
-            var date = new DateTimeWithZone(show.Date!.Value, centralTimeZone).UniversalTime;
+            var date = new DateTimeWithZone(show.Date!.Value, TimeZoneInfo.Local).UniversalTime;
 
             var from = UrlEncoder.Default.Encode($"{date:yyyyMMddTHHmmssZ}");
             var to = UrlEncoder.Default.Encode($"{date.AddHours(1):yyyyMMddTHHmmssZ}");
