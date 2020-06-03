@@ -29,6 +29,10 @@ a, .btn-link {
     background-color: var(--dotnet-color);
 }
 
+.oi-sm {
+    font-size: .7rem;
+}
+
 .grid {
     display: grid;
     height: 90vh;

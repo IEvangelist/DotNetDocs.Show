@@ -1,5 +1,5 @@
 ﻿@page "/checklist"
-
+@using DotNetDocs.Web.Extensions
 
 <div class="container">
     <h2>Hi friend! 👋</h2>
@@ -19,16 +19,16 @@
         Please help share this event with the world! We operate entirely on word-of-mouth and through social media channels such as Twitter, and LinkedIn - use any the following &#35; hash tags and handles.
     </p>
     <ul>
-        <li>@@camsoper (Host)</li>
-        <li>@@scott_addie (Host)</li>
-        <li>@@davidpine7 (Host)</li>
-        <li>@@docsmsft</li>
+        <li>@("@camsoper".ToTwitterMarkupString()) (Host)</li>
+        <li>@("@scott_addie".ToTwitterMarkupString()) (Host)</li>
+        <li>@("@davidpine7".ToTwitterMarkupString()) (Host)</li>
+        <li>@("@docsmsft".ToTwitterMarkupString())</li>
         <li>#dotnet</li>
         <li>#dotnetdocs</li>
     </ul>
     <h2>Twitch 📺</h2>
     <p>
-        We rely on Twitch, and follow thier <a href="https://www.twitch.tv/p/legal/community-guidelines" target="_blank">Twitch.tv - Community Guidelines <span class="oi oi-external-link"></span></a>. This is essential to ensuring that our show is inclusive, open, and welcoming to everyone. Our show is based on <a href="https://www.twitch.tv/thedotnetdocs" target="_blank">The .NET docs <span class="oi oi-external-link"></span></a> account.
+        We rely on Twitch, and follow thier <a href="https://www.twitch.tv/p/legal/community-guidelines" target="_blank">Twitch.tv - Community Guidelines <span class="oi oi-sm oi-external-link"></span></a>. This is essential to ensuring that our show is inclusive, open, and welcoming to everyone. Our show is based on <a href="https://www.twitch.tv/thedotnetdocs" target="_blank">The .NET docs <span class="oi oi-sm oi-external-link"></span></a> account.
     </p>
 </div>
 
@@ -39,7 +39,7 @@
         [2] = new MarkupString("Silence (<i>or</i> temporarily disable notifications)"),
         [3] = new MarkupString("Set status as \"Do not disturb\""),
         [4] = new MarkupString("Arrive 15 minutes early - 10:45 AM CT 🕥"),
-        [5] = new MarkupString("Download and install <a href='https://www.skype.com/en/get-skype' target='_blank'>Skype <span class='oi oi-external-link'></span></a>"),
-        [6] = new MarkupString("Reach out sooner to befriend the <a href='https://join.skype.com/invite/uoXw3Fv3wa3m' target='_blank'>.NET Docs account <span class='oi oi-external-link'></span></a>"),
+        [5] = new MarkupString("Download and install <a href='https://www.skype.com/en/get-skype' target='_blank'>Skype <span class='oi oi-sm oi-external-link'></span></a>"),
+        [6] = new MarkupString("Reach out sooner to befriend the <a href='https://join.skype.com/invite/uoXw3Fv3wa3m' target='_blank'>.NET Docs account <span class='oi oi-sm oi-external-link'></span></a>"),
     };
 }
