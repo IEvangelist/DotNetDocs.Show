@@ -16,8 +16,8 @@ a, .btn-link {
         color: rgb(38, 124, 178);
     }
 
-.navlink .active {
-    box-shadow: 0 3px 0 0 var(--dotnet-color);
+a.nav-link.text-light.active {
+    box-shadow: 0 4px 0 0 var(--dotnet-color);
 }
 
 .list {
