@@ -1,17 +1,17 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="main">
-    <div class="top-row px-4">
+    <nav class="top-row navbar navbar-dark bg-dark sticky-top px-4">
         <AuthorizeView>
             <Authorized>
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> Home
+                <NavLink class="nav-link text-light" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> &nbsp; Home
                 </NavLink>
-                <NavLink class="nav-link" href="admin">
-                    <span class="oi oi-lock-unlocked" aria-hidden="true"></span> Admin
+                <NavLink class="nav-link text-light" href="admin">
+                    <span class="oi oi-lock-locked" aria-hidden="true"></span> &nbsp; Admin
                 </NavLink>
                 <a class="btn btn-dark" href="AzureAD/Account/SignOut"
-                   role="button" title="@($"Click to sign out {context.User.Identity.Name}")">
+                   role="button" title="@($"Click to sign out \"{context.User.Identity.Name}\"")">
                     <img src="ms-symbol.png" /> &nbsp; Sign out
                 </a>
             </Authorized>
@@ -23,7 +23,7 @@
                 <image xlink:href="twitch-logo.svg" width="114" height="38"></image>
             </svg>
         </a>
-    </div>
+    </nav>
 
     <div class="content px-4">
         @Body

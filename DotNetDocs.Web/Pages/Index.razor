@@ -2,12 +2,14 @@
 
 @attribute [AllowAnonymous]
 
+@using DotNetDocs.Services
 @using DotNetDocs.Services.Models
 @using DotNetDocs.Web.Shared
 @using DotNetDocs.Web.Workers
 @using Microsoft.Extensions.Caching.Memory
 
 @inject IMemoryCache Cache
+@inject IScheduleService ScheduleService
 
 @if (_shows == null)
 {
@@ -26,8 +28,8 @@ else
 {
     <div class="card-deck">
         @foreach (var (show, index) in
-           _shows.OrderByDescending(show => show.Date)
-                 .Select((show, index) => (show, index)))
+          _shows.OrderByDescending(show => show.Date)
+                .Select((show, index) => (show, index)))
         {
             <ShowDetails Show="show" Index="index" />
         }
@@ -37,8 +39,11 @@ else
 @code {
     private IEnumerable<DocsShow> _shows = null!;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        _shows = Cache.Get<IEnumerable<DocsShow>>(CacheKeys.ShowSchedule);
+        _shows = await Cache.GetOrCreateAsync<IEnumerable<DocsShow>>(
+            CacheKeys.ShowSchedule,
+            async _ =>
+            await ScheduleService.GetAllAsync(DateTime.Now.AddDays(-(20 * 7))));
     }
 }
