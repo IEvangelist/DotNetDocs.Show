@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Net.Mime;
 using DotNetDocs.Services.Extensions;
+using DotNetDocs.Web.Extensions;
 using DotNetDocs.Web.Workers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
@@ -40,6 +41,7 @@ namespace DotNetDocs.Web
                     new[] { MediaTypeNames.Application.Octet }));
             services.AddDotNetDocsShowServices(_configuration);
             services.AddHostedService<ScheduleWorker>();
+            services.AddAutoMapper();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

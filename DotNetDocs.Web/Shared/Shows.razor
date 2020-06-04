@@ -1,5 +1,9 @@
 ﻿@inherits ShowsComponent
+
 @using DotNetDocs.Web.Extensions
+@using Microsoft.AspNetCore.Components
+
+@inject NavigationManager Navigation
 
 @if (Shows == null)
 {
@@ -7,8 +11,8 @@
 }
 else
 {
-    <table class="table table-hover">
-        <thead>
+    <table class="table table-hover pt-4">
+        <thead class="thead-dark">
             <tr>
                 <th scope="col">Title</th>
                 <th scope="col">Date</th>
@@ -18,16 +22,22 @@ else
             </tr>
         </thead>
         <tbody>
-        @foreach (var show in Shows.OrderByDescending(s => s.Date))
-        {
-            <tr>
-                <td>@(show.Title)</td>
-                <td>@($"{show.Date:MMM dd, yyyy}")</td>
-                <td>@(show.Url)</td>
-                <td>@(show.Guests.ToCommaSeparatedString(false))</td>
-                <td>@(show.Hosts.ToCommaSeparatedString(false))</td>
-            </tr>
-        }
+            @foreach (var show in Shows.OrderByDescending(s => s.Date))
+            {
+                <tr class="editable" @onclick="(_ => NavigateToShowDetails(show.Id))">
+                    <td>@(show.Title)</td>
+                    <td>@($"{show.Date:MMM dd, yyyy}")</td>
+                    <td>@(show.Url)</td>
+                    <td>@(show.Guests.ToCommaSeparatedString(false))</td>
+                    <td>@(show.Hosts.ToCommaSeparatedString(false))</td>
+                </tr>
+            }
         </tbody>
     </table>
+}
+
+
+@code {
+    protected void NavigateToShowDetails(string showId) =>
+        Navigation.NavigateTo($"/admin/show/{showId}");
 }

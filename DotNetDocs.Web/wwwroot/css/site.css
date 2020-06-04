@@ -186,6 +186,14 @@ app {
     color: red;
 }
 
+tr.editable:hover {
+    cursor: pointer;
+}
+
+    tr.editable:disabled:hover {
+        cursor: not-allowed;
+    }
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

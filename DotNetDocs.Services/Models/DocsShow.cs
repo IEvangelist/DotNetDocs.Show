@@ -1,7 +1,6 @@
 ﻿using DotNetDocs.Repository;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DotNetDocs.Services.Models
 {
@@ -23,7 +22,7 @@ namespace DotNetDocs.Services.Models
 
         public string Title { get; set; } = "The .NET docs show";
 
-        public string Url { get; set; } = null!;
+        public string Url { get; set; }
 
         public string ShowImage { get; set; } = null!;
     }
