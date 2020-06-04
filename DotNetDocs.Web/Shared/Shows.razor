@@ -18,7 +18,7 @@ else
             </tr>
         </thead>
         <tbody>
-        @foreach (var show in Shows)
+        @foreach (var show in Shows.OrderByDescending(s => s.Date))
         {
             <tr>
                 <td>@(show.Title)</td>
