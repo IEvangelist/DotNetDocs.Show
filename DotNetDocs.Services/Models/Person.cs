@@ -12,6 +12,13 @@
 
         public bool IsBlueBadge { get; set; }
 
+        public bool IsMicrosoftMvp => MicrosoftMvpId.HasValue;
+
+        /// <summary>
+        /// https://mvp.microsoft.com/en-us/PublicProfile/{id}
+        /// </summary>
+        public int? MicrosoftMvpId { get; set; } = null;
+
         public static readonly Person Cam = new Person
         {
             FirstName = "Cam",

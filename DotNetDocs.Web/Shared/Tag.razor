@@ -1,0 +1,11 @@
+﻿<span class="badge @(string.IsNullOrWhiteSpace(Class) ? "badge-dotnet" : Class)">
+    @(new MarkupString(Value))
+</span>
+
+@code {
+    [Parameter]
+    public string? Value { get; set; } = null!;
+
+    [Parameter]
+    public string? Class { get; set; }
+}

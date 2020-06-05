@@ -14,10 +14,7 @@
         <p class="card-text">
             @(Show.ToGeneralDescription())
             <hr>
-            @foreach (var tag in Show.Tags)
-            {
-            <span class="badge badge-dotnet">@tag</span>
-            }
+            <Tags TagValues="Tags" />
         </p>
     </div>
     <div class="card-footer">
@@ -57,4 +54,13 @@
     public int Index { get; set; }
 
     bool IsDivisableBy(int number) => (Index + 1) % number == 0;
+
+    IDictionary<string, string> Tags =>
+            Show.Tags
+                .Select(tag => (tag: tag, color: ""))
+                .Concat(
+                    Show.Guests
+                        .Where(p => p.IsMicrosoftMvp)
+                        .Select(p => (tag: p.ToMvpUrl(), color: "badge-mvp")))
+                .ToDictionary(t => t.tag, t => t.color);
 }

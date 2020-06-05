@@ -16,6 +16,10 @@ a, .btn-link {
         color: rgb(38, 124, 178);
     }
 
+span.badge > a {
+    color: #fff !important;
+}
+
 a.nav-link.text-light.active {
     box-shadow: 0 4px 0 0 var(--dotnet-color);
 }
@@ -31,6 +35,16 @@ a.nav-link.text-light.active {
 .badge-dotnet {
     color: #fff;
     background-color: var(--dotnet-color);
+}
+
+.badge-mvp {
+    color: #fff;
+    background-color: #01a6f0;
+}
+
+.badge-blue {
+    color: #fff;
+    background-color: #01a6f0;
 }
 
 .oi-sm {

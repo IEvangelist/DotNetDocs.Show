@@ -1,0 +1,9 @@
+﻿@foreach (var (tag, color) in TagValues!)
+{
+    <Tag Value="@tag" Class="@color" />
+}
+
+@code {
+    [Parameter]
+    public IDictionary<string, string> TagValues { get; set; } = new Dictionary<string, string>();
+}

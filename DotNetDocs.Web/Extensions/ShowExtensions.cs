@@ -43,5 +43,8 @@ namespace DotNetDocs.Web.Extensions
 
         internal static MarkupString ToTwitterMarkupString(this string twitterHandle) =>
             new MarkupString(twitterHandle.ToTwitterUrl());
+
+        internal static string ToMvpUrl(this Person person) =>
+            $"<a href='https://mvp.microsoft.com/en-us/PublicProfile/{person.MicrosoftMvpId}' target='_blank'>MVP</a>";
     }
 }
