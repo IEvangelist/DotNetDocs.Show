@@ -79,7 +79,9 @@ namespace DotNetDocs.Sandbox
         static ServiceProvider ConfigureServices()
         {
             IConfigurationBuilder configBuilder =
-                new ConfigurationBuilder().AddEnvironmentVariables();
+                new ConfigurationBuilder()
+                    .AddEnvironmentVariables()
+                    .ConfigureKeyVault();
             IConfigurationRoot configuration =
                 configBuilder.Build();
             IServiceCollection services =
