@@ -27,7 +27,7 @@ else
                 <tr class="editable" @onclick="(_ => NavigateToShowDetails(show.Id))">
                     <td>@(show.Title)</td>
                     <td>@($"{show.Date:MMM dd, yyyy}")</td>
-                    <td>@(show.Url)</td>
+                    <td><a href="@(show.Url)" target="_blank">@(show.Url) <span class="oi oi-sm oi-external-link"></span></a></td>
                     <td>@(show.Guests.ToCommaSeparatedString(false))</td>
                     <td>@(show.Hosts.ToCommaSeparatedString(false))</td>
                 </tr>
