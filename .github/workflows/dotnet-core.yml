@@ -26,7 +26,7 @@ jobs:
     - name: Build
       run: |
         dotnet build --configuration Release --no-restore
-        dotnet publish -c Release dotnetdocsshow
+        dotnet publish -c Release -o dotnetdocsshow
 
     - name: Test
       run: dotnet test --no-restore --verbosity normal
