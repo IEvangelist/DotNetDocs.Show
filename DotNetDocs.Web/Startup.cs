@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.Azure.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -35,9 +36,14 @@ namespace DotNetDocs.Web
 
             services.AddMemoryCache();
             services.AddServerSideBlazor();
+
+            services.AddSignalR()
+                .AddAzureSignalR(options =>
+                    options.ServerStickyMode = ServerStickyMode.Required);
+
             services.AddProtectedBrowserStorage();
-            services.AddResponseCompression(opts =>
-                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+            services.AddResponseCompression(options =>
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { MediaTypeNames.Application.Octet }));
             services.AddDotNetDocsShowServices(_configuration);
             services.AddHostedService<ScheduleWorker>();
