@@ -3,8 +3,6 @@ name: Build .NET Core
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
   build:
@@ -23,3 +21,7 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+    - uses: azure/webapps-deploy@v2
+      name: Deploy
+      with:
+        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
