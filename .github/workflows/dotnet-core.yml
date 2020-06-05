@@ -4,6 +4,10 @@ on:
   push:
     branches: [ master ]
 
+env:
+  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root:
+  DOTNET_VERSION: '3.1.101'           # set this to the dot net version to use
+
 jobs:
   build:
 
@@ -14,14 +18,21 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.101
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
     - name: Install dependencies
       run: dotnet restore
+      
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: |
+        dotnet build --configuration Release --no-restore
+        dotnet publish -c Release dotnetdocsshow
+
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+      
     - uses: azure/webapps-deploy@v2
       name: Deploy
       with:
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dotnetdocsshow'
