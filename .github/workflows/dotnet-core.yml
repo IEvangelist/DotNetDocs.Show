@@ -34,5 +34,6 @@ jobs:
     - uses: azure/webapps-deploy@v2
       name: Deploy
       with:
+        app-name: DotNetDocsWeb 
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
         package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dotnetdocsshow'
