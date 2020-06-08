@@ -27,7 +27,7 @@ jobs:
     - name: Build
       run: |
         dotnet build --configuration Release --no-restore
-        dotnet publish -c Release -o dotnetdocsshow
+        dotnet publish -c Release -o dotnetdocsshow --self-contained true -r linux-x64 -v d
 
     - name: Test
       run: dotnet test --no-restore --verbosity normal
