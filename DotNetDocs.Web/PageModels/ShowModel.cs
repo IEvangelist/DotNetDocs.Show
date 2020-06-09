@@ -6,22 +6,25 @@ namespace DotNetDocs.Web.PageModels
 {
     public class ShowModel
     {
+        public string Id { get; set; } = null!;
+
         [Required, DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
 
         [Required]
-        public string Title { get; set; }
+        public string Title { get; set; } = null!;
 
         [Required, Url]
-        public string Url { get; set; }
+        public string Url { get; set; } = null!;
 
-        [Required]
-        public string ShowImage { get; set; }
+        public string ShowImage { get; set; } = null!;
 
-        public IEnumerable<PersonModel> Guests { get; set; }
+        public int? VideoId { get; set; }
 
-        public IEnumerable<PersonModel> Hosts { get; set; }
+        public IEnumerable<PersonModel> Guests { get; set; } = null!;
 
-        public IEnumerable<string> Tags { get; set; }
+        public IEnumerable<PersonModel> Hosts { get; set; } = null!;
+
+        public IEnumerable<string> Tags { get; set; } = null!;
     }
 }

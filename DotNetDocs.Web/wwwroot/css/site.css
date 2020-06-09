@@ -107,15 +107,15 @@ input:not(:disabled):hover {
     margin-bottom: 0;
 }
 
-.show > a > div {
+.show-card > a > div {
     background: #000;
 }
 
-.show > a:hover img {
+.show-card > a:hover img {
     opacity: 0.6;
 }
 
-.show .show-date {
+.show-card .show-date {
     font-size: 0.8em;
 }
 
@@ -124,25 +124,25 @@ input:not(:disabled):hover {
 }
 
 @media (max-width: 768px) {
-    .show {
+    .show-card {
         max-width: 480px;
     }
 }
 
 @media (min-width: 768px) {
-    .show {
+    .show-card {
         height: 360px;
     }
 }
 
 @media (min-width: 992px) {
-    .show {
+    .show-card {
         height: 320px;
     }
 }
 
 @media (min-width: 1200px) {
-    .show {
+    .show-card {
         height: 360px;
     }
 }
@@ -200,11 +200,12 @@ app {
     color: red;
 }
 
+.clickable:hover,
 tr.editable:hover {
     cursor: pointer;
 }
 
-    tr.editable:disabled:hover {
+    .clickable:disabled:hover, tr.editable:disabled:hover {
         cursor: not-allowed;
     }
 

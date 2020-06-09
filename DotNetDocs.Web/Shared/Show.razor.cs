@@ -22,6 +22,8 @@ namespace DotNetDocs.Web.Shared
         [Parameter]
         public string? ShowId { get; set; }
 
+        protected string SelectedShowId { get; set; } = null!;
+        protected int SelectedVideoId { get; set; }
         protected bool IsDisabled { get; set; }
         protected ShowModel Show { get; set; } = null!;
 
@@ -40,7 +42,7 @@ namespace DotNetDocs.Web.Shared
         {
             IsDisabled = true;
 
-            if (context.IsModified() && ScheduleService != null)
+            if (ScheduleService != null)
             {
                 _show = Mapper?.Map<DocsShow>(Show);
                 if (!(_show is null))
@@ -50,6 +52,21 @@ namespace DotNetDocs.Web.Shared
             }
 
             NavigateBack();
+        }
+
+        protected void OnSelectShowThumbnail()
+        {
+            SelectedShowId = ShowId!;
+            SelectedVideoId = Show.VideoId!.Value;
+
+            StateHasChanged();
+        }
+
+        protected void OnThumbnailChanged(string thumbnailUrl)
+        {
+            Show.ShowImage = thumbnailUrl;
+
+            StateHasChanged();
         }
 
         protected void NavigateBack() => Navigation?.NavigateTo("admin");

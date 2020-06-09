@@ -22,8 +22,10 @@ namespace DotNetDocs.Services.Models
 
         public string Title { get; set; } = "The .NET docs show";
 
-        public string Url { get; set; }
+        public string Url { get; set; } = null!;
 
         public string ShowImage { get; set; } = null!;
+
+        public int? VideoId => this.GetVideoId();
     }
 }
