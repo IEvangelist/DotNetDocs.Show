@@ -37,10 +37,8 @@ else
                         var showId = Show.VideoId;
                         var isDisabled = !showId.HasValue;
                     }
-                    <a class="btn btn-secondary" data-toggle="modal" data-target="#thumbnailModal"
-                           disabled="@(!Show.VideoId.HasValue)" @onclick="@(_ => OnSelectShowThumbnail())">
-                        <span class="oi oi-image"></span> &nbsp; Select Thumbnail
-                    </a>
+                    <input type="button" value="Select Thumbnail" class="btn btn-secondary" data-toggle="modal" data-target="#thumbnailModal"
+                       disabled="@(!Show.VideoId.HasValue)" @onclick="@(_ => OnSelectShowThumbnail())">
                 </div>
                 <ValidationMessage For="() => Show.ShowImage" />
             </div>
