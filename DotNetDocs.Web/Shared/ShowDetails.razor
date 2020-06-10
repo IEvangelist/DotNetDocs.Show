@@ -1,6 +1,8 @@
 ﻿@using DotNetDocs.Services.Models
 @using DotNetDocs.Web.Extensions
 
+@inject NavigationManager Navigation
+
 <div class="card mb-4">
     <a href="@Show.Url" title="Watch this episode">
         <img class="card-img-top img-fluid" src='@(Show.ShowImage ?? $"default-thumb.png")' alt="Thumbnail of episode">
@@ -19,13 +21,20 @@
     </div>
     <div class="card-footer">
         <small class="text-muted">@(Show.IsScheduled ?  Show.Date!.Value.ToString("MMM dd, yyyy") : "TBD")</small>
+        <AuthorizeView>
+            <button class="btn btn-sm btn-secondary float-right ml-2" title='Edit "@(Show.Title)"?'
+                    @onclick="@(_ => Navigation.NavigateTo($"/admin/show/{Show.Id}"))">
+                <span class="oi oi-pencil"></span>
+            </button>
+        </AuthorizeView>
+
         @if (Show.IsInFuture)
         {
-        <a href="@(Show.AddToGoogleCalendar())" target="_blank" class="float-right">Add to calendar?</a>
+            <a href="@(Show.AddToGoogleCalendar())" target="_blank" class="float-right ml-2">Add to calendar?</a>
         }
         else if (Show.IsNew)
         {
-        <span class="badge badge-success float-right">New</span>
+            <span class="badge badge-success float-right ml-2">New</span>
         }
     </div>
 </div>

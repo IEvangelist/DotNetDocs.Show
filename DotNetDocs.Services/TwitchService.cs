@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using DotNetDocs.Services.Models;
 using DotNetDocs.Services.Options;
@@ -13,7 +12,7 @@ namespace DotNetDocs.Services
     public class TwitchService
     {
         const string TokenUrl = "https://id.twitch.tv/oauth2/token";
-        const string VideoUrl = "https://api.twitch.tv/kraken/videos";
+        const string VideoUrl = "https://api.twitch.tv/helix/videos";
 
         readonly HttpClient _client;
         readonly TwitchOptions _twitchOptions;
@@ -27,7 +26,7 @@ namespace DotNetDocs.Services
             _client.DefaultRequestHeaders.Add("Client-ID", _twitchOptions.ClientId);
         }
 
-        async ValueTask<string> GetOAuthTokenAsync()
+        async ValueTask<string?> GetOAuthTokenAsync()
         {
             using var content = new FormUrlEncodedContent(new Dictionary<string, string>
             {
@@ -36,16 +35,21 @@ namespace DotNetDocs.Services
                 ["grant_type"] = "client_credentials",
             });
 
-            var response = await _client.PostAsync(TokenUrl, content);
-            var json = await response.Content.ReadAsStringAsync();
-            var twitchAuthToken = JsonConvert.DeserializeObject<TwitchAuthToken>(json);
+            HttpResponseMessage? response = await _client.PostAsync(TokenUrl, content);
+            string? json = await response.Content.ReadAsStringAsync();
+            TwitchAuthToken? twitchAuthToken = JsonConvert.DeserializeObject<TwitchAuthToken>(json);
 
-            return twitchAuthToken.AccessToken;
+            return twitchAuthToken?.AccessToken;
         }
 
         public async ValueTask<TwitchVideo> GetTwitchVideoAsync(int videoId)
         {
-            string? json = await _client.GetStringAsync($"{VideoUrl}/{videoId}?{_twitchOptions.ToQueryString()}");
+            string? authorizationToken = await GetOAuthTokenAsync();
+
+            _client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", authorizationToken);
+
+            string? json = await _client.GetStringAsync($"{VideoUrl}?id={videoId}");
             return JsonConvert.DeserializeObject<TwitchVideo>(json);
         }
     }

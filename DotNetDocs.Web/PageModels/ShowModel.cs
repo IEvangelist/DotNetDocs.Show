@@ -11,7 +11,7 @@ namespace DotNetDocs.Web.PageModels
         [Required, DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "A title is required.")]
         public string Title { get; set; } = null!;
 
         [Required, Url]
