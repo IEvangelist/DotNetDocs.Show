@@ -68,6 +68,13 @@ a.nav-link.text-light.active {
     padding: 1.5rem;
 }
 
+.grid-clouds {
+    grid-row: 1;
+    grid-column: 1 / -1;
+    display: flex;
+    align-content: center;
+}
+
 .preparing-for-blast-off {
     animation: rumble .16s infinite alternate;
 }

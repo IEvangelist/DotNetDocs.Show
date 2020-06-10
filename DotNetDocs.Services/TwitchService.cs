@@ -12,7 +12,7 @@ namespace DotNetDocs.Services
     public class TwitchService
     {
         const string TokenUrl = "https://id.twitch.tv/oauth2/token";
-        const string VideoUrl = "https://api.twitch.tv/helix/videos";
+        const string VideoUrl = "https://api.twitch.tv/kraken/videos"; // "https://api.twitch.tv/helix/videos";
 
         readonly HttpClient _client;
         readonly TwitchOptions _twitchOptions;
@@ -44,12 +44,15 @@ namespace DotNetDocs.Services
 
         public async ValueTask<TwitchVideo> GetTwitchVideoAsync(int videoId)
         {
-            string? authorizationToken = await GetOAuthTokenAsync();
+            // TODO: port over to using new API, not v5: https://dev.twitch.tv/docs/api
+            //string? authorizationToken = await GetOAuthTokenAsync();
 
-            _client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", authorizationToken);
+            //_client.DefaultRequestHeaders.Authorization =
+            //    new AuthenticationHeaderValue("Bearer", authorizationToken);
 
-            string? json = await _client.GetStringAsync($"{VideoUrl}?id={videoId}");
+            //string? json = await _client.GetStringAsync($"{VideoUrl}?id={videoId}");
+
+            string? json = await _client.GetStringAsync($"{VideoUrl}/{videoId}?{_twitchOptions.ToQueryString()}");
             return JsonConvert.DeserializeObject<TwitchVideo>(json);
         }
     }
