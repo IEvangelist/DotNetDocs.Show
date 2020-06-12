@@ -15,8 +15,8 @@ namespace DotNetDocs.Web.Extensions
             var date = new DateTimeWithZone(show.Date!.Value, TimeZoneInfo.Local).UniversalTime;
 
             // Reference: http://stackoverflow.com/a/21653600/22941
-            var from = UrlEncoder.Default.Encode($"{date:yyyyMMddTHHmmssZ}");
-            var to = UrlEncoder.Default.Encode($"{date.AddHours(1):yyyyMMddTHHmmssZ}");
+            var from = UrlEncoder.Default.Encode($"{date:yyyyMMddTHHmmssZZZZ}");
+            var to = UrlEncoder.Default.Encode($"{date.AddHours(1):yyyyMMddTHHmmssZZZZ}");
             var text = UrlEncoder.Default.Encode($"The .NET docs show - live with {show.Guests.ToCommaSeparatedString(false)}.");
             var location = UrlEncoder.Default.Encode("https://www.twitch.tv/thedotnetdocs");
 
