@@ -90,9 +90,6 @@ namespace DotNetDocs.Sandbox
             return services.BuildServiceProvider();
         }
 
-        static DateTimeWithZone GetCentralTimeZoneDateTime(DateTime date) =>
-            new DateTimeWithZone(date, TimeZoneInfo.Local);
-
         static void WritePersonDetails(Person person, string role) =>
                     Console.WriteLine($"{role}: {person.FirstName} {person.LastName} ({person.Email}, {person.TwitterHandle})");
 

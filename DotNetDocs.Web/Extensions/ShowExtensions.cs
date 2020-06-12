@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.Encodings.Web;
-using DotNetDocs.Repository;
 using DotNetDocs.Services.Models;
 using Microsoft.AspNetCore.Components;
 
@@ -12,15 +10,18 @@ namespace DotNetDocs.Web.Extensions
     {
         internal static string AddToGoogleCalendar(this DocsShow show)
         {
-            var date = new DateTimeWithZone(show.Date!.Value, TimeZoneInfo.Local).UniversalTime;
+            var date = show.Date!.Value;
 
             // Reference: http://stackoverflow.com/a/21653600/22941
-            var from = UrlEncoder.Default.Encode($"{date:yyyyMMddTHHmmssZZZZ}");
-            var to = UrlEncoder.Default.Encode($"{date.AddHours(1):yyyyMMddTHHmmssZZZZ}");
-            var text = UrlEncoder.Default.Encode($"The .NET docs show - live with {show.Guests.ToCommaSeparatedString(false)}.");
-            var location = UrlEncoder.Default.Encode("https://www.twitch.tv/thedotnetdocs");
+            static string UrlEncode(string value) => UrlEncoder.Default.Encode(value);
 
-            return $"https://www.google.com/calendar/render?action=TEMPLATE&text={text}&dates={from}/{to}&details={location}&location={location}&sf=true&output=xml";
+            var from = UrlEncode($"{date:yyyyMMddTHHmmss}");
+            var to = UrlEncode($"{date.AddHours(1):yyyyMMddTHHmmss}");
+            var text = UrlEncode($"The .NET docs show - live with {show.Guests.ToCommaSeparatedString(false)}.");
+            var location = UrlEncode("https://www.twitch.tv/thedotnetdocs");
+            var zone = UrlEncode("America/Chicago");
+
+            return $"https://www.google.com/calendar/render?action=TEMPLATE&ctz={zone}&text={text}&dates={from}/{to}&details={location}&location={location}&sf=true&output=xml";
         }
 
         internal static MarkupString ToGeneralDescription(this DocsShow show) =>
