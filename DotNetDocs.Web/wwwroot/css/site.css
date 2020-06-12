@@ -105,7 +105,11 @@ a.nav-link.text-light.active {
     border-color: #1861ac;
 }
 
-input:not(:disabled):hover {
+input[type=radio]:not(:disabled):hover,
+input[type=checkbox]:not(:disabled):hover,
+input[type=file]:not(:disabled):hover,
+input[type=color]:not(:disabled):hover,
+input[type=button]:not(:disabled):hover {
     cursor: pointer;
 }
 

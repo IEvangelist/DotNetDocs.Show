@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using NodaTime;
+using NodaTime.Text;
 
 namespace DotNetDocs.Web.PageModels
 {
@@ -8,10 +9,37 @@ namespace DotNetDocs.Web.PageModels
     {
         public string Id { get; set; } = null!;
 
-        [Required, DataType(DataType.DateTime)]
-        public DateTime Date { get; set; }
+        ZonedDateTime _date;
 
-        [Required(ErrorMessage = "A title is required.")]
+        public ZonedDateTime Date
+        {
+            get => _date;
+            set
+            {
+                _date = value;
+                DateString = _date.ToString();
+            }
+        }
+
+        string _dateString = null!;
+
+        public string DateString
+        {
+            get => _dateString;
+            set
+            {
+                _dateString = value;
+                ParseResult<ZonedDateTime>? result =
+                    ZonedDateTimePattern.CreateWithCurrentCulture("G", DateTimeZoneProviders.Tzdb)
+                                        .Parse(_dateString);
+                if (result.Success)
+                {
+                    _date = result.Value;
+                }
+            }
+        }
+
+        [Required(ErrorMessage = "A show title is required.")]
         public string Title { get; set; } = null!;
 
         [Required, Url]

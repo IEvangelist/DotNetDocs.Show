@@ -20,7 +20,7 @@
         </p>
     </div>
     <div class="card-footer">
-        <small class="text-muted">@(Show.IsScheduled ?  Show.Date!.Value.ToString("MMM dd, yyyy") : "TBD")</small>
+        <small class="text-muted">@ShowDateTimeString</small>
         <AuthorizeView>
             <button class="btn btn-sm btn-secondary float-right ml-2" title='Edit "@(Show.Title)"?'
                     @onclick="@(_ => Navigation.NavigateTo($"/admin/show/{Show.Id}"))">
@@ -72,4 +72,9 @@
                         .Where(p => p.IsMicrosoftMvp)
                         .Select(p => (tag: p.ToMvpUrl(), color: "badge-mvp")))
                 .ToDictionary(t => t.tag, t => t.color);
+
+    string ShowDateTimeString =>
+        Show.IsScheduled
+            ? $"{Show.Date!.Value:MMM dd, dddd} at {Show.Date!.Value:hh:mm tt} ({Show.Date!.Value:zz})"
+            : "TBD";
 }

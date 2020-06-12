@@ -30,7 +30,7 @@ namespace DotNetDocs.Web.Workers
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            // Twenty previos weeks worth of episodes.
+            // Twenty previous weeks worth of episodes.
             var sinceDate = DateTime.Now.Date.AddDays(-(20 * 7));
             while (!stoppingToken.IsCancellationRequested)
             {
