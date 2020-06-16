@@ -6,7 +6,7 @@ namespace DotNetDocs.Services.Models
 {
     public class DocsShow : Document
     {
-        public DateTime? Date { get; set; }
+        public DateTimeOffset? Date { get; set; }
 
         public bool IsScheduled => Date.HasValue;
 

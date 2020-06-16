@@ -23,34 +23,21 @@ namespace DotNetDocs.Web.Extensions
             CreateMap<DocsShow, ShowModel>().ReverseMap();
             CreateMap<Person, PersonModel>().ReverseMap();
 
-            // TODO:
-            // Verify that this is what we want to do... and do it.
-            // Right now all of our data is persisted as local time :(
-            // ---------------------------------------------------------------
-            // Handle converting to/from zoned datetime and datetime
-            // When using datetime, we'll always persist as UTC.
-            //   The cosmos-db model persists the BCL datetime using UTC.
-            // When zoned datetime, we'll always convert to US/Central.
-            //   The UI will allow for us to set the date, time and time zone.
-            CreateMap<ZonedDateTime, DateTime>()
-                .ConvertUsing<NodaDateTimeConverter>();
-
-            CreateMap<DateTime, ZonedDateTime>()
-                .ConvertUsing<NodaDateTimeConverter>();
+            CreateMap<ZonedDateTime, DateTimeOffset>().ConvertUsing<NodaDateTimeConverter>();
+            CreateMap<DateTimeOffset, ZonedDateTime>().ConvertUsing<NodaDateTimeConverter>();
         }
     }
 
     public class NodaDateTimeConverter :
-        ITypeConverter<ZonedDateTime, DateTime>,
-        ITypeConverter<DateTime, ZonedDateTime>
+        ITypeConverter<ZonedDateTime, DateTimeOffset>,
+        ITypeConverter<DateTimeOffset, ZonedDateTime>
     {
-        DateTime ITypeConverter<ZonedDateTime, DateTime>.Convert(
-            ZonedDateTime z, DateTime _, ResolutionContext context) =>
-            z.ToDateTimeUtc();
+        DateTimeOffset ITypeConverter<ZonedDateTime, DateTimeOffset>.Convert(
+            ZonedDateTime z, DateTimeOffset _, ResolutionContext context) =>
+            z.ToDateTimeOffset();
 
-        ZonedDateTime ITypeConverter<DateTime, ZonedDateTime>.Convert(
-            DateTime d, ZonedDateTime _, ResolutionContext context) =>
-            new LocalDateTime(d.Year, d.Month, d.Day, d.Hour, d.Minute, d.Second)
-                .InZoneLeniently(DateTimeZoneProviders.Tzdb["US/Central"]);
+        ZonedDateTime ITypeConverter<DateTimeOffset, ZonedDateTime>.Convert(
+            DateTimeOffset d, ZonedDateTime _, ResolutionContext context) =>
+            ZonedDateTime.FromDateTimeOffset(d);
     }
 }

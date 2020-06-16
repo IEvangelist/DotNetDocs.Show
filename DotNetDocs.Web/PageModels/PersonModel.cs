@@ -17,5 +17,7 @@ namespace DotNetDocs.Web.PageModels
         public string TwitterHandle { get; set; } = null!;
 
         public bool IsBlueBadge { get; set; }
+
+        public int? MicrosoftMvpId { get; set; } = null;
     }
 }
