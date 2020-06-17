@@ -1,14 +1,15 @@
 ﻿@using DotNetDocs.Services.Models
 @using DotNetDocs.Web.Extensions
 
-<div class="jumbotron">
+<div class="jumbotron" id="@Id">
     <div class="container text-center text-lg-left">
 
         <div class="row">
             <div class="col-lg-8">
                 <h1 class="display-4">@Show.Title</h1>
                 <p class="lead">@(Show.ToGeneralDescription())</p>
-                <span class="text-center d-inline-block">
+                <CountDownTimer ShowTime="@Show.Date!.Value.DateTime" />
+                <span class="text-center pt-2 d-inline-block">
                     <a class="btn btn-primary btn-lg w-100" href="@(Show.AddToGoogleCalendar())" target="_blank" role="button">Add to calendar?</a>
                 </span>
             </div>
@@ -22,4 +23,7 @@
 @code {
     [Parameter]
     public DocsShow Show { get; set; } = null!;
+
+    [Parameter]
+    public string Id { get; set; } = null!;
 }

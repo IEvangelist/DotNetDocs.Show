@@ -37,6 +37,16 @@ a.nav-link.text-light.active {
     background-color: var(--dotnet-color);
 }
 
+.btn-dotnet {
+    color: #fff;
+    background-color: var(--dotnet-color);
+}
+
+.btn-dotnet:hover {
+    color: #fff;
+    background-color: #591CB3;
+}
+
 .badge-mvp {
     color: #fff;
     background-color: #01a6f0;

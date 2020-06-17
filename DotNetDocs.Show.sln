@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetDocs.Web", "DotNetDoc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetDocs.Sandbox", "DotNetDocs.Sandbox\DotNetDocs.Sandbox.csproj", "{3365A629-734E-4CC5-9DA6-3D94B0D545ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetDocs.Web.Tests", "DotNetDocs.Services.Tests\DotNetDocs.Web.Tests.csproj", "{DCA0594A-00CA-434A-954D-5FB90FDDA4AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetDocs.Web.Tests", "DotNetDocs.Services.Tests\DotNetDocs.Web.Tests.csproj", "{DCA0594A-00CA-434A-954D-5FB90FDDA4AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

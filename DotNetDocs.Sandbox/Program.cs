@@ -24,9 +24,18 @@ namespace DotNetDocs.Sandbox
                     #region Add show
                     //var show = new DocsShow
                     //{
-                    //    Date = GetCentralTimeZoneDateTime(new DateTime(2020, 5, 21, 11, 00, 00)).LocalTime,
-                    //    Title = "Build 2020 Recap",
-                    //    Url = "https://www.twitch.tv/videos/627661338"
+                    //    Date = DateTimeOffset.Parse("2020-07-16T11:00:00-05:00"),
+                    //    Title = "Talking .NET with Jeremy Sinclair",
+                    //    Guests = new[]
+                    //    {
+                    //        new Person
+                    //        {
+                    //            FirstName = "Jeremy",
+                    //            LastName = "Sinclair",
+                    //            Email = " jeremy.sinclair@live.com",
+                    //            TwitterHandle = "@sinclairinat0r"
+                    //        }
+                    //    }
                     //};
 
                     //_ = await scheduleService.CreateShowAsync(show);
@@ -39,32 +48,32 @@ namespace DotNetDocs.Sandbox
                     #endregion // end add show
 
                     #region Read shows
-                    TwitchService twitchService = services.GetService<TwitchService>();
-                    IEnumerable<DocsShow> shows = await scheduleService.GetAllAsync(DateTime.Now.AddDays(-(40 * 7)));
-                    foreach (DocsShow show in shows)
-                    {
-                        if (show.ShowImage is null && !show.IsInFuture && show.Url != "https://www.twitch.tv/thedotnetdocs")
-                        {
-                            var videoUri = new Uri(show.Url);
-                            if (int.TryParse(videoUri.Segments.Last(), out int id))
-                            {
-                                var video = await twitchService.GetTwitchVideoAsync(id);
-                                if (video is null) continue;
+                    //TwitchService twitchService = services.GetService<TwitchService>();
+                    //IEnumerable<DocsShow> shows = await scheduleService.GetAllAsync(DateTime.Now.AddDays(-(40 * 7)));
+                    //foreach (DocsShow show in shows)
+                    //{
+                    //    if (show.ShowImage is null && !show.IsInFuture && show.Url != "https://www.twitch.tv/thedotnetdocs")
+                    //    {
+                    //        var videoUri = new Uri(show.Url);
+                    //        if (int.TryParse(videoUri.Segments.Last(), out int id))
+                    //        {
+                    //            var video = await twitchService.GetTwitchVideoAsync(id);
+                    //            if (video is null) continue;
 
-                                var url = RandomElement(video.Thumbnails.Large).Url;
-                                if (url is null) continue;
+                    //            var url = RandomElement(video.Thumbnails.Large).Url;
+                    //            if (url is null) continue;
 
-                                show.ShowImage = url;
-                                var updatedShow = await scheduleService.UpdateShowAsync(show);
-                                if (updatedShow.ShowImage == show.ShowImage)
-                                {
-                                    Console.WriteLine($"Updated show iamge URL!");
-                                }
-                            }
-                        }
+                    //            show.ShowImage = url;
+                    //            var updatedShow = await scheduleService.UpdateShowAsync(show);
+                    //            if (updatedShow.ShowImage == show.ShowImage)
+                    //            {
+                    //                Console.WriteLine($"Updated show iamge URL!");
+                    //            }
+                    //        }
+                    //    }
 
-                        WriteShowDetails(show);
-                    }
+                    //    WriteShowDetails(show);
+                    //}
                     #endregion // end read shows
                 }
             }
