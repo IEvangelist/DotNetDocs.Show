@@ -7,10 +7,16 @@
             <div class="col-lg-8">
                 <h2 class="display-4">@Show.Title</h2>
                 <p class="lead">@(Show.ToGeneralDescription())</p>
-                <CountDownTimer ShowTime="@Show.Date!.Value.DateTime" />
-                <span class="text-center pt-2 pb-2 d-inline-block">
-                    <a class="btn btn-dotnet btn-lg w-100" href="@(Show.AddToGoogleCalendar())" target="_blank" role="button">Add to calendar</a>
-                </span>
+                <div class="row pb-4">
+                    <div class="col-8">
+                        <CountDownTimer ShowTime="@Show.Date!.Value.DateTime" />
+                    </div>
+                    <div class="col-4">
+                        <span class="text-center pb-2 d-inline-block">
+                            <a class="btn btn-dotnet btn-lg w-100" href="@(Show.AddToGoogleCalendar())" target="_blank" role="button">Add to calendar</a>
+                        </span>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-4 align-items-center d-flex">
                 <img src='@(Show.ShowImage ?? "default-thumb.png")' alt="Thumbnail of episode" class="img-fluid">
