@@ -12,7 +12,7 @@ env:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -28,7 +28,7 @@ jobs:
       run: |
         cd DotNetDocs.Web
         dotnet build --configuration Release --no-restore
-        dotnet publish -c Release -o ../dotnetdocsshow -r linux-x64 --self-contained true /p:UseAppHost=true
+        dotnet publish -c Release -o ../dotnetdocsshow -r win-x64 --self-contained true /p:UseAppHost=true
 
     - name: Test
       run: |
