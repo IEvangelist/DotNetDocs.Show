@@ -4,12 +4,14 @@
 
 @using DotNetDocs.Services
 @using DotNetDocs.Services.Models
+@using DotNetDocs.Web.Interop
 @using DotNetDocs.Web.Shared
 @using DotNetDocs.Web.Workers
 @using Microsoft.Extensions.Caching.Memory
 
 @inject IMemoryCache Cache
 @inject IScheduleService ScheduleService
+@inject IJSRuntime JavaScript
 
 @if (_shows == null)
 {
@@ -26,24 +28,80 @@ else if (!_shows.Any())
 }
 else
 {
-    <div class="card-deck">
-        @foreach (var (show, index) in
-          _shows.OrderByDescending(show => show.Date)
-                .Select((show, index) => (show, index)))
-        {
-            <ShowDetails Show="show" Index="index" />
-        }
-    </div>
+    <h1 class="text-center">Streaming Live</h1>
+    <h3 class="text-center">
+        <small class="text-muted">Thursdays @@ 11 AM (US/Central)</small>
+    </h3>
+    if (_futureShows.Any())
+    {
+        <div class="text-center pb-4">
+            <button class="btn btn-lg btn-dotnet" type="button" data-toggle="collapse" data-target="#collapsable" aria-expanded="false" aria-controls="collapseExample">
+                See More Scheduled Shows
+            </button>
+        </div>
+        <div class="collapse" id="collapsable">
+            <div class="card-deck">
+                @foreach (var (show, index) in _futureShows.Select((show, index) => (show, index)))
+                {
+                    <ShowDetails Show="show" Index="index" />
+                }
+            </div>
+        </div>
+    }
+    if (_nextShow != null)
+    {
+        <NextShowDetails Show="_nextShow" Id="@NextShowElementId" />
+    }
+    if (_pastShows.Any())
+    {
+        <div class="card-deck">
+            @foreach (var (show, index) in _pastShows.Select((show, index) => (show, index)))
+            {
+                <ShowDetails Show="show" Index="index" />
+            }
+        </div>
+    }
+    if (_hasMoreShows)
+    {
+        <div class="text-center pb-4">
+            <a class="btn btn-lg btn-dotnet" href="https://www.youtube.com/channel/UCIy_nKrwrd-naf_MPWtXdLA"
+               role="button" target="_blank" rel="nofollow noreferrer">See More Shows</a>
+        </div>
+    }
 }
 
 @code {
+    const string NextShowElementId = "next-show";
+
     private IEnumerable<DocsShow> _shows = null!;
+    private IEnumerable<DocsShow> _pastShows = null!;
+    private IEnumerable<DocsShow> _futureShows = null!;
+
+    private bool _hasMoreShows;
+    private DocsShow _nextShow = null!;
 
     protected override async Task OnInitializedAsync()
     {
+        var today = DateTime.Now.Date;
         _shows = await Cache.GetOrCreateAsync<IEnumerable<DocsShow>>(
             CacheKeys.ShowSchedule,
             async _ =>
-            await ScheduleService.GetAllAsync(DateTime.Now.AddDays(-(20 * 7))));
+            await ScheduleService.GetAllAsync(today.AddDays(-(20 * 7))));
+
+        var orderedShows = _shows.OrderByDescending(show => show.Date);
+        _pastShows = orderedShows.Where(show => show.Date < today).Take(8);
+        _hasMoreShows = orderedShows.Count() > _pastShows.Count();
+
+        var futureShows = orderedShows.Where(show => show.Date >= today).ToList();
+        _nextShow = futureShows.TakeLast(1).SingleOrDefault();
+        _futureShows = futureShows.SkipLast(1);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && _nextShow != null)
+        {
+            await JavaScript.ScrollIntoViewAsync(NextShowElementId);
+        }
     }
 }

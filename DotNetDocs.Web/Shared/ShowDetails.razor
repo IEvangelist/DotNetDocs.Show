@@ -5,7 +5,7 @@
 
 <div class="card mb-4">
     <a href="@Show.Url" title="Watch this episode">
-        <img class="card-img-top img-fluid" src='@(Show.ShowImage ?? $"default-thumb.png")' alt="Thumbnail of episode">
+        <img class="card-img-top img-fluid" src='@(Show.ShowImage ?? "default-thumb.png")' alt="Thumbnail of episode">
     </a>
     <div class="card-body">
         <h5 class="card-title">
@@ -13,14 +13,13 @@
                 @Show.Title<br />
             </a>
         </h5>
+        <div class="lead">@ShowDateTimeString</div>
         <p class="card-text">
             @(Show.ToGeneralDescription())
-            <hr>
-            <Tags TagValues="Tags" />
         </p>
     </div>
     <div class="card-footer">
-        <small class="text-muted">@ShowDateTimeString</small>
+        <Tags TagValues="Tags" />
         <AuthorizeView>
             <button class="btn btn-sm btn-secondary float-right ml-2" title='Edit "@(Show.Title)"?'
                     @onclick="@(_ => Navigation.NavigateTo($"/admin/show/{Show.Id}"))">
@@ -73,8 +72,5 @@
                         .Select(p => (tag: p.ToMvpUrl(), color: "badge-mvp")))
                 .ToDictionary(t => t.tag, t => t.color);
 
-    string ShowDateTimeString =>
-        Show.IsScheduled
-            ? $"{Show.Date!.Value:MMM dd, dddd} at {Show.Date!.Value:hh:mm tt} ({Show.Date!.Value:zz})"
-            : "TBD";
+    string ShowDateTimeString => Show.ToDateString();
 }
