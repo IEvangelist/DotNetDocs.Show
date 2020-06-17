@@ -26,24 +26,51 @@ else if (!_shows.Any())
 }
 else
 {
-    <div class="card-deck">
-        @foreach (var (show, index) in
-          _shows.OrderByDescending(show => show.Date)
-                .Select((show, index) => (show, index)))
-        {
-            <ShowDetails Show="show" Index="index" />
-        }
-    </div>
+    if (_futureShows.Any())
+    {
+        <div class="card-deck">
+            @foreach (var (show, index) in
+              _futureShows.Select((show, index) => (show, index)))
+            {
+                <ShowDetails Show="show" Index="index" />
+            }
+        </div>
+    }
+    if (_nextShow != null)
+    {
+        <NextShowDetails Show="_nextShow" />
+    }
+    if (_pastShows.Any())
+    {
+        <div class="card-deck">
+            @foreach (var (show, index) in
+              _pastShows.Select((show, index) => (show, index)))
+            {
+                <ShowDetails Show="show" Index="index" />
+            }
+        </div>
+    }
 }
 
 @code {
     private IEnumerable<DocsShow> _shows = null!;
+    private IEnumerable<DocsShow> _pastShows = null!;
+    private IEnumerable<DocsShow> _futureShows = null!;
+    private DocsShow _nextShow = null!;
 
     protected override async Task OnInitializedAsync()
     {
+        var today = DateTime.Now.Date;
         _shows = await Cache.GetOrCreateAsync<IEnumerable<DocsShow>>(
             CacheKeys.ShowSchedule,
             async _ =>
-            await ScheduleService.GetAllAsync(DateTime.Now.AddDays(-(20 * 7))));
+            await ScheduleService.GetAllAsync(today.AddDays(-(20 * 7))));
+
+        var orderedShows = _shows.OrderByDescending(show => show.Date);
+
+        _pastShows = orderedShows.Where(show => show.Date < today);
+        var futureShows = orderedShows.Where(show => show.Date >= today).ToList();
+        _nextShow = futureShows.TakeLast(1).SingleOrDefault();
+        _futureShows = futureShows.SkipLast(1);
     }
 }

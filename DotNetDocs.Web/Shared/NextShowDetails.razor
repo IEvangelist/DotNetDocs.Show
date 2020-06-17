@@ -1,0 +1,25 @@
+﻿@using DotNetDocs.Services.Models
+@using DotNetDocs.Web.Extensions
+
+<div class="jumbotron">
+    <div class="container text-center text-lg-left">
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h1 class="display-4">@Show.Title</h1>
+                <p class="lead">@(Show.ToGeneralDescription())</p>
+                <span class="text-center d-inline-block">
+                    <a class="btn btn-primary btn-lg w-100" href="@(Show.AddToGoogleCalendar())" target="_blank" role="button">Add to calendar?</a>
+                </span>
+            </div>
+            <div class="col-lg-4 align-items-center d-flex">
+                <img src='@(Show.ShowImage ?? "default-thumb.png")' alt="Thumbnail of episode" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public DocsShow Show { get; set; } = null!;
+}
