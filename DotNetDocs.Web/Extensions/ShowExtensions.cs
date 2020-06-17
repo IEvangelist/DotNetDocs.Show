@@ -26,22 +26,22 @@ namespace DotNetDocs.Web.Extensions
                 return $"{dateTime:MMM dd, yyyy}";
             }
 
-            static string CalculateDayString(DateTime dateTime, int dayDiff, int secDiff) => dayDiff switch
+            static string CalculateDayString(DateTime dateTime, int days, int seconds) => days switch
             {
-                0 => CalculateSecString(dateTime, secDiff),
+                0 => CalculateSecString(dateTime, seconds),
                 1 => "Yesterday",
-                _ when (2..7).IsInRange(dayDiff) => string.Format("{0} days ago", dayDiff),
-                _ when (8..31).IsInRange(dayDiff) => string.Format("{0} weeks ago", Math.Ceiling((double)dayDiff / 7)),
+                _ when (2..7).IsInRange(days) => string.Format("{0} days ago", days),
+                _ when (8..31).IsInRange(days) => string.Format("{0} weeks ago", Math.Ceiling((double)days / 7)),
                 _ => $"{dateTime:MMM dd, yyyy}"
             };
 
-            static string CalculateSecString(DateTime dateTime, int secDiff) => secDiff switch
+            static string CalculateSecString(DateTime dateTime, int seconds) => seconds switch
             {
-                _ when (0..60).IsInRange(secDiff) => "Just now",
-                _ when (61..120).IsInRange(secDiff) => "1 minute ago",
-                _ when (121..3600).IsInRange(secDiff) => string.Format("{0} minutes ago", Math.Floor((double)secDiff / 60)),
-                _ when (3601..7200).IsInRange(secDiff) => "1 hour ago",
-                _ when (7201..86400).IsInRange(secDiff) => string.Format("{0} hours ago", Math.Floor((double)secDiff / 3600)),
+                _ when (0..60).IsInRange(seconds) => "Just now",
+                _ when (61..120).IsInRange(seconds) => "1 minute ago",
+                _ when (121..3600).IsInRange(seconds) => string.Format("{0} minutes ago", Math.Floor((double)seconds / 60)),
+                _ when (3601..7200).IsInRange(seconds) => "1 hour ago",
+                _ when (7201..86400).IsInRange(seconds) => string.Format("{0} hours ago", Math.Floor((double)seconds / 3600)),
                 _ => $"{dateTime:MMM dd, yyyy}"
             };
 

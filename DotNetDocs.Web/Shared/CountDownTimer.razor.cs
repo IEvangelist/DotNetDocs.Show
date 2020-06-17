@@ -13,18 +13,18 @@ namespace DotNetDocs.Web.Shared
         [Parameter]
         public DateTime ShowTime { get; set; }
 
+        [Parameter]
+        public EventCallback<bool> ShowIsStarting { get; set; }
+
         protected TimeSpan TimeRemaining { get; private set; }
 
         public CountDownTimerComponent()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                _centralTimeZone = TimeZoneInfo.FindSystemTimeZoneById("America/Chicago");
-            }
-            else
-            {
-                _centralTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
-            }
+            _centralTimeZone =
+                TimeZoneInfo.FindSystemTimeZoneById(
+                    RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                        ? "America/Chicago"
+                        : "Central Standard Time");
 
             _timer = new Timer(1000);
             _timer.Elapsed += OnTimerElapsed;
@@ -37,12 +37,20 @@ namespace DotNetDocs.Web.Shared
             base.OnParametersSet();
         }
 
-        void OnTimerElapsed(object sender, ElapsedEventArgs e)
+        async void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
             DateTime dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, _centralTimeZone);
             TimeRemaining = ShowTime.Subtract(dateTime);
 
-            InvokeAsync(() => StateHasChanged());
+            if (TimeRemaining <= TimeSpan.FromSeconds(30))
+            {
+                StopTimerAndUnregisterHandler();
+                await ShowIsStarting.InvokeAsync(true);
+            }
+            else
+            {
+                await InvokeAsync(() => StateHasChanged());
+            }
         }
 
         public void Dispose()
@@ -52,10 +60,21 @@ namespace DotNetDocs.Web.Shared
                 return;
             }
 
-            _timer.Stop();
-            _timer.Elapsed -= OnTimerElapsed;
+            StopTimerAndUnregisterHandler();
+
             _timer.Dispose();
             _timer = null!;
+        }
+
+        void StopTimerAndUnregisterHandler()
+        {
+            if (_timer is null)
+            {
+                return;
+            }
+
+            _timer.Stop();
+            _timer.Elapsed -= OnTimerElapsed;
         }
     }
 }
