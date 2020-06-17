@@ -9,7 +9,7 @@ using NodaTime;
 using NodaTime.Text;
 using Xunit;
 
-namespace DotNetDocs.Services.Tests
+namespace DotNetDocs.Web.Tests
 {
     public class MapperTests
     {
