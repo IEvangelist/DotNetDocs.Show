@@ -32,7 +32,7 @@ jobs:
 
     - name: Test
       run: |
-        cd ../DotNetDocs.Web.Tests
+        cd DotNetDocs.Web.Tests
         dotnet test --no-restore --verbosity normal
       
     - uses: azure/webapps-deploy@v2
