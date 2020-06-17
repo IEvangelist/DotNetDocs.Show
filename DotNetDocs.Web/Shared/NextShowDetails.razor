@@ -8,10 +8,10 @@
                 <h2 class="display-4">@Show.Title</h2>
                 <p class="lead">@(Show.ToGeneralDescription())</p>
                 <div class="row pb-4">
-                    <div class="col-8">
+                    <div class="col-md-8 pb-2">
                         <CountDownTimer ShowTime="@Show.Date!.Value.DateTime" />
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <span class="text-center pb-2 d-inline-block">
                             <a class="btn btn-dotnet btn-lg w-100" href="@(Show.AddToGoogleCalendar())" target="_blank" role="button">Add to calendar</a>
                         </span>
