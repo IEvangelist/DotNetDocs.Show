@@ -63,7 +63,7 @@ a.nav-link.text-light.active {
 
 .grid {
     display: grid;
-    height: calc(100vh - 4rem);
+    height: calc(100vh - 8rem);
     align-items: center;
     text-align: center;
     overflow: hidden;
