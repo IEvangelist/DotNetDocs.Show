@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Timers;
 using Microsoft.AspNetCore.Components;
 
@@ -7,6 +8,7 @@ namespace DotNetDocs.Web.Shared
     public class CountDownTimerComponent : ComponentBase, IDisposable
     {
         Timer _timer;
+        readonly TimeZoneInfo _centralTimeZone;
 
         [Parameter]
         public DateTime ShowTime { get; set; }
@@ -15,6 +17,15 @@ namespace DotNetDocs.Web.Shared
 
         public CountDownTimerComponent()
         {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                _centralTimeZone = TimeZoneInfo.FindSystemTimeZoneById("America/Chicago");
+            }
+            else
+            {
+                _centralTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+            }
+
             _timer = new Timer(1000);
             _timer.Elapsed += OnTimerElapsed;
         }
@@ -28,7 +39,8 @@ namespace DotNetDocs.Web.Shared
 
         void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
-            TimeRemaining = ShowTime.Subtract(DateTime.Now);
+            DateTime dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, _centralTimeZone);
+            TimeRemaining = ShowTime.Subtract(dateTime);
 
             InvokeAsync(() => StateHasChanged());
         }
