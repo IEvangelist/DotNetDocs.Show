@@ -26,11 +26,14 @@ jobs:
       
     - name: Build
       run: |
+        cd DotNetDocs.Web
         dotnet build --configuration Release --no-restore
-        dotnet publish -c Release -o dotnetdocsshow --self-contained true -v d /p:UseAppHost=true
+        dotnet publish -c Release -o dotnetdocsshow -r linux-x64 --self-contained true -v d /p:UseAppHost=true
 
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: |
+        cd DotNetDocs.Web.Tests
+        dotnet test --no-restore --verbosity normal
       
     - uses: azure/webapps-deploy@v2
       name: Deploy
