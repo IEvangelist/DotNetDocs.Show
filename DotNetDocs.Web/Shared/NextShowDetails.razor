@@ -25,4 +25,13 @@
 
     [Parameter]
     public string Id { get; set; } = null!;
+
+    IDictionary<string, string> Tags =>
+            Show.Tags
+                .Select(tag => (tag: tag, color: ""))
+                .Concat(
+                    Show.Guests
+                        .Where(p => p.IsMicrosoftMvp)
+                        .Select(p => (tag: p.ToMvpUrl(), color: "badge-mvp")))
+                .ToDictionary(t => t.tag, t => t.color);
 }
