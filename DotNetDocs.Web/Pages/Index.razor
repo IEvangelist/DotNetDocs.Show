@@ -83,14 +83,14 @@ else
     protected override async Task OnInitializedAsync()
     {
         var now = DateTime.Now;
-        var today = DateTimeOffset.Parse($"{now.Year}-{now.Month:00}-{now.Day:00}T12:15:00-05:00").DateTime;
+        var today = DateTimeOffset.Parse($"{now.Year}-{now.Month:00}-{now.Day:00}T12:15:00-05:00");
         _shows = await Cache.GetOrCreateAsync<IEnumerable<DocsShow>>(
             CacheKeys.ShowSchedule,
             async _ =>
-            await ScheduleService.GetAllAsync(today.AddDays(-(20 * 7))));
+            await ScheduleService.GetAllAsync(today.DateTime.AddDays(-(20 * 7))));
 
         var orderedShows = _shows.OrderByDescending(show => show.Date);
-        _pastShows = orderedShows.Where(show => show.Date < today).Take(8);
+        _pastShows = orderedShows.Where(show => show.Date < today).Take(12);
         _hasMoreShows = orderedShows.Count() > _pastShows.Count();
 
         var futureShows = orderedShows.Where(show => show.Date >= today).ToList();
