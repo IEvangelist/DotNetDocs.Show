@@ -16,7 +16,11 @@ namespace DotNetDocs.Web.Shared
         [Parameter]
         public EventCallback<bool> ShowIsStarting { get; set; }
 
+        [Inject]
+        public NavigationManager Navigation { get; set; } = null!;
+
         protected TimeSpan TimeRemaining { get; private set; }
+        protected string ImminentClass { get; private set; } = "";
 
         public CountDownTimerComponent()
         {
@@ -42,12 +46,23 @@ namespace DotNetDocs.Web.Shared
             DateTime dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, _centralTimeZone);
             TimeRemaining = ShowTime.Subtract(dateTime);
 
-            if (TimeRemaining <= TimeSpan.FromSeconds(30))
+            bool alreadyStarted = TimeRemaining.Ticks < 0;
+            if (alreadyStarted && TimeRemaining < TimeSpan.FromHours(1.5))
             {
                 StopTimerAndUnregisterHandler();
+                Navigation.NavigateTo("/", true);
+            }
+            else if (TimeRemaining <= TimeSpan.FromSeconds(90)) // Starts in 90 seconds
+            {
+                ImminentClass = "blinking";
+                await InvokeAsync(() => StateHasChanged());
+            }
+            else if (TimeRemaining <= TimeSpan.FromSeconds(30)) // Starts in 30 seconds
+            {
+                ImminentClass = "";
                 await InvokeAsync(async () => await ShowIsStarting.InvokeAsync(true));
             }
-            else
+            else                                                // Normal count down tick
             {
                 await InvokeAsync(() => StateHasChanged());
             }

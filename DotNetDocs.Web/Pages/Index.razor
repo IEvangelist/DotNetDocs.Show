@@ -82,7 +82,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var today = DateTime.Now.Date;
+        var now = DateTime.Now.Date;
+        var today = DateTimeOffset.Parse($"{now.Year}-{now.Month:00}-{now.Day:00}T12:15:00-05:00").DateTime;
         _shows = await Cache.GetOrCreateAsync<IEnumerable<DocsShow>>(
             CacheKeys.ShowSchedule,
             async _ =>

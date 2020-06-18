@@ -2,10 +2,10 @@
 
 <div class="shadow rounded bg-light p-2 text-center">
     <p class="mb-0 font-weight-bold text-dotnet text-uppercase">Next show</p>
-    <div class="pt-2 text-muted">
-        <span class="h2 font-weight-bold">@TimeRemaining.Days</span> @(TimeRemaining.Days > 1 ? "days" : "day")
-        <span class="h2 font-weight-bold">@($"{TimeRemaining.Hours:00}")</span> hr
-        <span class="h2 font-weight-bold">@($"{TimeRemaining.Minutes:00}")</span> min
-        <span class="h2 font-weight-bold">@($"{TimeRemaining.Seconds:00}")</span> sec
+    <div class="pt-2">
+        <span class="h2 font-weight-bold @(ImminentClass)">@TimeRemaining.Days</span> @(TimeRemaining.Days > 1 ? "days" : "day")
+        <span class="h2 font-weight-bold @(ImminentClass)">@($"{TimeRemaining.Hours:00}")</span> hr
+        <span class="h2 font-weight-bold @(ImminentClass)">@($"{TimeRemaining.Minutes:00}")</span> min
+        <span class="h2 font-weight-bold @(ImminentClass)">@($"{TimeRemaining.Seconds:00}")</span> sec
     </div>
 </div>
