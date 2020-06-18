@@ -45,7 +45,7 @@ namespace DotNetDocs.Web.Shared
             if (TimeRemaining <= TimeSpan.FromSeconds(30))
             {
                 StopTimerAndUnregisterHandler();
-                await ShowIsStarting.InvokeAsync(true);
+                await InvokeAsync(async () => await ShowIsStarting.InvokeAsync(true));
             }
             else
             {

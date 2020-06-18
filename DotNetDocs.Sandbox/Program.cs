@@ -22,29 +22,22 @@ namespace DotNetDocs.Sandbox
                     IScheduleService scheduleService = services.GetService<IScheduleService>();
 
                     #region Add show
-                    //var show = new DocsShow
-                    //{
-                    //    Date = DateTimeOffset.Parse("2020-07-16T11:00:00-05:00"),
-                    //    Title = "Talking .NET with Jeremy Sinclair",
-                    //    Guests = new[]
-                    //    {
-                    //        new Person
-                    //        {
-                    //            FirstName = "Jeremy",
-                    //            LastName = "Sinclair",
-                    //            Email = " jeremy.sinclair@live.com",
-                    //            TwitterHandle = "@sinclairinat0r"
-                    //        }
-                    //    }
-                    //};
+                    var show = new DocsShow
+                    {
+                        Date = DateTimeOffset.Parse("2020-05-14T11:00:00-05:00"),
+                        Title = "Smoking ribs with .NET and Cam Soper",
+                        Url = "https://www.twitch.tv/videos/581536242",
+                        Hosts = new[] { Person.David, Person.Scott },
+                        Guests = new[] { Person.Cam }
+                    };
 
-                    //_ = await scheduleService.CreateShowAsync(show);
-                    //DocsShow persistedShow = await scheduleService.GetShowAsync(show.Id);
-                    //if (!(persistedShow is null))
-                    //{
-                    //    Person guest = persistedShow.Guests.ElementAt(0);
-                    //    Console.WriteLine($"Added show details for {guest.FirstName} {guest.LastName}, on {persistedShow.Date:MMM dd, yyyy}");
-                    //}
+                    _ = await scheduleService.CreateShowAsync(show);
+                    DocsShow persistedShow = await scheduleService.GetShowAsync(show.Id);
+                    if (!(persistedShow is null))
+                    {
+                        Person guest = persistedShow.Guests.ElementAt(0);
+                        Console.WriteLine($"Added show details for {guest.FirstName} {guest.LastName}, on {persistedShow.Date:MMM dd, yyyy}");
+                    }
                     #endregion // end add show
 
                     #region Read shows
