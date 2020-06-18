@@ -39,11 +39,13 @@
     </div>
 
     <footer class="footer fixed-bottom bg-dark">
-        <div class="container text-center text-light py-3">
+        <div class="container text-center text-light py-2">
             <small>
-                &copy; Copyright @DateTime.UtcNow.Year &nbsp; &bull; &nbsp;
-                <a href="https://github.com/IEvangelist/DotNetDocs.Show" target="_blank">GitHub Repo</a> &nbsp; &bull; &nbsp;
-                Powered by @RuntimeInformation.FrameworkDescription
+                <span>&copy; Copyright @DateTime.UtcNow.Year &nbsp; &bull; &nbsp;</span>
+                <span class="d-none d-lg-inline">
+                    <a href="https://github.com/IEvangelist/DotNetDocs.Show" target="_blank">GitHub Repo</a> &nbsp; &bull; &nbsp;
+                </span >
+                <span>Powered by @RuntimeInformation.FrameworkDescription</span>
             </small>
         </div>
     </footer>
