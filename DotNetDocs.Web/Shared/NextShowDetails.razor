@@ -22,7 +22,7 @@
                     <p class="lead">@(Show.ToGeneralDescription())</p>
                     <div class="row pb-4">
                         <div class="col-md-8 pb-2">
-                            <CountDownTimer ShowTime="@Show.Date!.Value" ShowIsStarting="OnShowIsStarting" />
+                            <CountDownTimer ShowTime="@Show.Date!.Value.DateTime" ShowIsStarting="OnShowIsStarting" />
                         </div>
                         <div class="col-md-4">
                             <span class="text-center pb-2 d-inline-block">

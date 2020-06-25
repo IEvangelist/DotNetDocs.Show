@@ -11,7 +11,7 @@ namespace DotNetDocs.Web.Shared
         readonly TimeZoneInfo _centralTimeZone;
 
         [Parameter]
-        public DateTimeOffset ShowTime { get; set; }
+        public DateTime ShowTime { get; set; }
 
         [Parameter]
         public EventCallback<bool> ShowIsStarting { get; set; }
