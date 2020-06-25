@@ -24,11 +24,7 @@ namespace DotNetDocs.Sandbox
                     #region Add show
                     var show = new DocsShow
                     {
-                        Date = DateTimeOffset.Parse("2020-05-14T11:00:00-05:00"),
-                        Title = "Smoking ribs with .NET and Cam Soper",
-                        Url = "https://www.twitch.tv/videos/581536242",
-                        Hosts = new[] { Person.David, Person.Scott },
-                        Guests = new[] { Person.Cam }
+                        Date = DateTimeOffset.Parse("2020-08-20T11:00:00-05:00")
                     };
 
                     _ = await scheduleService.CreateShowAsync(show);

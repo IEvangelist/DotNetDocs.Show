@@ -36,7 +36,7 @@ else
     {
         <div class="text-center pb-4">
             <button class="btn btn-lg btn-dotnet" type="button" data-toggle="collapse" data-target="#collapsable" aria-expanded="false" aria-controls="collapseExample">
-                See More Scheduled Shows
+                <span class="oi oi-calendar"></span> &nbsp; Upcoming Schedule
             </button>
         </div>
         <div class="collapse" id="collapsable">
@@ -65,7 +65,9 @@ else
     {
         <div class="text-center pb-4">
             <a class="btn btn-lg btn-dotnet" href="https://www.youtube.com/channel/UCIy_nKrwrd-naf_MPWtXdLA"
-               role="button" target="_blank" rel="nofollow noreferrer">See More Shows</a>
+               role="button" target="_blank" rel="nofollow noreferrer">
+                <span class="oi oi-thumb-up"></span> &nbsp; All Episodes
+            </a>
         </div>
     }
 }
@@ -91,19 +93,11 @@ else
             await ScheduleService.GetAllAsync(now.DateTime.AddDays(-(20 * 7))));
 
         var orderedShows = _shows.OrderByDescending(show => show.Date);
-        _pastShows = orderedShows.Where(show => show.Date < dailyShowTime).Take(12);
+        _pastShows = orderedShows.Where(show => show.Date <= dailyShowTime).Take(12);
         _hasMoreShows = orderedShows.Count() > _pastShows.Count();
 
-        var futureShows = orderedShows.Where(show => show.Date >= dailyShowTime).ToList();
+        var futureShows = orderedShows.Where(show => show.Date > dailyShowTime).ToList();
         _nextShow = futureShows.TakeLast(1).SingleOrDefault();
         _futureShows = futureShows.SkipLast(1);
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender && _nextShow != null)
-        {
-            await JavaScript.ScrollIntoViewAsync(NextShowElementId);
-        }
     }
 }

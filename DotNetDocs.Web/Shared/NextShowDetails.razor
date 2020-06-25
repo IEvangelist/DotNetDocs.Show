@@ -8,7 +8,7 @@
             {
                 <div class="embed-responsive embed-responsive-16by9">
                     <iframe src="https://player.twitch.tv/?channel=thedotnetdocs&parent=dotnetdocs.dev&muted=true"
-                            class="embed-responsive-item" allowfullscreen>
+                            class="embed-responsive-item" theme="dark" allowfullscreen>
                     </iframe>
                 </div>
             }
@@ -19,11 +19,12 @@
                     <p class="lead">@(Show.ToGeneralDescription())</p>
                     <div class="row pb-4">
                         <div class="col-md-8 pb-2">
-                            <CountDownTimer ShowTime="@Show.Date!.Value.DateTime" ShowIsStarting="OnShowIsStarting" />
+                            <CountDownTimer ShowTime="@Show.Date!.Value" ShowIsStarting="OnShowIsStarting" />
                         </div>
                         <div class="col-md-4">
                             <span class="text-center pb-2 d-inline-block">
-                                <a class="btn btn-dotnet btn-lg w-100" href="@(Show.AddToGoogleCalendar())" target="_blank" role="button">Add to calendar</a>
+                                <a class="btn btn-dotnet btn-lg w-100" href="@(Show.AddToGoogleCalendar())" target="_blank" role="button">
+                                    <span class="oi oi-plus"></span> &nbsp; Add to calendar</a>
                             </span>
                         </div>
                     </div>

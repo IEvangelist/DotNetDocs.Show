@@ -2,36 +2,44 @@
 @using System.Runtime.InteropServices
 
 <div class="main">
-    <nav class="top-row navbar navbar-dark bg-dark sticky-top px-4">
+    <nav class="navbar navbar-dark bg-dark sticky-top px-4">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="dotnet-bot_head.svg" width="38" height="38" class="d-inline-block align-top" alt=""> &nbsp; The .NET Docs Show
+        </a>
+
         <AuthorizeView>
             <Authorized>
-                <NavLink class="nav-link text-light" href="" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> &nbsp; Home
-                </NavLink>
-                <NavLink class="nav-link text-light" href="checklist">
-                    <span class="oi oi-task" aria-hidden="true"></span> &nbsp; Checklist
-                </NavLink>
-                <NavLink class="nav-link text-light" href="admin">
-                    <span class="oi oi-video" aria-hidden="true"></span> &nbsp; Shows
-                </NavLink>
-                <a class="btn btn-dark" href="AzureAD/Account/SignOut"
-                   role="button" title="@($"Click to sign out \"{context.User.Identity.Name}\"")">
-                    <img src="ms-symbol.png" /> &nbsp; Sign out
-                </a>
+                <div class="d-flex justify-content-center">
+                    <NavLink class="nav-link text-light" href="" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> &nbsp; Home
+                    </NavLink>
+                    <NavLink class="nav-link text-light" href="checklist">
+                        <span class="oi oi-task" aria-hidden="true"></span> &nbsp; Checklist
+                    </NavLink>
+                    <NavLink class="nav-link text-light" href="admin">
+                        <span class="oi oi-video" aria-hidden="true"></span> &nbsp; Shows
+                    </NavLink>
+                    <a class="btn btn-light" href="AzureAD/Account/SignOut"
+                       role="button" title="@($"Click to sign out \"{context.User.Identity.Name}\"")">
+                        <img src="ms-symbol.png" /> &nbsp; Sign out
+                    </a>
+                </div>
             </Authorized>
             <NotAuthorized></NotAuthorized>
         </AuthorizeView>
 
-        <a href="https://www.youtube.com/channel/UCIy_nKrwrd-naf_MPWtXdLA" target="_blank">
-            <svg width="130" height="38">
-                <image xlink:href="youtube-logo.svg" width="130" height="38"></image>
-            </svg>
-        </a>
-        <a href="https://www.twitch.tv/thedotnetdocs" target="_blank">
-            <svg width="114" height="38">
-                <image xlink:href="twitch-logo.svg" width="114" height="38"></image>
-            </svg>
-        </a>
+        <div class="justify-content-end">
+            <a href="https://www.youtube.com/channel/UCIy_nKrwrd-naf_MPWtXdLA" class="pr-2" target="_blank">
+                <svg width="130" height="38">
+                    <image xlink:href="youtube-logo.svg" width="130" height="38"></image>
+                </svg>
+            </a>
+            <a href="https://www.twitch.tv/thedotnetdocs" target="_blank">
+                <svg width="114" height="38">
+                    <image xlink:href="twitch-logo.svg" width="114" height="38"></image>
+                </svg>
+            </a>
+        </div>
     </nav>
 
     <div class="content px-4">

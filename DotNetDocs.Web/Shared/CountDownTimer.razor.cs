@@ -11,7 +11,7 @@ namespace DotNetDocs.Web.Shared
         readonly TimeZoneInfo _centralTimeZone;
 
         [Parameter]
-        public DateTime ShowTime { get; set; }
+        public DateTimeOffset ShowTime { get; set; }
 
         [Parameter]
         public EventCallback<bool> ShowIsStarting { get; set; }
@@ -47,24 +47,35 @@ namespace DotNetDocs.Web.Shared
             TimeRemaining = ShowTime.Subtract(dateTime);
 
             bool alreadyStarted = TimeRemaining.Ticks < 0;
-            if (alreadyStarted && TimeRemaining < TimeSpan.FromHours(1.5))
+            if (alreadyStarted)
             {
-                StopTimerAndUnregisterHandler();
-                Navigation.NavigateTo("/", true);
+                // Show is over
+                if (TimeRemaining >= TimeSpan.FromMinutes(-61))
+                {
+                    StopTimerAndUnregisterHandler();
+                    Navigation.NavigateTo("/", true);
+                }
             }
-            else if (TimeRemaining <= TimeSpan.FromSeconds(90)) // Starts in 90 seconds
+            else
             {
-                ImminentClass = "blinking";
-                await InvokeAsync(() => StateHasChanged());
-            }
-            else if (TimeRemaining <= TimeSpan.FromSeconds(30)) // Starts in 30 seconds
-            {
-                ImminentClass = "";
-                await InvokeAsync(async () => await ShowIsStarting.InvokeAsync(true));
-            }
-            else                                                // Normal count down tick
-            {
-                await InvokeAsync(() => StateHasChanged());
+                if (TimeRemaining <= TimeSpan.FromSeconds(30))
+                {
+                    // Starts in 30 seconds, show embedded Twitch stream
+                    ImminentClass = "";
+                    await InvokeAsync(
+                        async () => await ShowIsStarting.InvokeAsync(true));
+                }
+                else if (TimeRemaining <= TimeSpan.FromSeconds(90))
+                {
+                    // Starts in 90 seconds, start blinking
+                    ImminentClass = "blinking";
+                    await InvokeAsync(() => StateHasChanged());
+                }
+                else
+                {
+                    // Show hasn't started, nor is it imminent, just keep ticking
+                    await InvokeAsync(() => StateHasChanged());
+                }
             }
         }
 
