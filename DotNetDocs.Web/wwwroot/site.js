@@ -10,5 +10,10 @@
         } catch (error) {
             console.error(error);
         }
+    },
+    nudgeTwitter: () => {
+        if (twttr && twttr.widgets) {
+            twttr.widgets.load();
+        }
     }
 };

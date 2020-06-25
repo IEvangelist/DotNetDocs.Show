@@ -1,5 +1,8 @@
 ﻿@using DotNetDocs.Services.Models
 @using DotNetDocs.Web.Extensions
+@using DotNetDocs.Web.Interop 
+
+@inject IJSRuntime JavaScript
 
 <div class="jumbotron" id="@Id">
     <div class="container text-center text-lg-left">
@@ -25,6 +28,10 @@
                             <span class="text-center pb-2 d-inline-block">
                                 <a class="btn btn-dotnet btn-lg w-100" href="@(Show.AddToGoogleCalendar())" target="_blank" role="button">
                                     <span class="oi oi-plus"></span> &nbsp; Add to calendar</a>
+                            </span>
+                            <span>
+                                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large"
+                                   data-text="@TweetText" data-url="https://dotnetdocs.dev/" data-show-count="false">Tweet</a>
                             </span>
                         </div>
                     </div>
@@ -54,6 +61,12 @@
                         .Where(p => p.IsMicrosoftMvp)
                         .Select(p => (tag: p.ToMvpUrl(), color: "badge-mvp")))
                 .ToDictionary(t => t.tag, t => t.color);
+
+    string TweetText =>
+        $"Tune in to The .NET Docs Show: {Show.Title} - {Show.Guests.First().TwitterHandle}, live at {Show.Date!.Value:yyyy-MM-dd hh:mm tt} US/Central\n\n#TheDotNetDocsShow";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) =>
+        await Utilities.NudgeTwitterAsync(JavaScript);
 
     async Task OnShowIsStarting(bool isStarting)
     {
