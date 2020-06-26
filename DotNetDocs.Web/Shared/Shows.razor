@@ -1,9 +1,6 @@
 ﻿@inherits ShowsComponent
 
 @using DotNetDocs.Web.Extensions
-@using Microsoft.AspNetCore.Components
-
-@inject NavigationManager Navigation
 
 @if (Shows == null)
 {
@@ -20,6 +17,7 @@ else
     <table class="table table-hover pt-4">
         <thead class="thead-dark">
             <tr>
+                <th scope="col">Actions</th>
                 <th scope="col">Title</th>
                 <th scope="col">Date</th>
                 <th scope="col">Video URL</th>
@@ -30,7 +28,15 @@ else
         <tbody>
             @foreach (var show in Shows.OrderByDescending(s => s.Date))
             {
-                <tr class="editable" @onclick="(_ => NavigateToShowDetails(show.Id))">
+                <tr class="editable">
+                    <td>
+                        <button class="btn btn-danger" title="Delete" @onclick="(_ => OnConfirmDelete(show))">
+                            <span class="oi oi-trash"></span>
+                        </button>
+                        <button class="btn btn-dotnet" title="Edit" @onclick="(_ => NavigateToShowDetails(show.Id))">
+                            <span class="oi oi-pencil"></span>
+                        </button>
+                    </td>
                     <td>@(show.Title)</td>
                     <td>@($"{show.Date:MMM dd, yyyy}")</td>
                     <td><a href="@(show.Url)" target="_blank">@(show.Url) <span class="oi oi-sm oi-external-link"></span></a></td>
@@ -42,8 +48,24 @@ else
     </table>
 }
 
+@if (_showModal)
+{
+    <div class="modal fade show" style="display:block" aria-modal="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Show?</h4>
+                    <button type="button" class="close" @onclick="@Cancel">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>🤬 Wow... are you serious right now?! Are you sure you want to delete the "@(_show.Title)"?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" @onclick="@Cancel">Cancel</button>
+                    <button type="button" class="btn btn-danger" @onclick=@(async _ => await PerformDelete())>Delete</button>
+                </div>
 
-@code {
-    protected void NavigateToShowDetails(string showId) =>
-        Navigation.NavigateTo($"/admin/show/{showId}");
+            </div>
+        </div>
+    </div>
 }

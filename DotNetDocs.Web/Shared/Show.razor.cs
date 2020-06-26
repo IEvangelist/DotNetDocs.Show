@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DotNetDocs.Services;
 using DotNetDocs.Services.Models;
+using DotNetDocs.Web.Extensions;
 using DotNetDocs.Web.PageModels;
 using DotNetDocs.Web.Workers;
 using Microsoft.AspNetCore.Components;
@@ -44,7 +45,12 @@ namespace DotNetDocs.Web.Shared
             {
                 if (IsCreatingNewShow)
                 {
-                    Show = Mapper?.Map<ShowModel>(new DocsShow())!;
+                    var nxtThrsdy = DateTime.Today.AddDays(1).GetNextWeekday(DayOfWeek.Thursday);
+                    Show = Mapper?.Map<ShowModel>(new DocsShow
+                    {
+                        Date = DateTimeOffset.Parse(
+                            $"{nxtThrsdy.Year}-{nxtThrsdy.Month:00}-{nxtThrsdy.Day:00}T11:00:00-05:00")
+                    })!;
                 }
                 else
                 {
