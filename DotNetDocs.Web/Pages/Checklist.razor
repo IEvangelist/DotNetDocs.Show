@@ -3,45 +3,73 @@
 
 @attribute [AllowAnonymous]
 
-<div class="container">
-    <h2>Hi friend! 👋</h2>
-    <p>Oh 💩, that's right... you at some point have agreed to join the .NET docs live twitch stream and have only just now thought what you'll need to have ready. Please, take a deep breath - it's fine, we're probably looking through the same checklist ourselves. As the 📆 date approaches, take a moment to visit this checklist and use it just before the show. We're very grateful to have you on our show and we're looking forward to it - thank you 🙏.</p>
-    <h2>Come prepared 📋</h2>
-    <p>
-        You will need a headset with a microphone, or a dedicated microphone and headphones. You'll need a webcam, but beyond the immediately obvious - we have a few more things to consider.
-    </p>
-    <ul class="list no-bullets pl-4 pt-1">
-        @foreach (var (id, task) in Tasks)
-        {
-            <TaskItem Id="@id" Task="@task" />
-        }
-    </ul>
-    <h2>Share 💯</h2>
-    <p>
-        Please help share this event with the world! We operate entirely on word-of-mouth and through social media channels such as Twitter, and LinkedIn - use any the following &#35; hash tags and handles.
-    </p>
-    <ul>
-        <li>@("@camsoper".ToTwitterMarkupString()) (Host)</li>
-        <li>@("@scott_addie".ToTwitterMarkupString()) (Host)</li>
-        <li>@("@davidpine7".ToTwitterMarkupString()) (Host)</li>
-        <li>@("@docsmsft".ToTwitterMarkupString())</li>
-        <li>#dotnet</li>
-        <li>#dotnetdocs</li>
-    </ul>
-    <h2>Twitch 📺</h2>
-    <p>
-        We rely on Twitch, and follow thier <a href="https://www.twitch.tv/p/legal/community-guidelines" target="_blank">Twitch.tv - Community Guidelines <span class="oi oi-sm oi-external-link"></span></a>. This is essential to ensuring that our show is inclusive, open, and welcoming to everyone. Our show is based on <a href="https://www.twitch.tv/thedotnetdocs" target="_blank">The .NET docs <span class="oi oi-sm oi-external-link"></span></a> account.
-    </p>
-</div>
+    <div class="container">
+        <h2>Hi friend! 👋</h2>
+        <p>Oh 💩, that's right... you at some point have agreed to join "The .NET Docs Show" live twitch stream and have only just now thought what you'll need to have ready. Please, take a deep breath - it's fine, we're probably looking through the same checklist ourselves. As the 📆 date approaches, take a moment to visit this checklist and use it just before the show. We're very grateful to have you on our show and we're looking forward to it - thank you 🙏.</p>
+        <h2>Come prepared 📋</h2>
+        <p>
+            You will need a headset with a microphone, or a dedicated microphone and headphones. You'll need a webcam, but beyond the immediately obvious - we have a few more things to consider.
+        </p>
+        <ul class="list no-bullets pl-4 pt-1">
+            @foreach (var (id, task) in Tasks)
+            {
+                <TaskItem Id="@id" Task="@task" />
+            }
+        </ul>
+        <h2>Share 💯</h2>
+        <p>
+            Please help share this event with the world! We operate entirely on word-of-mouth and through social media channels such as Twitter, and LinkedIn - use any the following &#35; hash tags and handles.
+        </p>
+        <ul>
+            <li>@("@camsoper".ToTwitterMarkupString()) (Host)</li>
+            <li>@("@scott_addie".ToTwitterMarkupString()) (Host)</li>
+            <li>@("@davidpine7".ToTwitterMarkupString()) (Host)</li>
+            <li>#thedotnetdocsshow</li>
+            <li>#dotnet</li>
+        </ul>
+        <h2>Community Guidelines 📺</h2>
+        We rely on, and re-stream to several platforms. As such, we adhere to their Community Guidelines, and expect our guests to do so as well.
+
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Platform</th>
+                    <th scope="col">Account</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td><a href="https://www.twitch.tv/p/legal/community-guidelines" target="_blank">Twitch.tv - Community Guidelines <span class="oi oi-sm oi-external-link"></span></a></td>
+                    <td><a href="https://www.twitch.tv/thedotnetdocs" target="_blank">The .NET Docs Show on Twitch <span class="oi oi-sm oi-external-link"></span></a></td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td><a href="https://www.youtube.com/howyoutubeworks/policies/community-guidelines/" target="_blank">YouTube - Community Guidelines <span class="oi oi-sm oi-external-link"></span></a></td>
+                    <td><a href="https://www.youtube.com/channel/UCIy_nKrwrd-naf_MPWtXdLA" target="_blank">The .NET Docs Show on YouTube <span class="oi oi-sm oi-external-link"></span></a></td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Code of Conduct</h2>
+        <p>
+            We proudly echo, follow, and actively enforce the .NET Foundation - Code of Conduct, and we expect all guests to do so as well.
+
+            <a href="https://dotnetfoundation.org/about/code-of-conduct" target="_blank">
+                <svg width="259" height="92">
+                    <image xlink:href="dotnet-foundation-horizontal.svg" width="259" height="92"></image>
+                </svg>
+            </a>
+        </p>
+    </div>
 
 @code {
     protected IDictionary<int, MarkupString> Tasks = new Dictionary<int, MarkupString>
     {
-        [1] = new MarkupString("<b>Reboot</b> your machine"),
-        [2] = new MarkupString("Silence (<i>or</i> temporarily disable notifications)"),
-        [3] = new MarkupString("Set status as \"Do not disturb\""),
-        [4] = new MarkupString("Arrive 15 minutes early - 10:45 AM CT 🕥"),
-        [5] = new MarkupString("Download and install <a href='https://www.skype.com/en/get-skype' target='_blank'>Skype <span class='oi oi-sm oi-external-link'></span></a>"),
-        [6] = new MarkupString("Reach out sooner to befriend the <a href='https://join.skype.com/invite/uoXw3Fv3wa3m' target='_blank'>.NET Docs account <span class='oi oi-sm oi-external-link'></span></a>"),
+        [1] = new MarkupString("💻 <b>Reboot</b> your machine"),
+        [2] = new MarkupString("🔕 Silence (<i>or</i> temporarily disable notifications)"),
+        [3] = new MarkupString("💀 Set status as \"Do not disturb\""),
+        [4] = new MarkupString("🕥 Arrive 15 minutes early - 10:45 AM US/Central"),
+        [5] = new MarkupString("Follow the <a href='https://streamyard.com/resources/docs/guest-instructions/' target='_blank'>Guest Instructions <span class='oi oi-sm oi-external-link'></span></a> from Stream<b>Yard</b>.")
     };
 }

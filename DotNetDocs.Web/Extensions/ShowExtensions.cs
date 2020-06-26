@@ -16,6 +16,7 @@ namespace DotNetDocs.Web.Extensions
                 return "TBD";
             }
 
+            // TODO: fix this
             var dateTime = show.Date!.Value.DateTime;
             var timeSpan = DateTime.Now.Subtract(dateTime);
             var dayDiff = (int)timeSpan.TotalDays;
