@@ -36,12 +36,22 @@ namespace DotNetDocs.Web.Shared
         EditContext? _editContext;
         DocsShow? _show;
 
+        bool IsCreatingNewShow => ShowId == "create";
+
         protected override async Task OnInitializedAsync()
         {
             if (ScheduleService != null && !string.IsNullOrWhiteSpace(ShowId))
             {
-                _show = await ScheduleService.GetShowAsync(ShowId);
-                Show = Mapper?.Map<ShowModel>(_show)!;
+                if (IsCreatingNewShow)
+                {
+                    Show = Mapper?.Map<ShowModel>(new DocsShow())!;
+                }
+                else
+                {
+                    _show = await ScheduleService.GetShowAsync(ShowId);
+                    Show = Mapper?.Map<ShowModel>(_show)!;
+                }
+                
                 _editContext = new EditContext(Show);
                 _editContext.OnFieldChanged += OnModelChanged;
             }
@@ -55,17 +65,20 @@ namespace DotNetDocs.Web.Shared
 
         protected async ValueTask SubmitShowUpdatesAsync(EditContext context)
         {
-            if (ScheduleService != null)
+            if (ScheduleService != null && (_show = Mapper?.Map<DocsShow>(Show)) != null)
             {
-                _show = Mapper?.Map<DocsShow>(Show);
-                if (!(_show is null))
+                if (IsCreatingNewShow)
+                {
+                    await ScheduleService.CreateShowAsync(_show);
+                }
+                else
                 {
                     await ScheduleService.UpdateShowAsync(_show);
-
-                    // Update cache
-                    var shows = await ScheduleService.GetAllAsync(DateTime.Now.Date.AddDays(-(20 * 7)));
-                    Cache.Set(CacheKeys.ShowSchedule, shows);
                 }
+
+                // Update cache
+                var shows = await ScheduleService.GetAllAsync(DateTime.Now.Date.AddDays(-(20 * 7)));
+                Cache.Set(CacheKeys.ShowSchedule, shows);
             }
 
             NavigateBack();
