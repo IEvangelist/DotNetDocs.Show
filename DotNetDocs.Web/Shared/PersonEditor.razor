@@ -1,0 +1,51 @@
+﻿@attribute [Authorize]
+@page "/admin/show/{showId}/person/{personEmail}"
+
+
+@if (Person is null)
+{
+    <LoadingIndicator />
+}
+else
+{
+    <EditForm Model="Person" OnValidSubmit="(async context => await SubmitUpdatesAsync(context))">
+        <DataAnnotationsValidator />
+        <ValidationSummary Model="Person" />
+
+        <div class="form-group">
+            <label for="first">First name</label>
+            <InputText id="first" @bind-Value="Person.FirstName" class="form-control form-control-lg" />
+            <ValidationMessage For="() => Person.FirstName" />
+        </div>
+        <div class="form-group">
+            <label for="last">Last name</label>
+            <InputText id="last" @bind-Value="Person.LastName" class="form-control form-control-lg" />
+            <ValidationMessage For="() => Person.LastName" />
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <InputText id="email" @bind-Value="Person.Email" class="form-control form-control-lg" />
+            <ValidationMessage For="() => Person.Email" />
+        </div>
+        <div class="form-group">
+            <label for="twitter">Twitter Handle</label>
+            <InputText id="twitter" @bind-Value="Person.TwitterHandle" class="form-control form-control-lg" />
+            <ValidationMessage For="() => Person.TwitterHandle" />
+        </div>
+        <div class="form-group">
+            <label for="blueBadge">Is blue badge</label>
+            <InputCheckbox id="blueBadge" @bind-Value="Person.IsBlueBadge" class="form-control form-control-lg" />
+            <ValidationMessage For="() => Person.IsBlueBadge" />
+        </div>
+        <div class="form-group">
+            <label for="mvp">MVP ID</label>
+            <InputNumber id="mvp" @bind-Value="Person.MicrosoftMvpId" class="form-control form-control-lg" />
+            <ValidationMessage For="() => Person.MicrosoftMvpId" />
+        </div>
+
+        <button type="button" class="btn btn-lg btn-secondary" @onclick="NavigateBack">Cancel</button>
+        <button type="submit" class="btn btn-lg btn-primary float-right" disabled="@IsFormInvalid">
+            <span class="oi oi-check"></span> &nbsp; Save
+        </button>
+    </EditForm>
+}

@@ -22,7 +22,7 @@ namespace DotNetDocs.Services.Models
 
         public string Title { get; set; } = "The .NET docs show";
 
-        public string Url { get; set; } = null!;
+        public string Url { get; set; } = "https://www.twitch.tv/thedotnetdocs";
 
         public string ShowImage { get; set; } = null!;
 

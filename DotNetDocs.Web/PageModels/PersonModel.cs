@@ -4,16 +4,16 @@ namespace DotNetDocs.Web.PageModels
 {
     public class PersonModel
     {
-        [Required]
+        [Required(ErrorMessage = "A first name is required")]
         public string FirstName { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = "A last name is required")]
         public string LastName { get; set; } = null!;
 
-        [Required, DataType(DataType.EmailAddress), EmailAddress]
+        [Required(ErrorMessage = "A valid email address is required"), DataType(DataType.EmailAddress), EmailAddress]
         public string Email { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = "A valid twitterl handle is required (include @)")]
         public string TwitterHandle { get; set; } = null!;
 
         public bool IsBlueBadge { get; set; }

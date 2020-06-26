@@ -22,18 +22,18 @@ namespace DotNetDocs.Sandbox
                     IScheduleService scheduleService = services.GetService<IScheduleService>();
 
                     #region Add show
-                    var show = new DocsShow
-                    {
-                        Date = DateTimeOffset.Parse("2020-08-20T11:00:00-05:00")
-                    };
+                    //var show = new DocsShow
+                    //{
+                    //    Date = DateTimeOffset.Parse("2020-08-27T11:00:00-05:00")
+                    //};
 
-                    _ = await scheduleService.CreateShowAsync(show);
-                    DocsShow persistedShow = await scheduleService.GetShowAsync(show.Id);
-                    if (!(persistedShow is null))
-                    {
-                        Person guest = persistedShow.Guests.ElementAt(0);
-                        Console.WriteLine($"Added show details for {guest.FirstName} {guest.LastName}, on {persistedShow.Date:MMM dd, yyyy}");
-                    }
+                    //_ = await scheduleService.CreateShowAsync(show);
+                    //DocsShow persistedShow = await scheduleService.GetShowAsync(show.Id);
+                    //if (!(persistedShow is null))
+                    //{
+                    //    Person guest = persistedShow.Guests.ElementAt(0);
+                    //    Console.WriteLine($"Added show details for {guest.FirstName} {guest.LastName}, on {persistedShow.Date:MMM dd, yyyy}");
+                    //}
                     #endregion // end add show
 
                     #region Read shows

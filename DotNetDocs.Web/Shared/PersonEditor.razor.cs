@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DotNetDocs.Services;
@@ -11,7 +13,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace DotNetDocs.Web.Shared
 {
-    public class ShowComponent : ComponentBase
+    public partial class PersonEditor
     {
         [Inject]
         public IMapper? Mapper { get; set; }
@@ -28,22 +30,28 @@ namespace DotNetDocs.Web.Shared
         [Parameter]
         public string? ShowId { get; set; }
 
-        protected string SelectedShowId { get; set; } = null!;
-        protected int SelectedVideoId { get; set; }
+        [Parameter]
+        public string? PersonEmail { get; set; }
+
         protected bool IsFormInvalid { get; set; }
-        protected ShowModel Show { get; set; } = null!;
+        protected PersonModel Person { get; set; } = null!;
 
         EditContext? _editContext;
         DocsShow? _show;
+        Person? _person;
 
         protected override async Task OnInitializedAsync()
         {
             if (ScheduleService != null && !string.IsNullOrWhiteSpace(ShowId))
             {
                 _show = await ScheduleService.GetShowAsync(ShowId);
-                Show = Mapper?.Map<ShowModel>(_show)!;
-                _editContext = new EditContext(Show);
-                _editContext.OnFieldChanged += OnModelChanged;
+                if (_show != null)
+                {
+                    _person = _show.Guests.Concat(_show.Hosts).FirstOrDefault(p => p.Email == PersonEmail);
+                    Person = Mapper?.Map<PersonModel>(_person)!;
+                    _editContext = new EditContext(Person);
+                    _editContext.OnFieldChanged += OnModelChanged;
+                }
             }
         }
 
@@ -53,11 +61,22 @@ namespace DotNetDocs.Web.Shared
             StateHasChanged();
         }
 
-        protected async ValueTask SubmitShowUpdatesAsync(EditContext context)
+        protected async ValueTask SubmitUpdatesAsync(EditContext context)
         {
-            if (ScheduleService != null)
+            if (ScheduleService != null && _show != null)
             {
-                _show = Mapper?.Map<DocsShow>(Show);
+                void UpdateCollection(IEnumerable<Person> people)
+                {
+                    Person? person = people.FirstOrDefault(p => p.Email == PersonEmail);
+                    if (person != null)
+                    {
+                        Mapper?.Map(Person, person);
+                    }
+                }
+
+                UpdateCollection(_show.Hosts);
+                UpdateCollection(_show.Guests);
+
                 if (!(_show is null))
                 {
                     await ScheduleService.UpdateShowAsync(_show);
@@ -71,25 +90,21 @@ namespace DotNetDocs.Web.Shared
             NavigateBack();
         }
 
-        protected void OnSelectShowThumbnail()
+        protected void NavigateBack()
         {
-            SelectedShowId = ShowId!;
-            SelectedVideoId = Show.VideoId!.Value;
+            if (Navigation == null)
+            {
+                return;
+            }
 
-            StateHasChanged();
+            var uri = new Uri(Navigation.Uri);
+
+            // /admin/show/{showId}/person/{personEmail}
+            // We want /admin/show/{showId}
+            IEnumerable<string>? showSegements = uri.Segments.Take(uri.Segments.Length - 2);
+
+            Navigation.NavigateTo(string.Join("", showSegements));
         }
-
-        protected void OnThumbnailChanged(string thumbnailUrl)
-        {
-            Show.ShowImage = thumbnailUrl;
-
-            StateHasChanged();
-        }
-
-        protected void OnEditPerson(string email) =>
-            Navigation?.NavigateTo($"admin/show/{ShowId}/person/{email}");
-
-        protected void NavigateBack() => Navigation?.NavigateTo("admin");
 
         public void Dispose() => _editContext!.OnFieldChanged -= OnModelChanged;
     }
