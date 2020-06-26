@@ -14,6 +14,8 @@ namespace DotNetDocs.Services.Models
 
         public bool IsNew => !IsInFuture && Date.HasValue && (DateTimeOffset.Now - Date.Value).TotalDays <= 14;
 
+        public bool IsPublished { get; set; } = true;
+
         public IEnumerable<Person> Guests { get; set; } = new Person[] { Person.DotNetDocs };
 
         public IEnumerable<Person> Hosts { get; set; } = new Person[] { Person.Cam, Person.Scott, Person.David };

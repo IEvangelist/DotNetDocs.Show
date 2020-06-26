@@ -86,11 +86,12 @@ else
     {
         var now = DateTimeOffset.Now;
         var dailyShowTime = DateTimeOffset.Parse($"{now.Year}-{now.Month:00}-{now.Day:00}T11:00:00-05:00");
-
-        _shows = await Cache.GetOrCreateAsync<IEnumerable<DocsShow>>(
+        var shows = await Cache.GetOrCreateAsync<IEnumerable<DocsShow>>(
             CacheKeys.ShowSchedule,
             async _ =>
             await ScheduleService.GetAllAsync(now.DateTime.AddDays(-(20 * 7))));
+
+        _shows = shows.Where(show => show.IsPublished);
 
         var orderedShows = _shows.OrderByDescending(show => show.Date);
         _pastShows = orderedShows.Where(show => show.Date <= dailyShowTime).Take(12);

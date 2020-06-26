@@ -49,6 +49,8 @@ namespace DotNetDocs.Web.PageModels
 
         public int? VideoId { get; set; }
 
+        public bool IsPublished { get; set; }
+
         public IEnumerable<PersonModel> Guests { get; set; } = null!;
 
         public IEnumerable<PersonModel> Hosts { get; set; } = null!;
