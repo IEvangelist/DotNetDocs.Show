@@ -21,6 +21,9 @@ namespace DotNetDocs.Web.Shared
         public IScheduleService? ScheduleService { get; set; }
 
         [Inject]
+        public LogicAppService? LogicAppService { get; set; }
+
+        [Inject]
         public IMemoryCache? Cache { get; set; }
 
         [Inject]
@@ -73,6 +76,15 @@ namespace DotNetDocs.Web.Shared
         {
             if (ScheduleService != null && (_show = Mapper?.Map<DocsShow>(Show)) != null)
             {
+                if (LogicAppService != null &&
+                    _show.IsPublished &&
+                    _show.IsInFuture &&
+                    _show.IsScheduled &&
+                    !_show.IsCalendarInviteSent)
+                {
+                    _show.IsCalendarInviteSent = await LogicAppService.CreateShowCalendarInviteAsync(_show);
+                }
+
                 if (IsCreatingNewShow)
                 {
                     await ScheduleService.CreateShowAsync(_show);

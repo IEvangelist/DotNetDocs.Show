@@ -49,7 +49,8 @@
         public static readonly Person DotNetDocs = new Person
         {
             FirstName = ".NET",
-            LastName = "Docs"
+            LastName = "Docs",
+            Email = "dotnetdocsshow@microsoft.com"
         };
     }
 }

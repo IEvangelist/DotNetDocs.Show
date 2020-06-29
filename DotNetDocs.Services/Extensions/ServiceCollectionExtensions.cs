@@ -12,9 +12,12 @@ namespace DotNetDocs.Services.Extensions
             IConfiguration configuration)
         {
             services.AddHttpClient<TwitchService>();
+            services.AddHttpClient<LogicAppService>();
+
             return services.AddCosmosDbRepository(configuration)
                            .AddSingleton<IScheduleService, ScheduleService>()
-                           .Configure<TwitchOptions>(configuration.GetSection(nameof(TwitchOptions)));
+                           .Configure<TwitchOptions>(configuration.GetSection(nameof(TwitchOptions)))
+                           .Configure<LogicAppOptions>(configuration.GetSection(nameof(LogicAppOptions)));
         }
     }
 }

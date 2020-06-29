@@ -51,6 +51,11 @@ namespace DotNetDocs.Web.PageModels
 
         public bool IsPublished { get; set; }
 
+        public bool IsCalendarInviteSent { get; set; }
+
+        [Url]
+        public string GuestStreamUrl { get; set; } = null!;
+
         public IEnumerable<PersonModel> Guests { get; set; } = null!;
 
         public IEnumerable<PersonModel> Hosts { get; set; } = null!;

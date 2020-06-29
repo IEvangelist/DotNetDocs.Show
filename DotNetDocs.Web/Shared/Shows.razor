@@ -20,7 +20,8 @@ else
                 <th scope="col">Actions</th>
                 <th scope="col">Title</th>
                 <th scope="col">Date</th>
-                <th scope="col">Video URL</th>
+                <th scope="col">Published</th>
+                <th scope="col">Invite Sent</th>
                 <th scope="col">Guests</th>
                 <th scope="col">Hosts</th>
             </tr>
@@ -28,21 +29,22 @@ else
         <tbody>
             @foreach (var show in Shows.OrderByDescending(s => s.Date))
             {
-                <tr class="editable">
-                    <td>
-                        <button class="btn btn-danger" title="Delete" @onclick="(_ => OnConfirmDelete(show))">
-                            <span class="oi oi-trash"></span>
-                        </button>
-                        <button class="btn btn-dotnet" title="Edit" @onclick="(_ => NavigateToShowDetails(show.Id))">
-                            <span class="oi oi-pencil"></span>
-                        </button>
-                    </td>
-                    <td>@(show.Title)</td>
-                    <td>@($"{show.Date:MMM dd, yyyy}")</td>
-                    <td><a href="@(show.Url)" target="_blank">@(show.Url) <span class="oi oi-sm oi-external-link"></span></a></td>
-                    <td>@(show.Guests.ToCommaSeparatedString(false))</td>
-                    <td>@(show.Hosts.ToCommaSeparatedString(false))</td>
-                </tr>
+            <tr class="editable">
+                <td>
+                    <button class="btn btn-danger" title="Delete" @onclick="(_ => OnConfirmDelete(show))">
+                        <span class="oi oi-trash"></span>
+                    </button>
+                    <button class="btn btn-dotnet" title="Edit" @onclick="(_ => NavigateToShowDetails(show.Id))">
+                        <span class="oi oi-pencil"></span>
+                    </button>
+                </td>
+                <td>@(show.Title)</td>
+                <td>@($"{show.Date:MMM dd, yyyy}")</td>
+                <td><input type="checkbox" disabled @bind="show.IsPublished" class="form-control" /></td>
+                <td><input type="checkbox" disabled @bind="show.IsCalendarInviteSent" class="form-control" /></td>
+                <td>@(show.Guests.ToCommaSeparatedString(false))</td>
+                <td>@(show.Hosts.ToCommaSeparatedString(false))</td>
+            </tr>
             }
         </tbody>
     </table>
