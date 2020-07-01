@@ -16,7 +16,7 @@
     </div>
     <div class="card-footer">
         <button class="btn btn-sm btn-dotnet float-right"
-                @onclick='@(_ => Navigation.NavigateTo($"/request/{ShowDateTime:M-d-yyyy}"))'>Request</button>
+                @onclick='@(_ => Navigation.NavigateTo($"/request/{ShowDateTime.Month.ToString("X").ToLower()}-{ShowDateTime.Day.ToString("X").ToLower()}-{ShowDateTime.Year.ToString("X").ToLower()}"))'>Request</button>
     </div>
 </div>
 @if (IsDivisableBy(1))

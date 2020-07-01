@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using DotNetDocs.Services;
@@ -37,7 +38,7 @@ namespace DotNetDocs.Web.Shared
         {
             if (DateTimeService != null && !string.IsNullOrWhiteSpace(ShowDate))
             {
-                int[]? parts = ShowDate.Split("-").Select(str => int.Parse(str)).ToArray();
+                int[]? parts = ShowDate.Split("-").Select(str => int.Parse(str, NumberStyles.HexNumber)).ToArray();
                 (int month, int day, int year) = (parts[0], parts[1], parts[2]);
                 RequestShow = new RequestModel
                 {
