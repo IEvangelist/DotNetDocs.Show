@@ -57,22 +57,19 @@ namespace DotNetDocs.Web.Pages
             var scheduledShows = futureShows.SkipLast(1);
             const int nearestOfMultiple = 4;
             var count = scheduledShows.Count();
-            
+
             if (Features?.CurrentValue?.InterleaveShowGaps ?? false)
             {
-                if (count % nearestOfMultiple != 0)
-                {
-                    _futureShows =
-                        scheduledShows.InterleaveWithAdaptor(
-                            show => show.Date!.Value,
-                            date => date,
-                            TimeSpan.FromDays(7),
-                            nearestOfMultiple)
-                        .OrderByDescending(showOrDate =>
-                            showOrDate is DocsShow show ? show.Date!.Value : (DateTimeOffset)showOrDate);
+                _futureShows =
+                    scheduledShows.InterleaveWithAdaptor(
+                        show => show.Date!.Value,
+                        date => date,
+                        TimeSpan.FromDays(7),
+                        nearestOfMultiple)
+                    .OrderByDescending(showOrDate =>
+                        showOrDate is DocsShow show ? show.Date!.Value : (DateTimeOffset)showOrDate);
 
-                    return;
-                }
+                return;
             }
 
             (int remainder, int nearest) = count.RoundUpToNearest(nearestOfMultiple);
