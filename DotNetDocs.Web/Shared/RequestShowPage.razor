@@ -42,13 +42,13 @@
             <div class="row">
                 <div class="col">
                     <label for="email">Email</label>
-                    <InputText id="email" @bind-Value="RequestShow.Email" class="form-control form-control-lg" />
+                    <InputText id="email" @bind-Value="RequestShow.Email" class="form-control" />
                     <ValidationMessage For="() => RequestShow.Email" />
                 </div>
                 <div class="col">
                     <label for="thumb">Twitter Handle</label>
                     <div class="input-group">
-                        <InputText id="twitter" @bind-Value="RequestShow.TwitterHandle" class="form-control form-control-lg" />
+                        <InputText id="twitter" @bind-Value="RequestShow.TwitterHandle" class="form-control" />
                         <div class="input-group-append">
                             @{
                                 var first = RequestShow.FirstName;
