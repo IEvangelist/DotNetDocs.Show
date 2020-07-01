@@ -1,9 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DotNetDocs.Web.PageModels
 {
-    public class PersonModel
+    public class RequestModel
     {
+        [Required, DataType(DataType.Date)]
+        public DateTimeOffset ShowDate { get; set; }
+
+        public string TentativeTitle { get; set; } = null!;
+
+        [Required(ErrorMessage = "You're pitching a show idea, you need to provide something.")]
+        public string Idea { get; set; } = null!;
+
         [Required(ErrorMessage = "A first name is required")]
         public string FirstName { get; set; } = null!;
 
@@ -15,9 +24,5 @@ namespace DotNetDocs.Web.PageModels
 
         [Required(ErrorMessage = "A valid twitter handle is required (include @)")]
         public string TwitterHandle { get; set; } = null!;
-
-        public bool IsBlueBadge { get; set; }
-
-        public int? MicrosoftMvpId { get; set; } = null;
     }
 }

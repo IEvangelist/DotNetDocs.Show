@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using DotNetDocs.Web.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 

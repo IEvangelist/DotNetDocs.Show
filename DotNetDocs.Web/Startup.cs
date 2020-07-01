@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Net.Mime;
+using Blazing.ReCaptcha.Extensions;
 using DotNetDocs.Services.Extensions;
 using DotNetDocs.Web.Extensions;
 using DotNetDocs.Web.Workers;
@@ -47,7 +48,8 @@ namespace DotNetDocs.Web
                     new[] { MediaTypeNames.Application.Octet }));
             services.AddDotNetDocsShowServices(_configuration);
             services.AddHostedService<ScheduleWorker>();
-            services.AddAutoMapper();
+            services.AddAutoMapper(_configuration);
+            services.AddBlazorRecaptcha(_configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

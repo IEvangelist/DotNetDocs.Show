@@ -16,6 +16,7 @@ namespace DotNetDocs.Services.Extensions
 
             return services.AddCosmosDbRepository(configuration)
                            .AddSingleton<IScheduleService, ScheduleService>()
+                           .AddSingleton<DateTimeService>()
                            .Configure<TwitchOptions>(configuration.GetSection(nameof(TwitchOptions)))
                            .Configure<LogicAppOptions>(configuration.GetSection(nameof(LogicAppOptions)));
         }

@@ -132,6 +132,7 @@ a.nav-link.text-light.active {
 }
 
 input[type=radio]:not(:disabled):hover,
+input[type=date]:not(:disabled):hover,
 input[type=checkbox]:not(:disabled):hover,
 input[type=file]:not(:disabled):hover,
 input[type=color]:not(:disabled):hover,

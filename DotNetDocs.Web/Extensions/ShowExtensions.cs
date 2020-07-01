@@ -17,8 +17,8 @@ namespace DotNetDocs.Web.Extensions
             }
 
             // TODO: fix this
-            var dateTime = show.Date!.Value.DateTime;
-            var timeSpan = DateTime.Now.Subtract(dateTime);
+            var dateTime = show.Date!.Value;
+            var timeSpan = DateTimeOffset.Now.Subtract(dateTime);
             var dayDiff = (int)timeSpan.TotalDays;
             var secDiff = (int)timeSpan.TotalSeconds;
 
@@ -27,7 +27,7 @@ namespace DotNetDocs.Web.Extensions
                 return $"{dateTime:MMM dd, yyyy}";
             }
 
-            static string CalculateDayString(DateTime dateTime, int days, int seconds) => days switch
+            static string CalculateDayString(DateTimeOffset dateTime, int days, int seconds) => days switch
             {
                 0 => CalculateSecString(dateTime, seconds),
                 1 => "Yesterday",
@@ -36,7 +36,7 @@ namespace DotNetDocs.Web.Extensions
                 _ => $"{dateTime:MMM dd, yyyy}"
             };
 
-            static string CalculateSecString(DateTime dateTime, int seconds) => seconds switch
+            static string CalculateSecString(DateTimeOffset dateTime, int seconds) => seconds switch
             {
                 _ when (0..60).IsInRange(seconds) => "Just now",
                 _ when (61..120).IsInRange(seconds) => "1 minute ago",

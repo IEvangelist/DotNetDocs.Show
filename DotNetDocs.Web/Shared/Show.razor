@@ -9,81 +9,95 @@
 }
 else
 {
-<EditForm Model="Show" OnValidSubmit="(async context => await SubmitShowUpdatesAsync(context))">
-    <DataAnnotationsValidator />
-    <ValidationSummary Model="Show" />
+<div class="container">
+    <EditForm Model="Show" OnValidSubmit="(async context => await SubmitShowUpdatesAsync(context))">
+        <DataAnnotationsValidator />
+        <ValidationSummary Model="Show" />
 
-    <div class="form-group">
-        <label for="title">Title</label>
-        <InputText id="title" @bind-Value="Show.Title" class="form-control form-control-lg" />
-        <ValidationMessage For="() => Show.Title" />
-    </div>
-    <div class="form-group">
-        <label for="date">Date</label>
-        <InputText id="date" @bind-Value="Show.DateString"
-                   placeholder="YYYY-MM-DDTHH:mm:ss US/Central (-05)"
-                   class="form-control form-control-lg" />
-        <ValidationMessage For="() => Show.DateString" />
-    </div>
-    <div class="form-group">
-        <label for="url">Published</label>
-        <InputCheckbox id="url" @bind-Value="Show.IsPublished" class="form-control form-control-lg" />
-        <ValidationMessage For="() => Show.IsPublished" />
-    </div>
-    <div class="form-group">
-        <label for="url">Guest Stream URL</label>
-        <InputText id="url" @bind-Value="Show.GuestStreamUrl" class="form-control form-control-lg" />
-        <ValidationMessage For="() => Show.GuestStreamUrl" />
-    </div>
-    <div class="form-group">
-        <label for="url">Calendar invite sent</label>
-        <InputCheckbox id="url" @bind-Value="Show.IsCalendarInviteSent" title="This is set automatically" disabled class="form-control form-control-lg" />
-        <ValidationMessage For="() => Show.IsCalendarInviteSent" />
-    </div>
-    <div class="form-group">
-        <label for="url">URL</label>
-        <InputText id="url" @bind-Value="Show.Url" class="form-control form-control-lg" />
-        <ValidationMessage For="() => Show.Url" />
-    </div>
-    <div class="form-group">
-        <label for="thumb">Thumbnail image</label>
-        <div class="input-group">
-            <InputText id="thumb" @bind-Value="Show.ShowImage" class="form-control form-control-lg" />
-            <div class="input-group-append">
-                @{
+        <div class="form-group">
+            <label for="title">Title</label>
+            <InputText id="title" @bind-Value="Show.Title" class="form-control" />
+            <ValidationMessage For="() => Show.Title" />
+        </div>
+        <div class="form-group">
+            <label for="date">Date</label>
+            <InputText id="date" @bind-Value="Show.DateString"
+                       placeholder="YYYY-MM-DDTHH:mm:ss US/Central (-05)"
+                       class="form-control" />
+            <ValidationMessage For="() => Show.DateString" />
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col">
+                    <label for="url">Guest Stream URL</label>
+                    <InputText id="url" @bind-Value="Show.GuestStreamUrl" class="form-control" />
+                    <ValidationMessage For="() => Show.GuestStreamUrl" />
+                </div>
+                <div class="col">
+                    <label for="url">URL</label>
+                    <InputText id="url" @bind-Value="Show.Url" class="form-control" />
+                    <ValidationMessage For="() => Show.Url" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="thumb">Thumbnail image</label>
+            <div class="input-group">
+                <InputText id="thumb" @bind-Value="Show.ShowImage" class="form-control" />
+                <div class="input-group-append">
+                    @{
                     var showId = Show.VideoId;
                     var isDisabled = !showId.HasValue;
-                }
-                <input type="button" value="Select Thumbnail" class="btn btn-secondary" data-toggle="modal" data-target="#thumbnailModal"
-                       disabled="@(!Show.VideoId.HasValue)" @onclick="@(_ => OnSelectShowThumbnail())">
+                    }
+                    <input type="button" value="Select Thumbnail" class="btn btn-secondary" data-toggle="modal" data-target="#thumbnailModal"
+                           disabled="@(!Show.VideoId.HasValue)" @onclick="@(_ => OnSelectShowThumbnail())">
+                </div>
+                <ValidationMessage For="() => Show.ShowImage" />
             </div>
-            <ValidationMessage For="() => Show.ShowImage" />
         </div>
-    </div>
-    <div class="form-group">
-        <label>Hosts</label>
-        <br>
-        @foreach (var host in Show.Hosts)
-        {
-            <input type="button" value="@($"{host.FirstName} {host.LastName}")" class="btn btn-lg btn-dotnet"
-                   @onclick="@(_ => OnEditPerson(host.Email))">
-        }
-    </div>
-    <div class="form-group">
-        <label>Guests</label>
-        <br>
-        @foreach (var guest in Show.Guests)
-        {
-            <input type="button" value="@($"{guest.FirstName} {guest.LastName}")" class="btn btn-lg btn-info"
-                   @onclick="@(_ => OnEditPerson(guest.Email))">
-        }
-    </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col">
+                    <label>Hosts</label>
+                    <br>
+                    @foreach (var host in Show.Hosts)
+                    {
+                    <input type="button" value="@($"{host.FirstName} {host.LastName}")" class="btn btn-lg btn-dotnet"
+                           @onclick="@(_ => OnEditPerson(host.Email))">
+                    }
+                </div>
+                <div class="col">
+                    <label>Guests</label>
+                    <br>
+                    @foreach (var guest in Show.Guests)
+                    {
+                    <input type="button" value="@($"{guest.FirstName} {guest.LastName}")" class="btn btn-lg btn-info"
+                           @onclick="@(_ => OnEditPerson(guest.Email))">
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col">
+                    <label for="url">Published</label>
+                    <InputCheckbox id="url" @bind-Value="Show.IsPublished" class="form-control" />
+                    <ValidationMessage For="() => Show.IsPublished" />
+                </div>
+                <div class="col">
+                    <label for="url">Calendar invite sent</label>
+                    <InputCheckbox id="url" @bind-Value="Show.IsCalendarInviteSent" title="This is set automatically" disabled class="form-control" />
+                    <ValidationMessage For="() => Show.IsCalendarInviteSent" />
+                </div>
+            </div>
+        </div>
 
-    <button type="button" class="btn btn-lg btn-secondary" @onclick="NavigateBack">Cancel</button>
-    <button type="submit" class="btn btn-lg btn-primary float-right" disabled="@IsFormInvalid">
-        <span class="oi oi-check"></span> &nbsp; Save
-    </button>
-</EditForm>
+        <button type="button" class="btn btn-lg btn-secondary" @onclick="NavigateBack">Cancel</button>
+        <button type="submit" class="btn btn-lg btn-dotnet float-right" disabled="@IsFormInvalid">
+            <span class="oi oi-check"></span> &nbsp; Save
+        </button>
+    </EditForm>
+</div>
 }
 
 <div class="modal fade" id="thumbnailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

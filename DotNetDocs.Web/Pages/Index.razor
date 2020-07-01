@@ -1,17 +1,7 @@
 ﻿@page "/"
 
-@attribute [AllowAnonymous]
-
-@using DotNetDocs.Services
 @using DotNetDocs.Services.Models
-@using DotNetDocs.Web.Interop
-@using DotNetDocs.Web.Shared
-@using DotNetDocs.Web.Workers
-@using Microsoft.Extensions.Caching.Memory
-
-@inject IMemoryCache Cache
-@inject IScheduleService ScheduleService
-@inject IJSRuntime JavaScript
+@attribute [AllowAnonymous]
 
 @if (_shows == null)
 {
@@ -32,7 +22,7 @@ else
     <h3 class="text-center">
         <small class="text-muted">Thursdays @@ 11:00 AM (US/Central)</small>
     </h3>
-    if (_futureShows.Any())
+    if (_futureShows?.Any() ?? false)
     {
         <div class="text-center pb-4">
             <button class="btn btn-lg btn-dotnet" type="button" data-toggle="collapse" data-target="#collapsable" aria-expanded="false" aria-controls="collapseExample">
@@ -41,9 +31,16 @@ else
         </div>
         <div class="collapse" id="collapsable">
             <div class="card-deck">
-                @foreach (var (show, index) in _futureShows.Select((show, index) => (show, index)))
+                @foreach (var (obj, index) in _futureShows.Select((obj, index) => (obj, index)))
                 {
-                    <ShowDetails Show="show" Index="index" />
+                    if (obj is DocsShow show)
+                    {
+                        <ShowDetails Show="show" Index="index" />
+                    }
+                    else if (obj is DateTimeOffset showDate)
+                    {
+                        <UnscheduledShowDetails ShowDateTime="@showDate" Index="index" />
+                    }
                 }
             </div>
         </div>
@@ -69,36 +66,5 @@ else
                 <span class="oi oi-thumb-up"></span> &nbsp; All Episodes
             </a>
         </div>
-    }
-}
-
-@code {
-    const string NextShowElementId = "next-show";
-
-    private IEnumerable<DocsShow> _shows = null!;
-    private IEnumerable<DocsShow> _pastShows = null!;
-    private IEnumerable<DocsShow> _futureShows = null!;
-
-    private bool _hasMoreShows;
-    private DocsShow _nextShow = null!;
-
-    protected override async Task OnInitializedAsync()
-    {
-        var now = DateTimeOffset.Now;
-        var dailyShowTime = DateTimeOffset.Parse($"{now.Year}-{now.Month:00}-{now.Day:00}T11:00:00-05:00");
-        var shows = await Cache.GetOrCreateAsync<IEnumerable<DocsShow>>(
-            CacheKeys.ShowSchedule,
-            async _ =>
-            await ScheduleService.GetAllAsync(now.DateTime.AddDays(-(20 * 7))));
-
-        _shows = shows.Where(show => show.IsPublished);
-
-        var orderedShows = _shows.OrderByDescending(show => show.Date);
-        _pastShows = orderedShows.Where(show => show.Date <= dailyShowTime).Take(12);
-        _hasMoreShows = orderedShows.Count() > _pastShows.Count();
-
-        var futureShows = orderedShows.Where(show => show.Date > dailyShowTime).ToList();
-        _nextShow = futureShows.TakeLast(1).SingleOrDefault();
-        _futureShows = futureShows.SkipLast(1);
     }
 }

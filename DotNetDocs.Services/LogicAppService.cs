@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -42,6 +41,39 @@ namespace DotNetDocs.Services
                 using var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage? response = await _client.PostAsync(_settings.PostCalendarUrl, content);
+                if (response != null)
+                {
+                    response.EnsureSuccessStatusCode();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return false;
+        }
+
+        public async ValueTask<bool> RequestShowAsync(
+            DateTimeOffset showDate,
+            string tentativeTitle,
+            string idea,
+            string firstName,
+            string lastName,
+            string email,
+            string twitterHandle)
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(new
+                {
+                    showDate, tentativeTitle, idea, firstName, lastName, email, twitterHandle
+                });
+
+                using var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage? response = await _client.PostAsync(_settings.PostShowRequestUrl, content);
                 if (response != null)
                 {
                     response.EnsureSuccessStatusCode();
