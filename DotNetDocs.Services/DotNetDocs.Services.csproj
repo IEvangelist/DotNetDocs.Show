@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DotNetDocs.Extensions\DotNetDocs.Extensions.csproj" />
     <ProjectReference Include="..\DotNetDocs.Repository\DotNetDocs.Repository.csproj" />
   </ItemGroup>
 

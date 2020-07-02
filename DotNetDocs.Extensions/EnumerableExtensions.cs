@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DotNetDocs.Web.Extensions
+namespace DotNetDocs.Extensions
 {
     public static class EnumerableExtensions
     {
@@ -11,17 +11,17 @@ namespace DotNetDocs.Web.Extensions
         public static T RandomElement<T>(IReadOnlyList<T> array) =>
             array[s_random.Next(array.Count)];
 
-        public static IEnumerable<object> InterleaveWithAdaptor<T>(
+        public static IEnumerable<T> InterleaveWithAdaptor<T>(
             this IEnumerable<T> source,
             Func<T, DateTimeOffset> dateSelector,
-            Func<DateTimeOffset, object> adaptSelector,
+            Func<DateTimeOffset, T> adaptSelector,
             TimeSpan expectedGap,
             int? nearestOfMultiple = null)
         {
             DateTimeOffset previousDate = default;
             TimeSpan difference = default;
 
-            var results = new List<object>();
+            var results = new List<T>();
             foreach ((T value, int index) in
                 source.OrderBy(value => dateSelector(value)).Select((value, index) => (value, index)))
             {

@@ -1,5 +1,5 @@
 ﻿using Xunit;
-using DotNetDocs.Web.Extensions;
+using DotNetDocs.Extensions;
 using System;
 using System.Runtime.InteropServices;
 using System.Linq;

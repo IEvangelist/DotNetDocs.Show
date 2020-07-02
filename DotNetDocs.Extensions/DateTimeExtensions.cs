@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DotNetDocs.Web.Extensions
+namespace DotNetDocs.Extensions
 {
     public static class DateTimeExtensions
     {

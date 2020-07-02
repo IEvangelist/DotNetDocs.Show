@@ -31,15 +31,15 @@ else
         </div>
         <div class="collapse" id="collapsable">
             <div class="card-deck">
-                @foreach (var (obj, index) in _futureShows.Select((obj, index) => (obj, index)))
+                @foreach (var (show, index) in _futureShows.Select((show, index) => (show, index)))
                 {
-                    if (obj is DocsShow show)
+                    if (show.IsPlaceholder)
+                    {
+                        <UnscheduledShowDetails ShowDateTime="@show.Date!.Value" Index="index" />
+                    }
+                    else
                     {
                         <ShowDetails Show="show" Index="index" />
-                    }
-                    else if (obj is DateTimeOffset showDate)
-                    {
-                        <UnscheduledShowDetails ShowDateTime="@showDate" Index="index" />
                     }
                 }
             </div>
@@ -58,20 +58,15 @@ else
             }
         </div>
     }
-    if (_hasMoreShows)
-    {
-        <div class="text-center pb-4">
-            <a class="btn btn-lg btn-dotnet" href="https://www.youtube.com/channel/UCIy_nKrwrd-naf_MPWtXdLA"
-               role="button" target="_blank" rel="nofollow noreferrer">
-                <span class="oi oi-thumb-up"></span> &nbsp; All Episodes
-            </a>
-        </div>
-    }
+
+    <div class="text-center pb-4">
+        <a class="btn btn-lg btn-dotnet" href="https://www.youtube.com/channel/UCIy_nKrwrd-naf_MPWtXdLA"
+           role="button" target="_blank" rel="nofollow noreferrer">
+            <span class="oi oi-thumb-up"></span> &nbsp; All Episodes
+        </a>
+    </div>
 }
 
-<div id="index-now-debug" class="d-none">
-    @($"{_now:MMM dd yyy hh:mm:ss zzzz}")
-</div>
 <div id="index-datetime-debug" class="d-none">
-    @(DateTimeDebug.Value)
+    @(_dateTimeDebug.Value)
 </div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Encodings.Web;
+using DotNetDocs.Extensions;
 using DotNetDocs.Services.Models;
 using Microsoft.AspNetCore.Components;
 
@@ -48,9 +49,6 @@ namespace DotNetDocs.Web.Extensions
 
             return CalculateDayString(dateTime, dayDiff, secDiff);
         }
-
-        public static bool IsInRange(this Range range, int value) =>
-            value >= range.Start.Value && value <= range.End.Value;
 
         public static string AddToGoogleCalendar(this DocsShow show)
         {

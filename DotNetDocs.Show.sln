@@ -18,7 +18,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetDocs.Web", "DotNetDoc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetDocs.Web.Tests", "DotNetDocs.Web.Tests\DotNetDocs.Web.Tests.csproj", "{DCA0594A-00CA-434A-954D-5FB90FDDA4AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazing.ReCaptcha", "Blazing.ReCaptcha\Blazing.ReCaptcha.csproj", "{53339DB0-7736-43A1-BCE5-992F1002E6F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazing.ReCaptcha", "Blazing.ReCaptcha\Blazing.ReCaptcha.csproj", "{53339DB0-7736-43A1-BCE5-992F1002E6F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetDocs.Extensions", "DotNetDocs.Extensions\DotNetDocs.Extensions.csproj", "{1BE0E62D-3F94-45DC-B326-0CF18AD11BD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +48,10 @@ Global
 		{53339DB0-7736-43A1-BCE5-992F1002E6F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53339DB0-7736-43A1-BCE5-992F1002E6F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53339DB0-7736-43A1-BCE5-992F1002E6F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BE0E62D-3F94-45DC-B326-0CF18AD11BD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BE0E62D-3F94-45DC-B326-0CF18AD11BD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BE0E62D-3F94-45DC-B326-0CF18AD11BD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BE0E62D-3F94-45DC-B326-0CF18AD11BD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

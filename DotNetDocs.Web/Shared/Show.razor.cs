@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DotNetDocs.Services;
 using DotNetDocs.Services.Models;
-using DotNetDocs.Web.Extensions;
+using DotNetDocs.Extensions;
 using DotNetDocs.Web.PageModels;
 using DotNetDocs.Web.Workers;
 using Microsoft.AspNetCore.Components;

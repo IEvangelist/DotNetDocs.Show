@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Blazing.ReCaptcha\Blazing.ReCaptcha.csproj" />
+    <ProjectReference Include="..\DotNetDocs.Extensions\DotNetDocs.Extensions.csproj" />
     <ProjectReference Include="..\DotNetDocs.Services\DotNetDocs.Services.csproj" />
   </ItemGroup>
 

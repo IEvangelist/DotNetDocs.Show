@@ -1,4 +1,4 @@
-﻿namespace DotNetDocs.Web.Extensions
+﻿namespace DotNetDocs.Extensions
 {
     public static class NumberExtensions
     {

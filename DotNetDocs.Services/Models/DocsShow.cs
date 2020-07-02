@@ -8,6 +8,8 @@ namespace DotNetDocs.Services.Models
     {
         public DateTimeOffset? Date { get; set; }
 
+        public bool IsPlaceholder { get; }
+
         public bool IsScheduled => Date.HasValue;
 
         public bool IsInFuture => Date > DateTimeOffset.Now;
@@ -33,5 +35,13 @@ namespace DotNetDocs.Services.Models
         public string ShowImage { get; set; } = null!;
 
         public int? VideoId => this.GetVideoId();
+
+        public DocsShow() { }
+
+        private DocsShow(DateTimeOffset showDate) =>
+            (IsPlaceholder, Date) = (true, showDate);
+
+        public static DocsShow CreatePlaceholder(DateTimeOffset showDate) =>
+            new DocsShow(showDate);
     }
 }

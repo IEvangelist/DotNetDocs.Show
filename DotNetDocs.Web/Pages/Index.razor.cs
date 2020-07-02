@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using DotNetDocs.Services;
 using DotNetDocs.Services.Models;
-using DotNetDocs.Web.Extensions;
 using DotNetDocs.Web.Options;
 using DotNetDocs.Web.Workers;
 using Microsoft.AspNetCore.Components;
@@ -32,17 +31,17 @@ namespace DotNetDocs.Web.Pages
         [Inject]
         public IOptionsMonitor<FeatureOptions>? Features { get; set; }
 
-        const string NextShowElementId = "next-show";
+        const string? NextShowElementId = "next-show";
 
-        private IEnumerable<DocsShow> _shows = null!;
-        private IEnumerable<DocsShow> _pastShows = null!;
-        private IEnumerable<object> _futureShows = null!;
+        private SegmentedShows? _segmentedShows;
 
-        private bool _hasMoreShows;
-        private DocsShow _nextShow = null!;
-        private DateTime _now;
+        private IEnumerable<DocsShow>? _shows;
+        private IEnumerable<DocsShow>? _pastShows;
+        private IEnumerable<DocsShow>? _futureShows;
 
-        private readonly Lazy<MarkupString> DateTimeDebug = new Lazy<MarkupString>(() =>
+        private DocsShow? _nextShow;
+
+        private readonly Lazy<MarkupString> _dateTimeDebug = new Lazy<MarkupString>(() =>
         {
             var builder = new StringBuilder();
             builder.AppendLine($"TimeZoneInfo.Local: {TimeZoneInfo.Local}");
@@ -56,47 +55,22 @@ namespace DotNetDocs.Web.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            _now =
-                TimeZoneInfo.ConvertTime(DateTime.Now, DateTimeService.CentralTimeZone);
-            var dailyShowTime =
-                DateTimeOffset.Parse($"{_now.Year}-{_now.Month:00}-{_now.Day:00}T11:00:01-05:00");
-            //new DateTimeOffset(
-            //    _now.Year, _now.Month, _now.Day, 11, 0, 0,
-            //    DateTimeService.CentralTimeZone.BaseUtcOffset);
-
+            var now = DateTime.Now;
             var shows = await Cache.GetOrCreateAsync(
                 CacheKeys.ShowSchedule,
                 async _ =>
-                await ScheduleService!.GetAllAsync(_now.AddDays(-(20 * 7))));
+                await ScheduleService!.GetAllAsync(now.AddDays(-(20 * 7))));
 
             _shows = shows.Where(show => show.IsPublished);
 
-            var orderedShows = _shows.OrderByDescending(show => show.Date);
-            _pastShows = orderedShows.Where(show => show.Date <= dailyShowTime).Take(12);
-            _hasMoreShows = orderedShows.Count() > _pastShows.Count();
+            _segmentedShows = DateTimeService.GetSegmentedShows(
+                _shows,
+                now,
+                Features?.CurrentValue?.InterleaveShowGaps);
 
-            var futureShows = orderedShows.Where(show => show.Date > dailyShowTime);
-            _nextShow = futureShows.TakeLast(1).SingleOrDefault();
-            var scheduledShows = futureShows.SkipLast(1);
-            const int nearestOfMultiple = 4;
-            var count = scheduledShows.Count();
-
-            if (Features?.CurrentValue?.InterleaveShowGaps ?? false)
-            {
-                _futureShows =
-                    scheduledShows.InterleaveWithAdaptor(
-                        show => show.Date!.Value,
-                        date => date,
-                        TimeSpan.FromDays(7),
-                        nearestOfMultiple)
-                    .OrderByDescending(showOrDate =>
-                        showOrDate is DocsShow show ? show.Date!.Value : (DateTimeOffset)showOrDate);
-
-                return;
-            }
-
-            (int remainder, int nearest) = count.RoundUpToNearest(nearestOfMultiple);
-            _futureShows = scheduledShows.Take(Math.Max(4, remainder == 0 ? nearest : nearest - 4));
+            _pastShows = _segmentedShows.PastShows;
+            _nextShow = _segmentedShows.NextShow;
+            _futureShows = _segmentedShows.FutureShows;
         }
     }
 }
