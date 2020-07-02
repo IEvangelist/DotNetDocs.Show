@@ -46,9 +46,10 @@ namespace DotNetDocs.Web.Pages
             _now =
                 TimeZoneInfo.ConvertTime(DateTime.Now, DateTimeService.CentralTimeZone);
             var dailyShowTime =
-                new DateTimeOffset(
-                    _now.Year, _now.Month, _now.Day, 11, 0, 0,
-                    DateTimeService.CentralTimeZone.BaseUtcOffset);
+                DateTimeOffset.Parse($"{_now.Year}-{_now.Month:00}-{_now.Day:00}T11:00:00-05:00");
+            //new DateTimeOffset(
+            //    _now.Year, _now.Month, _now.Day, 11, 0, 0,
+            //    DateTimeService.CentralTimeZone.BaseUtcOffset);
 
             var shows = await Cache.GetOrCreateAsync(
                 CacheKeys.ShowSchedule,
@@ -58,10 +59,10 @@ namespace DotNetDocs.Web.Pages
             _shows = shows.Where(show => show.IsPublished);
 
             var orderedShows = _shows.OrderByDescending(show => show.Date);
-            _pastShows = orderedShows.Where(show => show.Date <= dailyShowTime).Take(12);
+            _pastShows = orderedShows.Where(show => show.Date < dailyShowTime).Take(12);
             _hasMoreShows = orderedShows.Count() > _pastShows.Count();
 
-            var futureShows = orderedShows.Where(show => show.Date > dailyShowTime);
+            var futureShows = orderedShows.Where(show => show.Date >= dailyShowTime);
             _nextShow = futureShows.TakeLast(1).SingleOrDefault();
             var scheduledShows = futureShows.SkipLast(1);
             const int nearestOfMultiple = 4;
