@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Timers;
 using DotNetDocs.Services;
 using Microsoft.AspNetCore.Components;
@@ -8,7 +7,7 @@ namespace DotNetDocs.Web.Shared
 {
     public class CountDownTimerComponent : ComponentBase, IDisposable
     {
-        static readonly TimeSpan ShowDuration = TimeSpan.FromHours(1).Duration();
+        static readonly TimeSpan ShowDuration = TimeSpan.FromHours(-1).Duration();
 
         [Parameter]
         public DateTime ShowTime { get; set; }
@@ -44,15 +43,19 @@ namespace DotNetDocs.Web.Shared
 
         async void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
+            _timer.Enabled = false;
+
             DateTime = TimeZoneInfo.ConvertTime(DateTime.Now, DateTimeService.CentralTimeZone);
             TimeRemaining = ShowTime.Subtract(DateTime);
 
+            bool reenableTimer = true;
             bool alreadyStarted = TimeRemaining.Ticks < 0;
             if (alreadyStarted)
             {
                 // Show is over
                 if (TimeRemaining.Duration() >= ShowDuration)
                 {
+                    reenableTimer = false;
                     StopTimerAndUnregisterHandler();
                     Navigation.NavigateTo("/", true);
                 }
@@ -84,6 +87,8 @@ namespace DotNetDocs.Web.Shared
                     await InvokeAsync(() => StateHasChanged());
                 }
             }
+
+            _timer.Enabled = reenableTimer;
         }
 
         public void Dispose()
