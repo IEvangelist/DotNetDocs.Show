@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using DotNetDocs.Services;
 using DotNetDocs.Services.Models;
@@ -40,6 +41,18 @@ namespace DotNetDocs.Web.Pages
         private bool _hasMoreShows;
         private DocsShow _nextShow = null!;
         private DateTime _now;
+
+        private readonly Lazy<MarkupString> DateTimeDebug = new Lazy<MarkupString>(() =>
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine($"TimeZoneInfo.Local: {TimeZoneInfo.Local}");
+            builder.AppendLine($"DateTime.Now: {DateTime.Now:MMM dd yyy hh:mm:ss zzzz}");
+            builder.AppendLine($"DateTime.UtcNow: {DateTime.UtcNow:MMM dd yyy hh:mm:ss zzzz}");
+            builder.AppendLine($"DateTimeOffset.Now: {DateTimeOffset.Now:MMM dd yyy hh:mm:ss zzzz}");
+            builder.AppendLine($"DateTimeOffset.UtcNow: {DateTimeOffset.UtcNow:MMM dd yyy hh:mm:ss zzzz}");
+
+            return new MarkupString(builder.ToString());
+        });
 
         protected override async Task OnInitializedAsync()
         {
