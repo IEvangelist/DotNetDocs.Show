@@ -23,6 +23,9 @@ namespace DotNetDocs.Web.Pages
         public IScheduleService? ScheduleService { get; set; }
 
         [Inject]
+        public DateTimeService DateTimeService { get; set; } = null!;
+
+        [Inject]
         public IJSRuntime? JavaScript { get; set; }
 
         [Inject]
@@ -36,15 +39,21 @@ namespace DotNetDocs.Web.Pages
 
         private bool _hasMoreShows;
         private DocsShow _nextShow = null!;
+        private DateTime _now;
 
         protected override async Task OnInitializedAsync()
         {
-            var now = DateTimeOffset.Now;
-            var dailyShowTime = DateTimeOffset.Parse($"{now.Year}-{now.Month:00}-{now.Day:00}T11:00:00-05:00");
+            _now =
+                TimeZoneInfo.ConvertTime(DateTime.Now, DateTimeService.CentralTimeZone);
+            var dailyShowTime =
+                new DateTimeOffset(
+                    _now.Year, _now.Month, _now.Day, 11, 0, 0,
+                    DateTimeService.CentralTimeZone.BaseUtcOffset);
+
             var shows = await Cache.GetOrCreateAsync(
                 CacheKeys.ShowSchedule,
                 async _ =>
-                await ScheduleService!.GetAllAsync(now.DateTime.AddDays(-(20 * 7))));
+                await ScheduleService!.GetAllAsync(_now.AddDays(-(20 * 7))));
 
             _shows = shows.Where(show => show.IsPublished);
 

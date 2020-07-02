@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Timers;
+using DotNetDocs.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace DotNetDocs.Web.Shared
 {
     public class CountDownTimerComponent : ComponentBase, IDisposable
     {
-        Timer _timer;
-        readonly TimeZoneInfo _centralTimeZone;
-
         [Parameter]
         public DateTime ShowTime { get; set; }
 
@@ -19,17 +17,17 @@ namespace DotNetDocs.Web.Shared
         [Inject]
         public NavigationManager Navigation { get; set; } = null!;
 
+        [Inject]
+        public DateTimeService DateTimeService { get; set; } = null!;
+
         protected TimeSpan TimeRemaining { get; private set; }
         protected string ImminentClass { get; private set; } = "";
+        protected DateTime DateTime { get; private set; }
+
+        Timer _timer;
 
         public CountDownTimerComponent()
         {
-            _centralTimeZone =
-                TimeZoneInfo.FindSystemTimeZoneById(
-                    RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
-                        ? "America/Chicago"
-                        : "Central Standard Time");
-
             _timer = new Timer(1000);
             _timer.Elapsed += OnTimerElapsed;
         }
@@ -43,8 +41,8 @@ namespace DotNetDocs.Web.Shared
 
         async void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
-            DateTime dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, _centralTimeZone);
-            TimeRemaining = ShowTime.Subtract(dateTime);
+            DateTime = TimeZoneInfo.ConvertTime(DateTime.Now, DateTimeService.CentralTimeZone);
+            TimeRemaining = ShowTime.Subtract(DateTime);
 
             bool alreadyStarted = TimeRemaining.Ticks < 0;
             if (alreadyStarted)
