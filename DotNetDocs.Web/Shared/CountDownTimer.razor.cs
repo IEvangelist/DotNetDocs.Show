@@ -8,6 +8,8 @@ namespace DotNetDocs.Web.Shared
 {
     public class CountDownTimerComponent : ComponentBase, IDisposable
     {
+        static readonly TimeSpan ShowDuration = TimeSpan.FromHours(1).Duration();
+
         [Parameter]
         public DateTime ShowTime { get; set; }
 
@@ -24,6 +26,7 @@ namespace DotNetDocs.Web.Shared
         protected string ImminentClass { get; private set; } = "";
         protected DateTime DateTime { get; private set; }
 
+        bool _showStarted;
         Timer _timer;
 
         public CountDownTimerComponent()
@@ -48,10 +51,16 @@ namespace DotNetDocs.Web.Shared
             if (alreadyStarted)
             {
                 // Show is over
-                if (TimeRemaining >= TimeSpan.FromMinutes(-61))
+                if (TimeRemaining.Duration() >= ShowDuration)
                 {
                     StopTimerAndUnregisterHandler();
                     Navigation.NavigateTo("/", true);
+                }
+                else if (!_showStarted)
+                {
+                    ImminentClass = "";
+                    await InvokeAsync(
+                        async () => await ShowIsStarting.InvokeAsync(_showStarted = true));
                 }
             }
             else
@@ -61,7 +70,7 @@ namespace DotNetDocs.Web.Shared
                     // Starts in 30 seconds, show embedded Twitch stream
                     ImminentClass = "";
                     await InvokeAsync(
-                        async () => await ShowIsStarting.InvokeAsync(true));
+                        async () => await ShowIsStarting.InvokeAsync(_showStarted = true));
                 }
                 else if (TimeRemaining <= TimeSpan.FromSeconds(90))
                 {
