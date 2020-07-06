@@ -62,15 +62,14 @@ namespace DotNetDocs.Web.Pages
                 await ScheduleService!.GetAllAsync(now.AddDays(-(20 * 7))));
 
             _shows = shows.Where(show => show.IsPublished);
-
             _segmentedShows = DateTimeService.GetSegmentedShows(
                 _shows,
                 now,
                 Features?.CurrentValue?.InterleaveShowGaps);
 
-            _pastShows = _segmentedShows.PastShows;
-            _nextShow = _segmentedShows.NextShow;
-            _futureShows = _segmentedShows.FutureShows;
+            _pastShows = _segmentedShows?.PastShows;
+            _nextShow = _segmentedShows?.NextShow;
+            _futureShows = _segmentedShows?.FutureShows;
         }
     }
 }
