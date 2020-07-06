@@ -2,13 +2,25 @@
 using System.Linq;
 using DotNetDocs.Services;
 using DotNetDocs.Services.Models;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace DotNetDocs.Web.Tests
 {
     public class DateTimeServiceTests
     {
-        readonly DateTimeService _systemUnderTest = new DateTimeService();
+        readonly DateTimeService _systemUnderTest;
+
+        public DateTimeServiceTests(ITestOutputHelper outputHelper)
+        {
+            _systemUnderTest = new ServiceCollection()
+                .AddLogging(builder => builder.AddXUnit(outputHelper))
+                .AddSingleton<DateTimeService>()
+                .BuildServiceProvider()
+                .GetRequiredService<DateTimeService>();
+        }
 
         [Fact]
         public void GetSegmentedShowsCorrectlySegmentsWhenDaysOff()

@@ -4,16 +4,21 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using DotNetDocs.Extensions;
 using DotNetDocs.Services.Models;
+using Microsoft.Extensions.Logging;
 
 namespace DotNetDocs.Services
 {
     public class DateTimeService
     {
+        readonly ILogger<DateTimeService> _logger;
+
         public TimeZoneInfo CentralTimeZone { get; private set; } =
             TimeZoneInfo.FindSystemTimeZoneById(
                 RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
                     ? "America/Chicago"
                     : "Central Standard Time");
+
+        public DateTimeService(ILogger<DateTimeService> logger) => _logger = logger;
 
         public TimeSpan GetCentralTimeZoneOffset(DateTime date)
         {
@@ -38,7 +43,10 @@ namespace DotNetDocs.Services
             DateTime segmentDate,
             bool? interleaveShowGaps = null)
         {
+            _logger.LogInformation($"segmentDate: {segmentDate}");
+
             var start = TimeZoneInfo.ConvertTime(segmentDate, CentralTimeZone);
+            _logger.LogInformation($"start: {start}");
             //var offset = GetCentralTimeZoneOffset(start);
             //var dailyShowEndTime = new DateTimeOffset(start.Year, start.Month, start.Day, 12, 0, 0, offset);
 
