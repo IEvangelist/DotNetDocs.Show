@@ -25,7 +25,8 @@ namespace DotNetDocs.Web.Tests
         [Fact]
         public void GetSegmentedShowsCorrectlySegmentsWhenDaysOff()
         {
-            var startDate = new DateTimeOffset(2020, 5, 29, 11, 0, 0, TimeSpan.FromHours(-5));
+            var utcDate = new DateTimeOffset(2020, 5, 29, 11, 0, 0, TimeSpan.FromHours(-5));
+            var startDate = _systemUnderTest.ConvertFromUtc(utcDate.UtcDateTime);
             var shows = new[]
             {
                 DocsShow.CreatePlaceholder(startDate),
@@ -36,7 +37,7 @@ namespace DotNetDocs.Web.Tests
             };
 
             var segmentedShows =
-                _systemUnderTest.GetSegmentedShows(shows, startDate.AddDays(15).DateTime, true);
+                _systemUnderTest.GetSegmentedShows(shows, utcDate.UtcDateTime.AddDays(15), true);
 
             Assert.NotNull(segmentedShows);
             Assert.NotNull(segmentedShows.PastShows);
@@ -53,7 +54,8 @@ namespace DotNetDocs.Web.Tests
             // Future shows, are all remaining shows in the future... (but not the next show)
             // Past shows are all shows in the past.
 
-            var startDate = new DateTimeOffset(2020, 5, 29, 11, 0, 0, TimeSpan.FromHours(-5));
+            var utcDate = new DateTimeOffset(2020, 5, 29, 11, 0, 0, TimeSpan.FromHours(-5));
+            var startDate = _systemUnderTest.ConvertFromUtc(utcDate.UtcDateTime);
             var shows = new[]
             {
                 new DocsShow { Date = startDate, Title = "First show" },
@@ -66,7 +68,7 @@ namespace DotNetDocs.Web.Tests
 
             var segmentedShows =
                 _systemUnderTest.GetSegmentedShows(
-                    shows, startDate.AddDays(7).AddSeconds(-7).DateTime, true);
+                    shows, utcDate.UtcDateTime.AddDays(7).AddSeconds(-7), true);
 
             Assert.NotNull(segmentedShows);
             Assert.Single(segmentedShows.PastShows);
@@ -76,7 +78,7 @@ namespace DotNetDocs.Web.Tests
 
             segmentedShows =
                 _systemUnderTest.GetSegmentedShows(
-                    shows, startDate.AddDays(7).DateTime, false);
+                    shows, utcDate.UtcDateTime.AddDays(7), false);
 
             Assert.NotNull(segmentedShows);
             Assert.Equal(2, segmentedShows.PastShows.Count());

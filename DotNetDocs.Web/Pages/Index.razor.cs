@@ -55,16 +55,17 @@ namespace DotNetDocs.Web.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            var now = DateTime.Now;
+            var utcNow = DateTime.UtcNow;
+            var centralTimeNow = DateTimeService.ConvertFromUtc(utcNow);
             var shows = await Cache.GetOrCreateAsync(
                 CacheKeys.ShowSchedule,
                 async _ =>
-                await ScheduleService!.GetAllAsync(now.AddDays(-(20 * 7))));
+                await ScheduleService!.GetAllAsync(centralTimeNow.AddDays(-(20 * 7))));
 
             _shows = shows.Where(show => show.IsPublished);
             _segmentedShows = DateTimeService.GetSegmentedShows(
                 _shows,
-                now,
+                utcNow,
                 Features?.CurrentValue?.InterleaveShowGaps);
 
             _pastShows = _segmentedShows?.PastShows;

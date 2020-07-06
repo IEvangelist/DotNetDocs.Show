@@ -38,6 +38,9 @@ namespace DotNetDocs.Services
         public bool IsDaylightSavingTime(DateTime date) =>
             CentralTimeZone.IsDaylightSavingTime(date);
 
+        public DateTime ConvertFromUtc(DateTime date) =>
+            TimeZoneInfo.ConvertTimeFromUtc(date, CentralTimeZone);
+
         public SegmentedShows GetSegmentedShows(
             IEnumerable<DocsShow> shows,
             DateTime segmentDate,
@@ -45,7 +48,7 @@ namespace DotNetDocs.Services
         {
             _logger.LogInformation($"segmentDate: {segmentDate}");
 
-            var start = TimeZoneInfo.ConvertTime(segmentDate, CentralTimeZone);
+            var start = ConvertFromUtc(segmentDate);
             _logger.LogInformation($"start: {start}");
             //var offset = GetCentralTimeZoneOffset(start);
             //var dailyShowEndTime = new DateTimeOffset(start.Year, start.Month, start.Day, 12, 0, 0, offset);
