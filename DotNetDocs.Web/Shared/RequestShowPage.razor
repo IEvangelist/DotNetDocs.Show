@@ -49,11 +49,11 @@
                     <label for="thumb">Twitter Handle</label>
                     <div class="input-group">
                         <InputText id="twitter" @bind-Value="RequestShow.TwitterHandle" class="form-control" />
-                        <div class="input-group-append">
+                        <div class="input-group-append d-none d-lg-inline">
                             @{
                                 var first = RequestShow.FirstName;
                                 var last = RequestShow.LastName;
-                                var twitterQuery = $"https://twitter.com/search?q={first}%20{last}&src=typed_query";
+                                var twitterQuery = $"https://twitter.com/search?q={first}%20{last}";
                             }
                             <input type="button" class="btn btn-secondary" value="Search Twitter" disabled="@(first == null && last == null)"
                                    onclick="@($"window.open('{twitterQuery}', '_blank')")" />

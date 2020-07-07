@@ -38,13 +38,12 @@ else
                         <label for="thumb">Twitter Handle</label>
                         <div class="input-group">
                             <InputText id="twitter" @bind-Value="Person.TwitterHandle" class="form-control" />
-                            <div class="input-group-append">
+                            <div class="input-group-append d-none d-lg-inline">
                                 @{
-                                    var first = Person.FirstName;
-                                    var last = Person.LastName;
-                                    var twitterQuery = $"https://twitter.com/search?q={first}%20{last}&src=typed_query";
+                                    var twitterQuery = $"https://twitter.com/search?q={Person.FirstName}%20{Person.LastName}";
                                 }
-                                <input type="button" class="btn btn-secondary" value="Search Twitter" disabled="@(first == null && last == null)"
+                                <input type="button" class="btn btn-secondary" value="Search Twitter"
+                                       disabled="@(Person.FirstName == null && Person.LastName == null)"
                                        onclick="@($"window.open('{twitterQuery}', '_blank')")" />
                             </div>
                             <br>
@@ -57,8 +56,19 @@ else
                 <div class="row">
                     <div class="col">
                         <label for="mvp">MVP ID</label>
-                        <InputNumber id="mvp" @bind-Value="Person.MicrosoftMvpId" class="form-control" />
-                        <ValidationMessage For="() => Person.MicrosoftMvpId" />
+                        <div class="input-group">
+                            <InputNumber id="mvp" @bind-Value="Person.MicrosoftMvpId" class="form-control" />
+                            <div class="input-group-append d-none d-lg-inline">
+                                @{
+                                    var mvpQuery = $"https://mvp.microsoft.com/en-us/MvpSearch?kw={Person.FirstName}+{Person.LastName}";
+                                }
+                                <input type="button" class="btn btn-secondary" value="Search MVPs"
+                                       disabled="@(Person.FirstName == null && Person.LastName == null)"
+                                       onclick="@($"window.open('{mvpQuery}', '_blank')")" />
+                            </div>
+                            <br>
+                            <ValidationMessage For="() => Person.MicrosoftMvpId" />
+                        </div>
                     </div>
                     <div class="col">
                         <label for="blueBadge">Is blue badge</label>
