@@ -3,32 +3,35 @@
 
 <div class="main">
     <nav class="navbar navbar-dark bg-dark sticky-top px-4">
-        <a class="navbar-brand d-flex align-items-center" href="#">
+        <a class="navbar-brand d-flex align-items-center d-none d-lg-inline" href="#">
             <img src="dotnet-bot_head.svg" width="38" height="38" class="d-inline-block align-top" alt=""> &nbsp; The .NET Docs Show
         </a>
 
-        <AuthorizeView>
-            <Authorized>
-                <div class="d-flex justify-content-center">
-                    <NavLink class="nav-link text-light" href="" Match="NavLinkMatch.All">
-                        <span class="oi oi-home" aria-hidden="true"></span> &nbsp; Home
-                    </NavLink>
+        <div class="d-flex justify-content-center">
+            <NavLink class="nav-link text-light d-none d-md-inline" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home pr-2" aria-hidden="true"></span> Home
+            </NavLink>
+            <NavLink class="nav-link text-light d-none d-md-inline" href="schedule">
+                <span class="oi oi-calendar pr-2" aria-hidden="true"></span> Schedule
+            </NavLink>
+            <AuthorizeView>
+                <Authorized>
                     <NavLink class="nav-link text-light" href="checklist">
-                        <span class="oi oi-task" aria-hidden="true"></span> &nbsp; Checklist
+                        <span class="oi oi-task pr-2" aria-hidden="true"></span> Checklist
                     </NavLink>
                     <NavLink class="nav-link text-light mr-5" href="admin">
-                        <span class="oi oi-video" aria-hidden="true"></span> &nbsp; Shows
+                        <span class="oi oi-video pr-2" aria-hidden="true"></span> Shows
                     </NavLink>
                     <a class="btn btn-light" href="AzureAD/Account/SignOut"
                        role="button" title="@($"Click to sign out \"{context.User.Identity.Name}\"")">
-                        <img src="ms-symbol.png" /> &nbsp; Sign out
+                        <img src="ms-symbol.png" class=" pr-2" /> Sign out
                     </a>
-                </div>
-            </Authorized>
-            <NotAuthorized></NotAuthorized>
-        </AuthorizeView>
+                </Authorized>
+                <NotAuthorized></NotAuthorized>
+            </AuthorizeView>
+        </div>
 
-        <div class="justify-content-end">
+        <div class="justify-content-end d-none d-lg-inline">
             <a href="https://www.youtube.com/channel/UCIy_nKrwrd-naf_MPWtXdLA" class="pr-2" target="_blank">
                 <svg width="130" height="38">
                     <image xlink:href="youtube-logo.svg" width="130" height="38"></image>
@@ -46,14 +49,20 @@
         @Body
     </div>
 
-    <footer class="footer fixed-bottom bg-dark">
+    <footer class="footer fixed-bottom bg-dark d-none d-md-inline">
         <div class="container text-center text-light py-2">
             <small>
-                <span>&copy; Copyright @DateTime.UtcNow.Year &nbsp; &bull; &nbsp;</span>
-                <span class="d-none d-lg-inline">
-                    <a href="https://github.com/IEvangelist/DotNetDocs.Show" target="_blank">GitHub Repo</a> &nbsp; &bull; &nbsp;
-                </span >
+                <span>&copy; Copyright @DateTime.UtcNow.Year</span>
+                <span class="p-2">&bull;</span>
+                <span>
+                    <a href="https://github.com/IEvangelist/DotNetDocs.Show" target="_blank">GitHub</a>
+                </span>
+                <span class="p-2">&bull;</span>
                 <span>Powered by @RuntimeInformation.FrameworkDescription</span>
+                <span class="p-2">&bull;</span>
+                <span>
+                    <a href="https://twitter.com/hashtag/TheDotNetDocsShow" target="_blank">#TheDotNetDocShow</a>
+                </span>
             </small>
         </div>
     </footer>
