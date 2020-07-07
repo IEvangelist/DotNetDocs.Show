@@ -24,6 +24,9 @@ namespace DotNetDocs.Web.Shared
         public LogicAppService? LogicAppService { get; set; }
 
         [Inject]
+        public DateTimeService? DateTimeService { get; set; }
+
+        [Inject]
         public IMemoryCache? Cache { get; set; }
 
         [Inject]
@@ -44,15 +47,21 @@ namespace DotNetDocs.Web.Shared
 
         protected override async Task OnInitializedAsync()
         {
-            if (ScheduleService != null && !string.IsNullOrWhiteSpace(ShowId))
+            if (ScheduleService != null && DateTimeService != null && !string.IsNullOrWhiteSpace(ShowId))
             {
                 if (IsCreatingNewShow)
                 {
                     var nxtThrsdy = DateTime.Today.AddDays(1).GetNextWeekday(DayOfWeek.Thursday);
+                    var offset = DateTimeService.GetCentralTimeZoneOffset(nxtThrsdy);
+
                     Show = Mapper?.Map<ShowModel>(new DocsShow
                     {
-                        Date = DateTimeOffset.Parse(
-                            $"{nxtThrsdy.Year}-{nxtThrsdy.Month:00}-{nxtThrsdy.Day:00}T11:00:00-05:00")
+                        Date = new DateTimeOffset(
+                            nxtThrsdy.Year,
+                            nxtThrsdy.Month,
+                            nxtThrsdy.Day,
+                            11, 0, 0,
+                            offset)
                     })!;
                 }
                 else

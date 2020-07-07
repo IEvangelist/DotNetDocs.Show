@@ -43,7 +43,9 @@ namespace DotNetDocs.Web.Shared
                 RequestShow = new RequestModel
                 {
                     ShowDate = new DateTimeOffset(
-                        year, month, day, 11, 0, 0, DateTimeService.CentralTimeZone.BaseUtcOffset)
+                        year, month, day, 11, 0, 0,
+                        DateTimeService.GetCentralTimeZoneOffset(
+                            new DateTime(year, month, day)))
                 };
 
                 _editContext = new EditContext(RequestShow);
