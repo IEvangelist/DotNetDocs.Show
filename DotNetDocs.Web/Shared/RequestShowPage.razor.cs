@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using DotNetDocs.Services;
+using DotNetDocs.Web.Extensions;
 using DotNetDocs.Web.PageModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Logging;
 
 namespace DotNetDocs.Web.Shared
@@ -22,6 +23,9 @@ namespace DotNetDocs.Web.Shared
         public LogicAppService? RequestShowService { get; set; }
 
         [Inject]
+        public IDataProtectionProvider? ProtectionProvider { get; set; }
+
+        [Inject]
         public ILogger<RequestShowPage>? Logger { get; set; }
 
         [Parameter]
@@ -36,9 +40,10 @@ namespace DotNetDocs.Web.Shared
 
         protected override void OnInitialized()
         {
-            if (DateTimeService != null && !string.IsNullOrWhiteSpace(ShowDate))
+            if (DateTimeService != null && ProtectionProvider != null && !string.IsNullOrWhiteSpace(ShowDate))
             {
-                int[]? parts = ShowDate.Split("-").Select(str => int.Parse(str, NumberStyles.HexNumber)).ToArray();
+                var dateRoute = ShowDate.Decrypt(ProtectionProvider);
+                int[]? parts = dateRoute.Split("-").Select(str => int.Parse(str)).ToArray();
                 (int month, int day, int year) = (parts[0], parts[1], parts[2]);
                 RequestShow = new RequestModel
                 {

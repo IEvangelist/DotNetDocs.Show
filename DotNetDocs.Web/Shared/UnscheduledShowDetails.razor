@@ -1,7 +1,8 @@
-﻿@using DotNetDocs.Services.Models
+﻿@using Microsoft.AspNetCore.DataProtection
 @using DotNetDocs.Web.Extensions
 
 @inject NavigationManager Navigation
+@inject IDataProtectionProvider ProtectionProvider
 
 <div class="card mb-4">
     <img class="card-img-top img-fluid" src="default-request-thumb.png" alt=".NET bot on the beach">
@@ -15,8 +16,11 @@
         </p>
     </div>
     <div class="card-footer">
+        @{
+            var dateRoute = $"{ShowDateTime.Month:00}-{ShowDateTime.Day:00}-{ShowDateTime.Year}".Encrypt(ProtectionProvider!);
+        }
         <button class="btn btn-sm btn-dotnet float-right"
-                @onclick='@(_ => Navigation.NavigateTo($"/request/{ShowDateTime.Month.ToString("X").ToLower()}-{ShowDateTime.Day.ToString("X").ToLower()}-{ShowDateTime.Year.ToString("X").ToLower()}"))'>Request</button>
+                @onclick='@(_ => Navigation.NavigateTo($"/request/{dateRoute}"))'>Request</button>
     </div>
 </div>
 @if (IsDivisableBy(1))

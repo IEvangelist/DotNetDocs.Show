@@ -6,6 +6,7 @@ using DotNetDocs.Services;
 using DotNetDocs.Services.Models;
 using DotNetDocs.Web.Workers;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace DotNetDocs.Web.Pages
@@ -20,6 +21,9 @@ namespace DotNetDocs.Web.Pages
 
         [Inject]
         public IScheduleService? ScheduleService { get; set; }
+
+        [Inject]
+        public IDataProtectionProvider? ProtectionProvider { get; set; }
 
         [Inject]
         public DateTimeService DateTimeService { get; set; } = null!;

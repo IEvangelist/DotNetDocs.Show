@@ -32,8 +32,9 @@ else
                         @if (isPlaceholder)
                         {
                             var date = show.Date!.Value;
+                            var dateRoute = $"{date.Month:00}-{date.Day:00}-{date.Year}".Encrypt(ProtectionProvider!);
                             <button class="btn btn-sm btn-dotnet"
-                                    @onclick='@(_ => Navigation.NavigateTo($"/request/{date.Month.ToString("X").ToLower()}-{date.Day.ToString("X").ToLower()}-{date.Year.ToString("X").ToLower()}"))'>
+                                    @onclick='@(_ => Navigation.NavigateTo($"/request/{dateRoute}"))'>
                                 Request
                             </button>
                         }

@@ -13,12 +13,16 @@ namespace DotNetDocs.Web.Extensions
     {
         public static IServiceCollection AddAutoMapper(
             this IServiceCollection services,
-            IConfiguration configuration) =>
-            services.Configure<FeatureOptions>(configuration.GetSection(nameof(FeatureOptions)))
-                    .AddSingleton(
-                        new MapperConfiguration(config =>
-                            config.AddProfile(new MappingProfile()))
-                                  .CreateMapper());
+            IConfiguration configuration)
+        {
+            services.AddDataProtection();
+            return services.Configure<FeatureOptions>(
+                configuration.GetSection(nameof(FeatureOptions)))
+                .AddSingleton(
+                    new MapperConfiguration(config =>
+                        config.AddProfile(new MappingProfile()))
+                              .CreateMapper());
+        }
     }
 
     public class MappingProfile : Profile
