@@ -1,11 +1,12 @@
-﻿@using DotNetDocs.Services.Models
-@using DotNetDocs.Web.Extensions
+﻿@using DotNetDocs.Web.Extensions
 
 @inject NavigationManager Navigation
 
 <div class="card mb-4">
     <a href="@Show.Url" title="Watch this episode">
-        <img class="card-img-top img-fluid" src='@(Show.ShowImage ?? "default-thumb.png")' alt="Thumbnail of episode">
+        <object class="card-img-top img-fluid" data="@Show.ShowImage" type="@(ToMimeType(Show.ShowImage))" alt="Thumbnail of episode">
+            <img class="card-img-top img-fluid" src="default-thumb.png" alt="Thumbnail of episode">
+        </object>
     </a>
     <div class="card-body">
         <h5 class="card-title">
@@ -39,38 +40,17 @@
 </div>
 @if (IsDivisableBy(1))
 {
-<div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 1 on sm--></div>
+    <div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 1 on sm--></div>
 }
 @if (IsDivisableBy(2))
 {
-<div class="w-100 d-none d-md-block d-lg-none"><!-- wrap every 2 on md--></div>
+    <div class="w-100 d-none d-md-block d-lg-none"><!-- wrap every 2 on md--></div>
 }
 @if (IsDivisableBy(3))
 {
-<div class="w-100 d-none d-lg-block d-xl-none"><!-- wrap every 3 on lg--></div>
+    <div class="w-100 d-none d-lg-block d-xl-none"><!-- wrap every 3 on lg--></div>
 }
 @if (IsDivisableBy(4))
 {
-<div class="w-100 d-none d-xl-block"><!-- wrap every 5 on xl--></div>
-}
-
-@code {
-    [Parameter]
-    public DocsShow Show { get; set; } = null!;
-
-    [Parameter]
-    public int Index { get; set; }
-
-    bool IsDivisableBy(int number) => (Index + 1) % number == 0;
-
-    IDictionary<string, string> Tags =>
-            Show.Tags
-                .Select(tag => (tag: tag, color: ""))
-                .Concat(
-                    Show.Guests
-                        .Where(p => p.IsMicrosoftMvp)
-                        .Select(p => (tag: p.ToMvpUrl(), color: "badge-mvp")))
-                .ToDictionary(t => t.tag, t => t.color);
-
-    string ShowDateTimeString => Show.ToDateString();
+    <div class="w-100 d-none d-xl-block"><!-- wrap every 5 on xl--></div>
 }

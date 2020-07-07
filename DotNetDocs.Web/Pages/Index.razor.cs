@@ -31,7 +31,7 @@ namespace DotNetDocs.Web.Pages
         [Inject]
         public IOptionsMonitor<FeatureOptions>? Features { get; set; }
 
-        const string? NextShowElementId = "next-show";
+        const string NextShowElementId = "next-show";
 
         private SegmentedShows? _segmentedShows;
 
