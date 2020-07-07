@@ -1,4 +1,4 @@
-@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 :root {
     --dotnet-color: #783bd2;
@@ -265,6 +265,225 @@ tr.editable:hover {
     position: absolute;
     right: 0.75rem;
     top: 0.5rem;
+}
+
+.all-devs {
+    font-size: 1.5em;
+    display: inline-block;
+    transition: all 0.5s ease-in-out;
+}
+
+    .all-devs:after {
+        -webkit-animation: change 12s linear infinite;
+        -moz-animation: change 12s linear infinite;
+        -o-animation: change 12s linear infinite;
+        animation: change 12s linear infinite;
+        display: inline-block;
+        content: "👨🏿‍💻";
+    }
+
+@-webkit-keyframes change {
+    0 {
+        content: "👨🏿‍💻";
+    }
+
+    8.33% {
+        content: "👩‍💻";
+    }
+
+    16.67% {
+        content: "👨‍💻";
+    }
+
+    25.00% {
+        content: "👩🏻‍💻";
+    }
+
+    33.33% {
+        content: "👨🏻‍💻";
+    }
+
+    41.67% {
+        content: "👩🏼‍💻";
+    }
+
+    50.00% {
+        content: "👨🏼‍💻";
+    }
+
+    58.33% {
+        content: "👩🏽‍💻";
+    }
+
+    66.67% {
+        content: "👨🏽‍💻";
+    }
+
+    75.00% {
+        content: "👩🏾‍💻";
+    }
+
+    83.33% {
+        content: "👨🏾‍💻";
+    }
+
+    91.67% {
+        content: "👩🏿‍💻";
+    }
+
+    100.00% {
+        content: "👨🏿‍💻";
+    }
+}
+
+@-moz-keyframes change {
+    8.33% {
+        content: "👩‍💻";
+    }
+
+    16.67% {
+        content: "👨‍💻";
+    }
+
+    25.00% {
+        content: "👩🏻‍💻";
+    }
+
+    33.33% {
+        content: "👨🏻‍💻";
+    }
+
+    41.67% {
+        content: "👩🏼‍💻";
+    }
+
+    50.00% {
+        content: "👨🏼‍💻";
+    }
+
+    58.33% {
+        content: "👩🏽‍💻";
+    }
+
+    66.67% {
+        content: "👨🏽‍💻";
+    }
+
+    75.00% {
+        content: "👩🏾‍💻";
+    }
+
+    83.33% {
+        content: "👨🏾‍💻";
+    }
+
+    91.67% {
+        content: "👩🏿‍💻";
+    }
+
+    100.00% {
+        content: "👨🏿‍💻";
+    }
+}
+
+@-o-keyframes change {
+    8.33% {
+        content: "👩‍💻";
+    }
+
+    16.67% {
+        content: "👨‍💻";
+    }
+
+    25.00% {
+        content: "👩🏻‍💻";
+    }
+
+    33.33% {
+        content: "👨🏻‍💻";
+    }
+
+    41.67% {
+        content: "👩🏼‍💻";
+    }
+
+    50.00% {
+        content: "👨🏼‍💻";
+    }
+
+    58.33% {
+        content: "👩🏽‍💻";
+    }
+
+    66.67% {
+        content: "👨🏽‍💻";
+    }
+
+    75.00% {
+        content: "👩🏾‍💻";
+    }
+
+    83.33% {
+        content: "👨🏾‍💻";
+    }
+
+    91.67% {
+        content: "👩🏿‍💻";
+    }
+
+    100.00% {
+        content: "👨🏿‍💻";
+    }
+}
+
+@keyframes change {
+    8.33% {
+        content: "👩‍💻";
+    }
+
+    16.67% {
+        content: "👨‍💻";
+    }
+
+    25.00% {
+        content: "👩🏻‍💻";
+    }
+
+    33.33% {
+        content: "👨🏻‍💻";
+    }
+
+    41.67% {
+        content: "👩🏼‍💻";
+    }
+
+    50.00% {
+        content: "👨🏼‍💻";
+    }
+
+    58.33% {
+        content: "👩🏽‍💻";
+    }
+
+    66.67% {
+        content: "👨🏽‍💻";
+    }
+
+    75.00% {
+        content: "👩🏾‍💻";
+    }
+
+    83.33% {
+        content: "👨🏾‍💻";
+    }
+
+    91.67% {
+        content: "👩🏿‍💻";
+    }
+
+    100.00% {
+        content: "👨🏿‍💻";
+    }
 }
 
 @media (max-width: 767.98px) {
