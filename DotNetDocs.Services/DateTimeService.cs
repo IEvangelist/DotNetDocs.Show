@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using DotNetDocs.Extensions;
 using DotNetDocs.Services.Models;
 using Microsoft.Extensions.Logging;
+using Nager.Date;
 
 namespace DotNetDocs.Services
 {
@@ -35,6 +36,10 @@ namespace DotNetDocs.Services
             return currentOffset;
         }
 
+        public bool IsHoliday(DateTime date) =>
+            DateSystem.IsPublicHoliday(date, CountryCode.US) ||
+            date.Month == 12 && date.Day == 24; // Christmas eve is a holiday too
+
         public bool IsDaylightSavingTime(DateTime date) =>
             CentralTimeZone.IsDaylightSavingTime(date);
 
@@ -51,8 +56,6 @@ namespace DotNetDocs.Services
 
             var start = ConvertFromUtc(segmentDate);
             _logger.LogInformation($"start: {start}");
-            //var offset = GetCentralTimeZoneOffset(start);
-            //var dailyShowEndTime = new DateTimeOffset(start.Year, start.Month, start.Day, 12, 0, 0, offset);
 
             var orderedShows = shows.OrderByDescending(show => show.Date);
             var pastShows = orderedShows.Where(show => show.Date!.Value.DateTime <= start).Take(12);
@@ -74,6 +77,7 @@ namespace DotNetDocs.Services
                         date => DocsShow.CreatePlaceholder(AdjustForDaylightSavingsTime(date)),
                         TimeSpan.FromDays(7),
                         nearestOfMultiple)
+                    .Where(show => !IsHoliday(show.Date!.Value.DateTime))
                     .OrderByDescending(show => show.Date!.Value);
 
                 return new SegmentedShows(pastShows, nextShow, futureShows);

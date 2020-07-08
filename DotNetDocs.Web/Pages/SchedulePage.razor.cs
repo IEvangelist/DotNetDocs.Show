@@ -47,7 +47,7 @@ namespace DotNetDocs.Web.Pages
                     shows.Where(show => show.IsPublished),
                     utcNow,
                     true,
-                    10);
+                    12);
 
                 Shows = segmentedShows.FutureShows;
             }
