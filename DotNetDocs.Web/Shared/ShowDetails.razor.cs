@@ -18,14 +18,7 @@ namespace DotNetDocs.Web.Shared
 
         bool IsDivisableBy(int number) => (Index + 1) % number == 0;
 
-        IDictionary<string, string> Tags =>
-                Show.Tags
-                    .Select(tag => (tag, color: ""))
-                    .Concat(
-                        Show.Guests
-                            .Where(p => p.IsMicrosoftMvp)
-                            .Select(p => (tag: p.ToMvpUrl(), color: "badge-mvp")))
-                    .ToDictionary(t => t.tag, t => t.color);
+        IDictionary<string, string> Tags => Show.ToShowTags();
 
         string ShowDateTimeString => Show.ToDateString();
 

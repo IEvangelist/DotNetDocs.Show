@@ -47,6 +47,11 @@ a.nav-link.text-light.active {
     background-color: #591CB3;
 }
 
+.badge-msft {
+    color: #fff;
+    background-color: red;
+}
+
 .badge-mvp {
     color: #fff;
     background-color: #01a6f0;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.Encodings.Web;
 using DotNetDocs.Extensions;
 using DotNetDocs.Services.Models;
@@ -89,5 +90,36 @@ namespace DotNetDocs.Web.Extensions
 
         public static string ToMvpUrl(this Person person) =>
             $"<a href='https://mvp.microsoft.com/en-us/PublicProfile/{person.MicrosoftMvpId}' target='_blank'>MVP</a>";
+
+        public static IDictionary<string, string> ToShowTags(this DocsShow show) =>
+            show.Tags
+                .Select(tag => (tag, color: ""))
+                .Concat(
+                    show.Guests
+                        .Where(p => p.IsMicrosoftMvp)
+                        .Select(p => (tag: p.ToMvpUrl(), color: "badge-mvp")))
+                .Concat(
+                    show.Guests
+                        .Where(p => p.IsBlueBadge)
+                        .Select(p => (tag: "MSFT", color: "badge-msft")))
+                .ToDictionary(t => t.tag, t => t.color);
+
+        public static string ToTweetText(this DocsShow show)
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine($"Tune in to The .NET Docs Show: {show.Title} - {show.Guests.First().TwitterHandle}");
+            builder.AppendLine();
+
+            var date = show.Date!.Value;
+            var utc = date.UtcDateTime;
+            builder.AppendLine($"📆 {date:dddd} • {date:MMMM} {date.Day}");
+            builder.AppendLine($"⏰ {date:hh:mm tt} US/Central • {utc:HH:mm} UTC");
+            builder.AppendLine();
+
+            builder.AppendLine("#TheDotNetDocsShow");
+            builder.AppendLine();
+
+            return builder.ToString();
+        }
     }
 }

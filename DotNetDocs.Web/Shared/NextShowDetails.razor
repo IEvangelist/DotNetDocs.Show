@@ -1,6 +1,6 @@
 ﻿@using DotNetDocs.Services.Models
 @using DotNetDocs.Web.Extensions
-@using DotNetDocs.Web.Interop 
+@using DotNetDocs.Web.Interop
 
 @inject IJSRuntime JavaScript
 
@@ -27,7 +27,8 @@
                         <div class="col-md-4">
                             <span class="text-center pb-2 d-inline-block">
                                 <a class="btn btn-dotnet btn-lg w-100" href="@(Show.AddToGoogleCalendar())" target="_blank" role="button">
-                                    <span class="oi oi-plus"></span> &nbsp; Add to calendar</a>
+                                    <span class="oi oi-plus"></span> &nbsp; Add to calendar
+                                </a>
                             </span>
                             <span>
                                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large"
@@ -53,17 +54,9 @@
 
     bool IsShowStarting = false;
 
-    IDictionary<string, string> Tags =>
-            Show.Tags
-                .Select(tag => (tag: tag, color: ""))
-                .Concat(
-                    Show.Guests
-                        .Where(p => p.IsMicrosoftMvp)
-                        .Select(p => (tag: p.ToMvpUrl(), color: "badge-mvp")))
-                .ToDictionary(t => t.tag, t => t.color);
+    IDictionary<string, string> Tags => Show.ToShowTags();
 
-    string TweetText =>
-        $"Tune in to The .NET Docs Show: {Show.Title} - {Show.Guests.First().TwitterHandle}, live at {Show.Date!.Value:yyyy-MM-dd hh:mm tt} US/Central\n\n#TheDotNetDocsShow";
+    string TweetText => Show.ToTweetText();
 
     protected override async Task OnAfterRenderAsync(bool firstRender) =>
         await Utilities.NudgeTwitterAsync(JavaScript);
