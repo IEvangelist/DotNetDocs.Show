@@ -18,12 +18,14 @@
         <p class="card-text">
             @{
                 var guest = Show.Guests.First();
-                if (guest.ImageUrl != null) // check for image
+                if (guest.ImageUrl != null)
                 {
-                    <div class="rounded float-left p-2 m-2 bg-dotnet">
-                        <img alt="@($"{guest.FirstName} {guest.LastName}")"
-                             src="@guest.ImageUrl">
-                    </div>
+                    <a href="https://twitter.com/@(guest.TwitterHandle)" target="_blank">
+                        <div class="rounded float-right p-2 m-2 bg-dotnet">
+                            <img alt="@($"{guest.FirstName} {guest.LastName}")"
+                                 src="@guest.ImageUrl">
+                        </div>
+                    </a>
                 }
             }
             @(Show.ToGeneralDescription())

@@ -16,8 +16,7 @@ namespace DotNetDocs.Web.Extensions
             IConfiguration configuration)
         {
             services.AddDataProtection();
-            return services.Configure<FeatureOptions>(
-                configuration.GetSection(nameof(FeatureOptions)))
+            return services.Configure<FeatureOptions>(configuration.GetSection(nameof(FeatureOptions)))
                 .AddSingleton(
                     new MapperConfiguration(config =>
                         config.AddProfile(new MappingProfile()))

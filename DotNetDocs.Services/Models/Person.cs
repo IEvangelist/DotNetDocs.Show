@@ -10,6 +10,8 @@
 
         public string TwitterHandle { get; set; } = null!;
 
+        public string ImageUrl { get; set; } = null!;
+
         public bool IsBlueBadge { get; set; }
 
         public bool IsMicrosoftMvp => MicrosoftMvpId.HasValue;
