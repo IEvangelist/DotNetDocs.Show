@@ -32,6 +32,10 @@ a.nav-link.text-light.active {
     color: var(--dotnet-color) !important;
 }
 
+.bg-dotnet {
+    background-color: var(--dotnet-color);
+}
+
 .badge-dotnet {
     color: #fff;
     background-color: var(--dotnet-color);
