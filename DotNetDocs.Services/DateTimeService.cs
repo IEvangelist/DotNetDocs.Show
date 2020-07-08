@@ -62,10 +62,11 @@ namespace DotNetDocs.Services
 
             if (interleaveShowGaps ?? false)
             {
-                DateTimeOffset AdjustForDaylightSavingsTime(DateTimeOffset dateTimeOffset) =>
-                    dateTimeOffset.ToOffset(
-                        GetCentralTimeZoneOffset(
-                            dateTimeOffset.DateTime));
+                DateTimeOffset AdjustForDaylightSavingsTime(DateTimeOffset dateTimeOffset)
+                {
+                    var result = dateTimeOffset.ToOffset(GetCentralTimeZoneOffset(dateTimeOffset.DateTime));
+                    return result.Hour == 10 ? result.AddHours(1) : result;
+                }
 
                 futureShows =
                     scheduledShows.InterleaveWithAdaptor(
