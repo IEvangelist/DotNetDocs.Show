@@ -76,8 +76,8 @@ namespace DotNetDocs.Services
                         show => show.Date!.Value,
                         date => DocsShow.CreatePlaceholder(AdjustForDaylightSavingsTime(date)),
                         TimeSpan.FromDays(7),
-                        nearestOfMultiple)
-                    .Where(show => !IsHoliday(show.Date!.Value.DateTime))
+                        nearestOfMultiple,
+                        date => !IsHoliday(date.DateTime))
                     .OrderByDescending(show => show.Date!.Value);
 
                 return new SegmentedShows(pastShows, nextShow, futureShows);

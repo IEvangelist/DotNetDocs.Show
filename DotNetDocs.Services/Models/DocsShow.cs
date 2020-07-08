@@ -1,9 +1,11 @@
 ﻿using DotNetDocs.Repository;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace DotNetDocs.Services.Models
 {
+    [DebuggerDisplay("Date = {Date}, Title = {Title}, Published = {IsPublished}")]
     public class DocsShow : Document
     {
         public DateTimeOffset? Date { get; set; }
@@ -39,7 +41,7 @@ namespace DotNetDocs.Services.Models
         public DocsShow() { }
 
         private DocsShow(DateTimeOffset showDate) =>
-            (IsPlaceholder, Date) = (true, showDate);
+            (IsPlaceholder, IsPublished, Date) = (true, false, showDate);
 
         public static DocsShow CreatePlaceholder(DateTimeOffset showDate) =>
             new DocsShow(showDate);

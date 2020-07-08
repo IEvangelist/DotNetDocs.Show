@@ -16,7 +16,8 @@ namespace DotNetDocs.Extensions
             Func<T, DateTimeOffset> dateSelector,
             Func<DateTimeOffset, T> adaptSelector,
             TimeSpan expectedGap,
-            int? nearestOfMultiple = null)
+            int? nearestOfMultiple = null,
+            Func<DateTimeOffset, bool>? filterPredicate = null)
         {
             DateTimeOffset previousDate = default;
             TimeSpan difference = default;
@@ -32,7 +33,7 @@ namespace DotNetDocs.Extensions
                 else
                 {
                     DateTimeOffset currentDate = dateSelector(value);
-                    difference = currentDate - previousDate;
+                    difference = currentDate.Date - previousDate.Date;
                     if (difference.Duration() == expectedGap.Duration())
                     {
                         previousDate = currentDate;
@@ -40,7 +41,7 @@ namespace DotNetDocs.Extensions
                     else
                     {
                         DateTimeOffset nextDate = previousDate.Add(expectedGap);
-                        while (nextDate < currentDate)
+                        while (nextDate.Date < currentDate.Date)
                         {
                             results.Add(adaptSelector(nextDate));
                             nextDate = nextDate.Add(expectedGap);
@@ -59,7 +60,10 @@ namespace DotNetDocs.Extensions
                 while (results.Count < nearest)
                 {
                     previousDate = previousDate.Add(expectedGap);
-                    results.Add(adaptSelector(previousDate));
+                    if (filterPredicate?.Invoke(previousDate) ?? true)
+                    {
+                        results.Add(adaptSelector(previousDate));
+                    }
                 }
             }
 
