@@ -51,6 +51,14 @@ a.nav-link.text-light.active {
     background-color: #591CB3;
 }
 
+.circle {
+    border-radius: 50%;
+}
+
+.bg-twitter {
+    background-color: #6cadde;
+}
+
 .badge-msft {
     color: #fff;
     background-color: #012456;

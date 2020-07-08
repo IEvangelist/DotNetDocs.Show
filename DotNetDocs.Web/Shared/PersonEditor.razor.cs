@@ -79,6 +79,11 @@ namespace DotNetDocs.Web.Shared
                     }
                 }
 
+                if (Person.ImageUrl != null)
+                {
+                    Person.ImageUrl = Person.ImageUrl.Replace("_normal", "_bigger");
+                }
+
                 void UpdateCollection(IEnumerable<Person> people)
                 {
                     Person? person = people.FirstOrDefault(p => p.Email == PersonEmail);

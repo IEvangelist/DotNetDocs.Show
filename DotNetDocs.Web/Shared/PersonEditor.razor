@@ -53,6 +53,11 @@ else
                 </div>
             </div>
             <div class="form-group">
+                <label for="profileImage">Image URL</label>
+                <InputText id="profileImage" @bind-Value="Person.ImageUrl" class="form-control" />
+                <ValidationMessage For="() => Person.ImageUrl" />
+            </div>
+            <div class="form-group">
                 <div class="row">
                     <div class="col">
                         <label for="mvp">MVP ID</label>

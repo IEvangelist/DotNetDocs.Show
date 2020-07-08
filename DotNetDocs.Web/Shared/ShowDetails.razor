@@ -21,9 +21,9 @@
                 if (guest.ImageUrl != null)
                 {
                     <a href="https://twitter.com/@(guest.TwitterHandle)" target="_blank">
-                        <div class="rounded float-right p-2 m-2 bg-dotnet">
+                        <div class="circle float-right p-1 m-2 bg-twitter">
                             <img alt="@($"{guest.FirstName} {guest.LastName}")"
-                                 src="@guest.ImageUrl">
+                                 class="circle" src="@guest.ImageUrl">
                         </div>
                     </a>
                 }
