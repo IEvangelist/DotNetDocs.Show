@@ -1,58 +1,57 @@
 ﻿@attribute [Authorize]
 @page "/admin/show/{showId}"
-@inherits ShowComponent
 
 
-@if (Show is null)
+@if (Episode is null)
 {
     <LoadingIndicator />
 }
 else
 {
 <div class="container">
-    <EditForm Model="Show" OnValidSubmit="(async context => await SubmitShowUpdatesAsync(context))">
+    <EditForm Model="Episode" OnValidSubmit="(async context => await SubmitShowUpdatesAsync(context))">
         <DataAnnotationsValidator />
-        <ValidationSummary Model="Show" />
+        <ValidationSummary Model="Episode" />
 
         <div class="form-group">
             <label for="title">Title</label>
-            <InputText id="title" @bind-Value="Show.Title" class="form-control" />
-            <ValidationMessage For="() => Show.Title" />
+            <InputText id="title" @bind-Value="Episode.Title" class="form-control" />
+            <ValidationMessage For="() => Episode.Title" />
         </div>
         <div class="form-group">
             <label for="date">Date</label>
-            <InputText id="date" @bind-Value="Show.DateString"
+            <InputText id="date" @bind-Value="Episode.DateString"
                        placeholder="YYYY-MM-DDTHH:mm:ss US/Central (-05)"
                        class="form-control" />
-            <ValidationMessage For="() => Show.DateString" />
+            <ValidationMessage For="() => Episode.DateString" />
         </div>
         <div class="form-group">
             <div class="row">
                 <div class="col">
                     <label for="url">Guest Stream URL</label>
-                    <InputText id="url" @bind-Value="Show.GuestStreamUrl" class="form-control" />
-                    <ValidationMessage For="() => Show.GuestStreamUrl" />
+                    <InputText id="url" @bind-Value="Episode.GuestStreamUrl" class="form-control" />
+                    <ValidationMessage For="() => Episode.GuestStreamUrl" />
                 </div>
                 <div class="col">
                     <label for="url">URL</label>
-                    <InputText id="url" @bind-Value="Show.Url" class="form-control" />
-                    <ValidationMessage For="() => Show.Url" />
+                    <InputText id="url" @bind-Value="Episode.Url" class="form-control" />
+                    <ValidationMessage For="() => Episode.Url" />
                 </div>
             </div>
         </div>
         <div class="form-group">
             <label for="thumb">Thumbnail image</label>
             <div class="input-group">
-                <InputText id="thumb" @bind-Value="Show.ShowImage" class="form-control" />
+                <InputText id="thumb" @bind-Value="Episode.ShowImage" class="form-control" />
                 <div class="input-group-append">
                     @{
-                    var showId = Show.VideoId;
+                    var showId = Episode.VideoId;
                     var isDisabled = !showId.HasValue;
                     }
                     <input type="button" value="Select Thumbnail" class="btn btn-secondary" data-toggle="modal" data-target="#thumbnailModal"
-                           disabled="@(!Show.VideoId.HasValue)" @onclick="@(_ => OnSelectShowThumbnail())">
+                           disabled="@(!Episode.VideoId.HasValue)" @onclick="@(_ => OnSelectShowThumbnail())">
                 </div>
-                <ValidationMessage For="() => Show.ShowImage" />
+                <ValidationMessage For="() => Episode.ShowImage" />
             </div>
         </div>
         <div class="form-group">
@@ -60,7 +59,7 @@ else
                 <div class="col">
                     <label>Hosts</label>
                     <br>
-                    @foreach (var host in Show.Hosts)
+                    @foreach (var host in Episode.Hosts)
                     {
                     <input type="button" value="@($"{host.FirstName} {host.LastName}")" class="btn btn-lg btn-dotnet"
                            @onclick="@(_ => OnEditPerson(host.Email))">
@@ -69,7 +68,7 @@ else
                 <div class="col">
                     <label>Guests</label>
                     <br>
-                    @foreach (var guest in Show.Guests)
+                    @foreach (var guest in Episode.Guests)
                     {
                     <input type="button" value="@($"{guest.FirstName} {guest.LastName}")" class="btn btn-lg btn-info"
                            @onclick="@(_ => OnEditPerson(guest.Email))">
@@ -81,13 +80,13 @@ else
             <div class="row">
                 <div class="col">
                     <label for="url">Published</label>
-                    <InputCheckbox id="url" @bind-Value="Show.IsPublished" class="form-control" />
-                    <ValidationMessage For="() => Show.IsPublished" />
+                    <InputCheckbox id="url" @bind-Value="Episode.IsPublished" class="form-control" />
+                    <ValidationMessage For="() => Episode.IsPublished" />
                 </div>
                 <div class="col">
                     <label for="url">Calendar invite sent</label>
-                    <InputCheckbox id="url" @bind-Value="Show.IsCalendarInviteSent" title="This is set automatically" disabled class="form-control" />
-                    <ValidationMessage For="() => Show.IsCalendarInviteSent" />
+                    <InputCheckbox id="url" @bind-Value="Episode.IsCalendarInviteSent" title="This is set automatically" disabled class="form-control" />
+                    <ValidationMessage For="() => Episode.IsCalendarInviteSent" />
                 </div>
             </div>
         </div>

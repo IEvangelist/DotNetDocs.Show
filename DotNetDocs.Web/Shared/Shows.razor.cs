@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace DotNetDocs.Web.Shared
 {
-    public class ShowsComponent : ComponentBase
+    public partial class Shows
     {
         [Inject]
         public NavigationManager Navigation { get; set; } = null!;
@@ -16,39 +16,39 @@ namespace DotNetDocs.Web.Shared
         [Inject]
         public IScheduleService? ScheduleService { get; set; }
 
-        public IEnumerable<DocsShow> Shows { get; set; } = null!;
+        public IEnumerable<DocsShow> Episodes { get; set; } = null!;
 
-        protected DocsShow? _show;
-        protected bool _showModal = false;
+        DocsShow? _show;
+        bool _showModal = false;
 
         protected override async Task OnInitializedAsync()
         {
             if (ScheduleService != null)
             {
-                Shows = await ScheduleService.GetAllAsync(DateTime.Now.AddYears(-10));
+                Episodes = await ScheduleService.GetAllAsync(DateTime.Now.AddYears(-10));
             }
         }
 
-        protected void Cancel() => _showModal = false;
+        void Cancel() => _showModal = false;
 
-        protected async Task PerformDelete()
+        async Task PerformDelete()
         {
             if (ScheduleService != null && _show != null)
             {
                 await ScheduleService.DeleteShowAsync(_show.Id);
-                Shows = Shows.Where(show => show != _show);
+                Episodes = Episodes.Where(show => show != _show);
             }
 
             _showModal = false;
         }
 
-        protected void OnConfirmDelete(DocsShow show)
+        void OnConfirmDelete(DocsShow show)
         {
             _show = show;
             _showModal = true;
         }
 
-        protected void NavigateToShowDetails(string showId) =>
+        void NavigateToShowDetails(string showId) =>
             Navigation.NavigateTo($"/admin/show/{showId}");
     }
 }

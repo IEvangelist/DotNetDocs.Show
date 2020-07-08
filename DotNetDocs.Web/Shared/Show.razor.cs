@@ -12,7 +12,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace DotNetDocs.Web.Shared
 {
-    public class ShowComponent : ComponentBase
+    public partial class Show
     {
         [Inject]
         public IMapper? Mapper { get; set; }
@@ -38,7 +38,7 @@ namespace DotNetDocs.Web.Shared
         protected string SelectedShowId { get; set; } = null!;
         protected int SelectedVideoId { get; set; }
         protected bool IsFormInvalid { get; set; }
-        protected ShowModel Show { get; set; } = null!;
+        protected ShowModel Episode { get; set; } = null!;
 
         EditContext? _editContext;
         DocsShow? _show;
@@ -54,7 +54,7 @@ namespace DotNetDocs.Web.Shared
                     var nxtThrsdy = DateTime.Today.AddDays(1).GetNextWeekday(DayOfWeek.Thursday);
                     var offset = DateTimeService.GetCentralTimeZoneOffset(nxtThrsdy);
 
-                    Show = Mapper?.Map<ShowModel>(new DocsShow
+                    Episode = Mapper?.Map<ShowModel>(new DocsShow
                     {
                         Date = new DateTimeOffset(
                             nxtThrsdy.Year,
@@ -67,10 +67,10 @@ namespace DotNetDocs.Web.Shared
                 else
                 {
                     _show = await ScheduleService.GetShowAsync(ShowId);
-                    Show = Mapper?.Map<ShowModel>(_show)!;
+                    Episode = Mapper?.Map<ShowModel>(_show)!;
                 }
                 
-                _editContext = new EditContext(Show);
+                _editContext = new EditContext(Episode);
                 _editContext.OnFieldChanged += OnModelChanged;
             }
         }
@@ -83,7 +83,7 @@ namespace DotNetDocs.Web.Shared
 
         protected async ValueTask SubmitShowUpdatesAsync(EditContext context)
         {
-            if (ScheduleService != null && (_show = Mapper?.Map<DocsShow>(Show)) != null)
+            if (ScheduleService != null && (_show = Mapper?.Map<DocsShow>(Episode)) != null)
             {
                 if (LogicAppService != null &&
                     _show.IsPublished &&
@@ -114,14 +114,14 @@ namespace DotNetDocs.Web.Shared
         protected void OnSelectShowThumbnail()
         {
             SelectedShowId = ShowId!;
-            SelectedVideoId = Show.VideoId!.Value;
+            SelectedVideoId = Episode.VideoId!.Value;
 
             StateHasChanged();
         }
 
         protected void OnThumbnailChanged(string thumbnailUrl)
         {
-            Show.ShowImage = thumbnailUrl;
+            Episode.ShowImage = thumbnailUrl;
 
             StateHasChanged();
         }

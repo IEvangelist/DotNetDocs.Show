@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace DotNetDocs.Web.Shared
 {
-    public class CountDownTimerComponent : ComponentBase, IDisposable
+    public partial class CountDownTimer : IDisposable
     {
         static readonly TimeSpan ShowDuration = TimeSpan.FromHours(-1).Duration();
 
@@ -26,9 +26,9 @@ namespace DotNetDocs.Web.Shared
         protected DateTime DateTime { get; private set; }
 
         bool _showStarted;
-        Timer _timer;
+        Timer? _timer;
 
-        public CountDownTimerComponent()
+        public CountDownTimer()
         {
             _timer = new Timer(1000);
             _timer.Elapsed += OnTimerElapsed;
@@ -36,14 +36,17 @@ namespace DotNetDocs.Web.Shared
 
         protected override void OnParametersSet()
         {
-            _timer.Start();
+            _timer?.Start();
 
             base.OnParametersSet();
         }
 
         async void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
-            _timer.Enabled = false;
+            if (_timer != null)
+            {
+                _timer.Enabled = false;
+            }
 
             DateTime = TimeZoneInfo.ConvertTime(DateTime.Now, DateTimeService.CentralTimeZone);
             TimeRemaining = ShowTime.Subtract(DateTime);
@@ -88,7 +91,10 @@ namespace DotNetDocs.Web.Shared
                 }
             }
 
-            _timer.Enabled = reenableTimer;
+            if (_timer != null)
+            {
+                _timer.Enabled = reenableTimer;
+            }
         }
 
         public void Dispose()

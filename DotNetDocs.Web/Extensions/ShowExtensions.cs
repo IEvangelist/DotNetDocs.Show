@@ -116,7 +116,7 @@ namespace DotNetDocs.Web.Extensions
             builder.AppendLine($"⏰ {date:hh:mm tt} US/Central • {utc:HH:mm} UTC");
             builder.AppendLine();
 
-            builder.AppendLine("#TheDotNetDocsShow");
+            builder.AppendLine("#TheDotNetDocsShow #dotnet");
             builder.AppendLine();
 
             return builder.ToString();

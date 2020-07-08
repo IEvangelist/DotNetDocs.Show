@@ -46,7 +46,8 @@ namespace DotNetDocs.Web.Pages
                 var segmentedShows = DateTimeService.GetSegmentedShows(
                     shows.Where(show => show.IsPublished),
                     utcNow,
-                    true);
+                    true,
+                    10);
 
                 Shows = segmentedShows.FutureShows;
             }

@@ -44,7 +44,8 @@ namespace DotNetDocs.Services
         public SegmentedShows GetSegmentedShows(
             IEnumerable<DocsShow> shows,
             DateTime segmentDate,
-            bool? interleaveShowGaps = null)
+            bool? interleaveShowGaps = null,
+            int nearestOfMultiple = 4)
         {
             _logger.LogInformation($"segmentDate: {segmentDate}");
 
@@ -59,13 +60,17 @@ namespace DotNetDocs.Services
             var nextShow = futureShows.TakeLast(1).SingleOrDefault();
             var scheduledShows = futureShows.SkipLast(1);
 
-            const int nearestOfMultiple = 4;
             if (interleaveShowGaps ?? false)
             {
+                DateTimeOffset AdjustForDaylightSavingsTime(DateTimeOffset dateTimeOffset) =>
+                    dateTimeOffset.ToOffset(
+                        GetCentralTimeZoneOffset(
+                            dateTimeOffset.DateTime));
+
                 futureShows =
                     scheduledShows.InterleaveWithAdaptor(
                         show => show.Date!.Value,
-                        date => DocsShow.CreatePlaceholder(date),
+                        date => DocsShow.CreatePlaceholder(AdjustForDaylightSavingsTime(date)),
                         TimeSpan.FromDays(7),
                         nearestOfMultiple)
                     .OrderByDescending(show => show.Date!.Value);
