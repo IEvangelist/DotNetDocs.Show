@@ -19,10 +19,24 @@
             {
                 <div class="col-lg-8">
                     <h2 class="display-4">@Show.Title</h2>
-                    <p class="lead">@(Show.ToGeneralDescription())</p>
+                    <p class="lead">
+                        @(Show.ToGeneralDescription())
+                    </p>
                     <div class="row pb-4">
-                        <div class="col-md-8 pb-2">
+                        <div class="col-md-6 pb-2">
                             <CountDownTimer ShowTime="@Show.Date!.Value.DateTime" ShowIsStarting="OnShowIsStarting" />
+                        </div>
+                        <div class="col-md-2 pb-2">
+                            @{
+                                var guest = Show.Guests.First();
+                                if (guest.ImageUrl != null)
+                                {
+                                    <a href="https://twitter.com/@(guest.TwitterHandle)" target="_blank" class="d-none d-lg-inline">
+                                        <img alt="@($"{guest.FirstName} {guest.LastName}")"
+                                             class="circle bg-twitter shadow twitter-border" src="@guest.ImageUrl">
+                                    </a>
+                                }
+                            }
                         </div>
                         <div class="col-md-4">
                             <span class="text-center pb-2 d-inline-block">

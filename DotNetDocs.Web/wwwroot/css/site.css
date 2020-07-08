@@ -55,6 +55,10 @@ a.nav-link.text-light.active {
     border-radius: 50%;
 }
 
+.twitter-border {
+    border: 3px solid #6cadde;
+}
+
 .bg-twitter {
     background-color: #6cadde;
 }
