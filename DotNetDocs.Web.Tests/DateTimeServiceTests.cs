@@ -73,7 +73,7 @@ namespace DotNetDocs.Web.Tests
             Assert.NotNull(segmentedShows);
             Assert.Single(segmentedShows.PastShows);
             Assert.Equal("Second show", segmentedShows.NextShow.Title);
-            Assert.Equal(8, segmentedShows.FutureShows.Count());
+            Assert.Equal(7, segmentedShows.FutureShows.Count());
             Assert.Contains(segmentedShows.FutureShows, s => s.IsPlaceholder);
 
             segmentedShows =
