@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using DotNetDocs.Services;
+using DotNetDocs.Services.Models;
 using DotNetDocs.Web.Extensions;
 using DotNetDocs.Web.PageModels;
 using Microsoft.AspNetCore.Components;
@@ -21,6 +22,9 @@ namespace DotNetDocs.Web.Shared
 
         [Inject]
         public LogicAppService? RequestShowService { get; set; }
+
+        [Inject]
+        public IScheduleService? ScheduleService { get; set; }
 
         [Inject]
         public IDataProtectionProvider? ProtectionProvider { get; set; }
@@ -95,6 +99,26 @@ namespace DotNetDocs.Web.Shared
                     RequestShow.LastName,
                     RequestShow.Email,
                     RequestShow.TwitterHandle);
+
+                if (IsRequested && ScheduleService != null)
+                {
+                    await ScheduleService.CreateShowAsync(new DocsShow
+                    {
+                        IsPublished = false,
+                        Date = RequestShow.ShowDate,
+                        Title = RequestShow.TentativeTitle,
+                        Guests = new[]
+                        {
+                            new Person
+                            {
+                                FirstName = RequestShow.FirstName,
+                                LastName = RequestShow.LastName,
+                                Email = RequestShow.Email,
+                                TwitterHandle = RequestShow.TwitterHandle
+                            }
+                        }
+                    });
+                }
             }
         }
 
