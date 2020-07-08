@@ -33,15 +33,15 @@ namespace DotNetDocs.Web.Pages
 
         const string NextShowElementId = "next-show";
 
-        private SegmentedShows? _segmentedShows;
+        SegmentedShows? _segmentedShows;
 
-        private IEnumerable<DocsShow>? _shows;
-        private IEnumerable<DocsShow>? _pastShows;
-        private IEnumerable<DocsShow>? _futureShows;
+        IEnumerable<DocsShow>? _shows;
+        IEnumerable<DocsShow>? _pastShows;
+        IEnumerable<DocsShow>? _futureShows;
 
-        private DocsShow? _nextShow;
-
-        private readonly Lazy<MarkupString> _dateTimeDebug = new Lazy<MarkupString>(() =>
+        DocsShow? _nextShow;
+        
+        readonly Lazy<MarkupString> _dateTimeDebug = new Lazy<MarkupString>(() =>
         {
             var builder = new StringBuilder();
             builder.AppendLine($"TimeZoneInfo.Local: {TimeZoneInfo.Local}");
@@ -52,6 +52,8 @@ namespace DotNetDocs.Web.Pages
 
             return new MarkupString(builder.ToString());
         });
+
+        protected bool OrderFutureShowsDescending { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
