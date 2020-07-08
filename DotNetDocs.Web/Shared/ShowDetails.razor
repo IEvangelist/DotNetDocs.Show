@@ -16,6 +16,18 @@
         </h5>
         <div class="lead">@ShowDateTimeString</div>
         <p class="card-text">
+            @{
+                var guest = Show.Guests.First();
+                if (guest.ImageUrl != null)
+                {
+                    <a href="https://twitter.com/@(guest.TwitterHandle)" target="_blank">
+                        <div class="rounded float-right p-2 m-2 bg-dotnet">
+                            <img alt="@($"{guest.FirstName} {guest.LastName}")"
+                                 src="@guest.ImageUrl">
+                        </div>
+                    </a>
+                }
+            }
             @(Show.ToGeneralDescription())
         </p>
     </div>

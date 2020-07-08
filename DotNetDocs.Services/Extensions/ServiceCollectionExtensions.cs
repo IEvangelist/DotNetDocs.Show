@@ -18,6 +18,8 @@ namespace DotNetDocs.Services.Extensions
                            .AddSingleton<IScheduleService, ScheduleService>()
                            .AddSingleton<DateTimeService>()
                            .Configure<TwitchOptions>(configuration.GetSection(nameof(TwitchOptions)))
+                           .Configure<TwitterOptions>(configuration.GetSection(nameof(TwitterOptions)))
+                           .AddSingleton<TwitterService>()
                            .Configure<LogicAppOptions>(configuration.GetSection(nameof(LogicAppOptions)));
         }
     }

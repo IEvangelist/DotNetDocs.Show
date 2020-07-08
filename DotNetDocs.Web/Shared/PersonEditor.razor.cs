@@ -22,6 +22,9 @@ namespace DotNetDocs.Web.Shared
         public IScheduleService? ScheduleService { get; set; }
 
         [Inject]
+        public TwitterService? TwitterService { get; set; }
+
+        [Inject]
         public IMemoryCache? Cache { get; set; }
 
         [Inject]
@@ -65,6 +68,17 @@ namespace DotNetDocs.Web.Shared
         {
             if (ScheduleService != null && _show != null)
             {
+                if (TwitterService != null &&
+                    Person.TwitterHandle != null &&
+                    Person.ImageUrl is null)
+                {
+                    string? imageUrl = TwitterService.GetUserProfileImage(Person.TwitterHandle);
+                    if (!string.IsNullOrWhiteSpace(imageUrl))
+                    {
+                        Person.ImageUrl = imageUrl;
+                    }
+                }
+
                 void UpdateCollection(IEnumerable<Person> people)
                 {
                     Person? person = people.FirstOrDefault(p => p.Email == PersonEmail);

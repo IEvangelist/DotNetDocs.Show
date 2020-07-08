@@ -32,6 +32,10 @@ a.nav-link.text-light.active {
     color: var(--dotnet-color) !important;
 }
 
+.bg-dotnet {
+    background-color: var(--dotnet-color);
+}
+
 .badge-dotnet {
     color: #fff;
     background-color: var(--dotnet-color);
@@ -49,7 +53,7 @@ a.nav-link.text-light.active {
 
 .badge-msft {
     color: #fff;
-    background-color: red;
+    background-color: #012456;
 }
 
 .badge-mvp {
