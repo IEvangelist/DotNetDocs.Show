@@ -15,7 +15,7 @@ else
                 <th scope="col">
                     Guests &nbsp; <span class="all-devs"></span>
                 </th>
-                <th scope="col">Title</th>
+                <th scope="col">Title / Tags</th>
                 <th scope="col" class="clickable" @onclick="@(_ => _orderDescending = !_orderDescending)">
                     Date &nbsp; <span class='oi oi-chevron-@(_orderDescending ? "bottom" : "top")'></span>
                 </th>
@@ -55,6 +55,8 @@ else
                     else
                     {
                         @(show.Title)
+                        <br>
+                        <Tags TagValues="@show.ToShowTags()" />
                     }
                 </td>
                 <td>@($"{show.Date:MMM dd, yyyy hh:mm (zzzz)}")</td>
