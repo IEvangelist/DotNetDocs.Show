@@ -20,7 +20,9 @@
             var dateRoute = $"{ShowDateTime.Month:00}-{ShowDateTime.Day:00}-{ShowDateTime.Year}".Encrypt(ProtectionProvider!);
         }
         <button class="btn btn-sm btn-dotnet float-right"
-                @onclick='@(_ => Navigation.NavigateTo($"/request/{dateRoute}"))'>Request</button>
+                @onclick='@(_ => Navigation.NavigateTo($"/request/{dateRoute}"))'>
+            <span class="pr-2 oi oi-envelope-closed"></span> Request
+        </button>
     </div>
 </div>
 @if (IsDivisableBy(1))

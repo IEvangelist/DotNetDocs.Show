@@ -12,14 +12,14 @@ else
     <table class="table table-hover pt-4">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Actions</th>
+                <th scope="col">
+                    Guests &nbsp; <span class="all-devs"></span>
+                </th>
                 <th scope="col">Title</th>
                 <th scope="col" class="clickable" @onclick="@(_ => _orderDescending = !_orderDescending)">
                     Date &nbsp; <span class='oi oi-chevron-@(_orderDescending ? "bottom" : "top")'></span>
                 </th>
-                <th scope="col">
-                    Guests &nbsp; <span class="all-devs"></span>
-                </th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -27,40 +27,55 @@ else
                 _orderDescending ? Shows.OrderByDescending(s => s.Date) : Shows.OrderBy(s => s.Date))
             {
                 var isPlaceholder = show.IsPlaceholder;
-                <tr>
-                    <td>
-                        @if (isPlaceholder)
+            <tr>
+                <td>
+                    @if (isPlaceholder)
+                    {
+                        <img alt="Maybe you?" class="circle bg-twitter twitter-border" src="dotnet-bot-head.jpg">
+                        <span>You?!</span>
+                    }
+                    else
+                    {
+                        var guest = show.Guests.First();
+                        if (guest.ImageUrl != null)
                         {
-                            var date = show.Date!.Value;
-                            var dateRoute = $"{date.Month:00}-{date.Day:00}-{date.Year}".Encrypt(ProtectionProvider!);
-                            <button class="btn btn-sm btn-dotnet"
-                                    @onclick='@(_ => Navigation.NavigateTo($"/request/{dateRoute}"))'>
-                                Request
-                            </button>
+                            <a href="https://twitter.com/@(guest.TwitterHandle)" target="_blank">
+                                <img alt="@($"{guest.FirstName} {guest.LastName}")"
+                                     class="circle bg-twitter twitter-border" src="@guest.ImageUrl">
+                            </a>
                         }
-                    </td>
-                    <td>
-                        @if (isPlaceholder)
-                        {
-                            <span>Submit a topic, and maybe you'll be our guest!</span>
-                        }
-                        else
-                        {
-                            @(show.Title)
-                        }
-                    </td>
-                    <td>@($"{show.Date:MMM dd, yyyy hh:mm (zzzz)}")</td>
-                    <td>
-                        @if (isPlaceholder)
-                        {
-                            <span>You?!</span>
-                        }
-                        else
-                        {
-                            @(new MarkupString(show.Guests.ToCommaSeparatedString(true)))
-                        }
-                    </td>
-                </tr>
+                        @(new MarkupString(show.Guests.ToCommaSeparatedString(true)))
+                    }
+                </td>
+                <td>
+                    @if (isPlaceholder)
+                    {
+                        <span>Submit a topic, and maybe you'll be our guest!</span>
+                    }
+                    else
+                    {
+                        @(show.Title)
+                    }
+                </td>
+                <td>@($"{show.Date:MMM dd, yyyy hh:mm (zzzz)}")</td>
+                <td>
+                    @if (isPlaceholder)
+                    {
+                        var date = show.Date!.Value;
+                        var dateRoute = $"{date.Month:00}-{date.Day:00}-{date.Year}".Encrypt(ProtectionProvider!);
+                        <button class="btn btn-sm btn-dotnet"
+                                @onclick='@(_ => Navigation.NavigateTo($"/request/{dateRoute}"))'>
+                            <span class="pr-2 oi oi-envelope-closed"></span> Submit a topic
+                        </button>
+                    }
+                    else
+                    {
+                        <a href="@(show.AddToGoogleCalendar())" class="btn btn-sm btn-dotnet" target="_blank">
+                            <span class="pr-2 oi oi-plus"></span> Add to calendar
+                        </a>
+                    }
+                </td>
+            </tr>
             }
         </tbody>
     </table>

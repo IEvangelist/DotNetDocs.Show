@@ -89,11 +89,11 @@ namespace DotNetDocs.Web.Extensions
             new MarkupString(twitterHandle.ToTwitterUrl());
 
         public static string ToMvpUrl(this Person person) =>
-            $"<a href='https://mvp.microsoft.com/en-us/PublicProfile/{person.MicrosoftMvpId}' target='_blank'>MVP</a>";
+            $"<a href='https://mvp.microsoft.com/en-us/PublicProfile/{person.MicrosoftMvpId}' target='_blank'>MVP 🏅</a>";
 
         public static IDictionary<string, string> ToShowTags(this DocsShow show) =>
             show.Tags
-                .Select(tag => (tag, color: ""))
+                .Select(tag => (tag: tag == ".NET" ? ".NET 💬" : tag, color: ""))
                 .Concat(
                     show.Guests
                         .Where(p => p.IsMicrosoftMvp)
@@ -101,7 +101,7 @@ namespace DotNetDocs.Web.Extensions
                 .Concat(
                     show.Guests
                         .Where(p => p.IsBlueBadge)
-                        .Select(p => (tag: "MSFT", color: "badge-msft")))
+                        .Select(p => (tag: "MSFT 🏢", color: "badge-msft")))
                 .ToDictionary(t => t.tag, t => t.color);
 
         public static string ToTweetText(this DocsShow show)

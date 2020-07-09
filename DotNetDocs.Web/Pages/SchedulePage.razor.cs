@@ -30,7 +30,7 @@ namespace DotNetDocs.Web.Pages
 
         public IEnumerable<DocsShow>? Shows { get; private set; }
 
-        bool _orderDescending = true;
+        bool _orderDescending = false;
 
         protected override async Task OnInitializedAsync()
         {
