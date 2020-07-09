@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DotNetDocs.Services;
 using DotNetDocs.Services.Models;
+using DotNetDocs.Web.PageModels;
 using DotNetDocs.Web.Workers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.DataProtection;
@@ -28,8 +29,17 @@ namespace DotNetDocs.Web.Pages
         [Inject]
         public DateTimeService DateTimeService { get; set; } = null!;
 
-        public IEnumerable<DocsShow>? Shows { get; private set; }
+        protected IEnumerable<DocsShow>? FilteredShows => _filterOption switch
+        {
+            FilterOption.AllShows => _shows,
+            FilterOption.OnlyMicrosoft => _shows.Where(s => s.Guests.Any(g => g.IsBlueBadge)),
+            FilterOption.OnlyMvps => _shows.Where(s => s.Guests.Any(g => g.IsMicrosoftMvp)),
+            FilterOption.OnlyRequestable => _shows.Where(s => s.IsPlaceholder),
+            _ => null
+        };
 
+        IEnumerable<DocsShow>? _shows;
+        FilterOption _filterOption = FilterOption.AllShows;
         bool _orderDescending = false;
 
         protected override async Task OnInitializedAsync()
@@ -49,8 +59,19 @@ namespace DotNetDocs.Web.Pages
                     true,
                     12);
 
-                Shows = segmentedShows.FutureShows;
+                _shows = segmentedShows.FutureShows.Concat(new[] { segmentedShows.NextShow! });
             }
         }
+
+        string ToDisplayName(FilterOption option) => option switch
+        {
+            FilterOption.AllShows => "All shows",
+            FilterOption.OnlyMicrosoft => "Microsoft Employees",
+            FilterOption.OnlyMvps => "Microsoft MVPs",
+            FilterOption.OnlyRequestable => "Available dates",
+            _ => throw new Exception("WTF?!")
+        };
+
+
     }
 }
