@@ -8,12 +8,33 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+.badge-success-a11y {
+    color: white;
+    background-color: #01731b;
+}
+
+.text-muted-a11y {
+    color: #434e58;
+}
+
 a, .btn-link {
     color: #0366d6;
 }
 
-    a, a:hover {
-        color: rgb(38, 124, 178);
+a {
+    color: var(--dotnet-color);
+}
+
+    a:hover {
+        color: #6e31c8;
+    }
+
+a.light {
+    color: lightcyan;
+}
+
+    a.light:hover {
+        color: cyan;
     }
 
 span.badge > a {
@@ -46,10 +67,10 @@ a.nav-link.text-light.active {
     background-color: var(--dotnet-color);
 }
 
-.btn-dotnet:hover {
-    color: #fff;
-    background-color: #591CB3;
-}
+    .btn-dotnet:hover {
+        color: #fff;
+        background-color: #591CB3;
+    }
 
 .circle {
     border-radius: 50%;
@@ -70,7 +91,7 @@ a.nav-link.text-light.active {
 
 .badge-mvp {
     color: #fff;
-    background-color: #01a6f0;
+    background-color: #007db5;
 }
 
 .badge-blue {
@@ -104,6 +125,7 @@ a.nav-link.text-light.active {
     from {
         color: #783bd2;
     }
+
     to {
         color: transparent;
     }
@@ -130,12 +152,15 @@ a.nav-link.text-light.active {
     0% {
         transform: translate(-1px, 9px) rotate(14deg);
     }
+
     33% {
         transform: translate(-1px, 11px) rotate(16deg);
     }
+
     66% {
         transform: translate(1px, 11px) rotate(14deg);
     }
+
     100% {
         transform: translate(1px, 9px) rotate(16deg);
     }
@@ -234,10 +259,10 @@ app {
             margin-left: 1.5rem;
         }
 
-.main .top-row a:first-child {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+        .main .top-row a:first-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
 .content {
     padding-top: 1.1rem;
@@ -265,9 +290,9 @@ tr.editable:hover {
     cursor: pointer;
 }
 
-    .clickable:disabled:hover, tr.editable:disabled:hover {
-        cursor: not-allowed;
-    }
+.clickable:disabled:hover, tr.editable:disabled:hover {
+    cursor: not-allowed;
+}
 
 #blazor-error-ui {
     background: lightyellow;
@@ -281,12 +306,12 @@ tr.editable:hover {
     z-index: 1000;
 }
 
-#blazor-error-ui .dismiss {
-    cursor: pointer;
-    position: absolute;
-    right: 0.75rem;
-    top: 0.5rem;
-}
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
 
 .all-devs {
     font-size: 1.5em;

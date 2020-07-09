@@ -75,7 +75,7 @@ namespace DotNetDocs.Web.Extensions
 
         public static string ToPrintFriendlyName(this Person person, bool includeTwitter = true)
         {
-            string? twitterHandle = person.TwitterHandle is null || !includeTwitter ? null : $" ({person.TwitterHandle.ToTwitterUrl()})";
+            string? twitterHandle = person.TwitterHandle is null || !includeTwitter ? null : $" {person.TwitterHandle.ToTwitterUrl()}";
             return $"{person.FirstName} {person.LastName}{twitterHandle}";
         }
 
@@ -89,7 +89,7 @@ namespace DotNetDocs.Web.Extensions
             new MarkupString(twitterHandle.ToTwitterUrl());
 
         public static string ToMvpUrl(this Person person) =>
-            $"<a href='https://mvp.microsoft.com/en-us/PublicProfile/{person.MicrosoftMvpId}' target='_blank'>MVP 🏅</a>";
+            $"<a href='https://mvp.microsoft.com/en-us/PublicProfile/{person.MicrosoftMvpId}' target='_blank' aria-label='MVP link for {person.FirstName} {person.LastName}'>MVP 🏅</a>";
 
         public static IDictionary<string, string> ToShowTags(this DocsShow show) =>
             show.Tags

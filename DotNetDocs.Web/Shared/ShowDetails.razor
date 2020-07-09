@@ -3,14 +3,14 @@
 @inject NavigationManager Navigation
 
 <div class="card mb-4">
-    <a href="@Show.Url" title="Watch this episode">
+    <a href="@Show.Url" title='Watch the "@(Show.Title)" episode'>
         <object class="card-img-top img-fluid" data="@Show.ShowImage" type="@(ToMimeType(Show.ShowImage))" alt="Thumbnail of episode">
             <img class="card-img-top img-fluid" src="default-thumb.png" alt="Thumbnail of episode">
         </object>
     </a>
     <div class="card-body">
         <h5 class="card-title">
-            <a href="@Show.Url" title="Watch this episode">
+            <a href="@Show.Url" title='Watch "@(Show.Title)" episode again'>
                 @Show.Title<br />
             </a>
         </h5>
@@ -42,11 +42,14 @@
 
         @if (Show.IsInFuture)
         {
-            <a href="@(Show.AddToGoogleCalendar())" target="_blank" class="float-right ml-2">Add to calendar?</a>
+            <a href="@(Show.AddToGoogleCalendar())" target="_blank"
+               class="float-right btn btn-sm btn-dotnet ml-2">
+                <span class="pr-2 oi oi-plus"></span> Add to calendar
+            </a>
         }
         else if (Show.IsNew)
         {
-            <span class="badge badge-success float-right ml-2">New ⚡</span>
+            <span class="badge badge-success-a11y float-right ml-2" style="margin-top:.3em;">NEW ⚡</span>
         }
     </div>
 </div>

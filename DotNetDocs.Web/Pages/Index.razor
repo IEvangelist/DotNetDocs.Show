@@ -18,22 +18,22 @@ else if (!_shows.Any())
 else
 {
     <h1 class="text-center">Streaming Live</h1>
-    <h3 class="text-center">
-        <small class="text-muted">Thursdays @@ 11:00 AM (US/Central)</small>
-    </h3>
+    <h2 class="text-center">
+        <small class="text-muted-a11y">Thursdays @@ 11:00 AM (US/Central)</small>
+    </h2>
     if (_futureShows?.Any() ?? false)
     {
         <div class="text-center pb-4">
-            <button class="btn btn-lg btn-dotnet" type="button" data-toggle="collapse" data-target="#collapsable" aria-expanded="false" aria-controls="collapseExample">
-                <span class="oi oi-calendar"></span> &nbsp; Upcoming Schedule
+            <button class="btn btn-lg btn-dotnet" type="button" data-toggle="collapse" data-target="#collapsable" aria-expanded="false" aria-controls="collapsable">
+                <span class="pr-2 oi oi-calendar"></span> Upcoming Schedule
             </button>
         </div>
         <div class="collapse" id="collapsable">
             <div class="text-center pb-4">
-                <h4>
-                    <small class="text-muted">Sort by show date</small>
-                </h4>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <h3>
+                    <small class="text-muted-a11y">Sort by show date</small>
+                </h3>
+                <div class="btn-group btn-group-toggle text-monospace" data-toggle="buttons">
                     <label @onclick="@(_ => OrderFutureShowsDescending = false)"
                            class="btn clickable btn-sm btn-secondary @(OrderFutureShowsDescending ? "" : "active")">
                         <input type="radio" name="options" id="option2"
@@ -81,7 +81,7 @@ else
     <div class="text-center pb-4">
         <a class="btn btn-lg btn-dotnet" href="https://www.youtube.com/channel/UCIy_nKrwrd-naf_MPWtXdLA"
            role="button" target="_blank" rel="nofollow noreferrer">
-            <span class="oi oi-thumb-up"></span> &nbsp; All Episodes
+            <span class="pr-2 oi oi-thumb-up"></span> All Episodes
         </a>
     </div>
 }

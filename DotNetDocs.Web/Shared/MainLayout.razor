@@ -24,7 +24,7 @@
                     </NavLink>
                     <a class="btn btn-light" href="AzureAD/Account/SignOut"
                        role="button" title="@($"Click to sign out \"{context.User.Identity.Name}\"")">
-                        <img src="ms-symbol.png" class=" pr-2" /> Sign out
+                        <img src="ms-symbol.png" alt="Microsoft logo" class=" pr-2" /> Sign out
                     </a>
                 </Authorized>
                 <NotAuthorized></NotAuthorized>
@@ -32,12 +32,14 @@
         </div>
 
         <div class="justify-content-end d-none d-lg-inline">
-            <a href="https://www.youtube.com/channel/UCIy_nKrwrd-naf_MPWtXdLA" class="pr-2" target="_blank">
+            <a href="https://www.youtube.com/channel/UCIy_nKrwrd-naf_MPWtXdLA"
+               aria-label="Link to The .NET Docs Show on YouTube" class="pr-2" target="_blank">
                 <svg width="130" height="38">
                     <image xlink:href="youtube-logo.svg" width="130" height="38"></image>
                 </svg>
             </a>
-            <a href="https://www.twitch.tv/thedotnetdocs" target="_blank">
+            <a href="https://www.twitch.tv/thedotnetdocs" target="_blank"
+               aria-label="Link to The .NET Docs Show on Twitch">
                 <svg width="114" height="38">
                     <image xlink:href="twitch-logo.svg" width="114" height="38"></image>
                 </svg>
@@ -55,13 +57,13 @@
                 <span>&copy; Copyright @DateTime.UtcNow.Year</span>
                 <span class="p-2">&bull;</span>
                 <span>
-                    <a href="https://github.com/IEvangelist/DotNetDocs.Show" target="_blank">GitHub</a>
+                    <a href="https://github.com/IEvangelist/DotNetDocs.Show" target="_blank" class="light">GitHub</a>
                 </span>
                 <span class="p-2">&bull;</span>
                 <span>Powered by @RuntimeInformation.FrameworkDescription</span>
                 <span class="p-2">&bull;</span>
                 <span>
-                    <a href="https://twitter.com/hashtag/TheDotNetDocsShow" target="_blank">#TheDotNetDocShow</a>
+                    <a href="https://twitter.com/hashtag/TheDotNetDocsShow" target="_blank" class="light">#TheDotNetDocShow</a>
                 </span>
             </small>
         </div>
