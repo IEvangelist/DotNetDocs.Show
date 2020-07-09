@@ -12,11 +12,11 @@ else
 {
     <div class="text-center pb-4">
         <h2>Filters</h2>
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <div class="btn-group btn-group-toggle text-monospace" data-toggle="buttons">
             @{
                 foreach (var option in Enum.GetValues(typeof(FilterOption)).Cast<FilterOption>())
                 {
-                    <label class="clickable btn btn-secondary@(_filterOption == option ? " active" : "")"
+                    <label class="clickable btn btn-sm btn-secondary@(_filterOption == option ? " active" : "")"
                            @onclick="@(_ => _filterOption = option)">
                         <input type="radio" name="options" id="@option"
                                autocomplete="off" checked="@(_filterOption == option)">
@@ -30,7 +30,7 @@ else
         <thead class="thead-dark">
             <tr>
                 <th scope="col">
-                    Guests &nbsp; <span class="all-devs"></span>
+                    Guests &nbsp; <span class="d-none d-lg-inline"><span class="all-devs"></span></span>
                 </th>
                 <th scope="col">Title / Tags</th>
                 <th scope="col" class="clickable" @onclick="@(_ => _orderDescending = !_orderDescending)">
