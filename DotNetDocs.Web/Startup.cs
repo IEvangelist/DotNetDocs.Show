@@ -26,6 +26,7 @@ namespace DotNetDocs.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
             services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
                 .AddAzureAD(options => _configuration.Bind("AzureAd", options));
 
