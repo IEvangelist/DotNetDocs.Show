@@ -1,5 +1,5 @@
 ﻿<span class="badge @(string.IsNullOrWhiteSpace(Class) ? "badge-dotnet" : Class)">
-    @(new MarkupString(Value))
+    @(Value!.ToMarkupString())
 </span>
 
 @code {

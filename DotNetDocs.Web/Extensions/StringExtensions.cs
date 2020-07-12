@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.DataProtection;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace DotNetDocs.Web.Extensions
 {
@@ -11,5 +12,7 @@ namespace DotNetDocs.Web.Extensions
 
         public static string Decrypt(this string value, IDataProtectionProvider protectionProvider) =>
             protectionProvider.CreateProtector(TheDotNetDocs).Unprotect(value);
+
+        public static MarkupString ToMarkupString(this string value) => new MarkupString(value);
     }
 }

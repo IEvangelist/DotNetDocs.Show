@@ -1,11 +1,13 @@
-﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
-
-:root {
+﻿:root {
     --dotnet-color: #783bd2;
 }
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.badge {
+    font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace !important;
 }
 
 .badge-success-a11y {
@@ -318,6 +320,11 @@ tr.editable:hover {
     display: inline-block;
     transition: all 0.5s ease-in-out;
 }
+
+    .all-devs:hover {
+        transition: all .2s ease-in-out;
+        transform: scale(1.5);
+    }
 
     .all-devs:after {
         -webkit-animation: change 12s linear infinite;

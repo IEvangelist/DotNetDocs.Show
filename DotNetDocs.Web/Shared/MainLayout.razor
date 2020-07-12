@@ -1,5 +1,4 @@
 ﻿@inherits LayoutComponentBase
-@using System.Runtime.InteropServices
 
 <div class="main">
     <nav class="navbar navbar-dark bg-dark sticky-top px-4">
@@ -9,18 +8,18 @@
 
         <div class="d-flex justify-content-center">
             <NavLink class="nav-link text-light d-none d-md-inline" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home pr-2" aria-hidden="true"></span> Home
+                <i class="pr-2 fas fa-home" aria-hidden="true"></i> Home
             </NavLink>
             <NavLink class="nav-link text-light d-none d-md-inline" href="schedule">
-                <span class="oi oi-calendar pr-2" aria-hidden="true"></span> Schedule
+                <i class="pr-2 fas fa-calendar" aria-hidden="true"></i> Schedule
             </NavLink>
             <AuthorizeView>
                 <Authorized>
                     <NavLink class="nav-link text-light" href="checklist">
-                        <span class="oi oi-task pr-2" aria-hidden="true"></span> Checklist
+                        <i class="pr-2 fas fa-tasks" aria-hidden="true"></i> Checklist
                     </NavLink>
                     <NavLink class="nav-link text-light mr-5" href="admin">
-                        <span class="oi oi-video pr-2" aria-hidden="true"></span> Shows
+                        <i class="pr-2 fas fa-video" aria-hidden="true"></i> Shows
                     </NavLink>
                     <a class="btn btn-light" href="AzureAD/Account/SignOut"
                        role="button" title="@($"Click to sign out \"{context.User.Identity.Name}\"")">

@@ -1,9 +1,6 @@
 ﻿@page "/schedule"
 @attribute [AllowAnonymous]
 
-@using DotNetDocs.Web.Extensions
-@using DotNetDocs.Web.PageModels
-
 @if (_shows == null)
 {
     <LoadingIndicator />
@@ -30,11 +27,12 @@ else
         <thead class="thead-dark">
             <tr>
                 <th scope="col">
-                    Guests &nbsp; <span class="d-none d-lg-inline"><span class="all-devs"></span></span>
+                    Guests <span class="pr-2 d-none d-lg-inline">
+                    <span class="all-devs" title="#IncludeEveryone"></span></span>
                 </th>
                 <th scope="col">Title / Tags</th>
                 <th scope="col" class="clickable" @onclick="@(_ => _orderDescending = !_orderDescending)">
-                    Date &nbsp; <span class='oi oi-chevron-@(_orderDescending ? "bottom" : "top")'></span>
+                    Date <i class='pl-2 fas fa-chevron-@(_orderDescending ? "down" : "up")'></i>
                 </th>
                 <th scope="col"></th>
             </tr>
@@ -66,7 +64,7 @@ else
                                          class="circle bg-twitter twitter-border" src="@guest.ImageUrl">
                                 </a>
                             }
-                            @(new MarkupString(show.Guests.ToCommaSeparatedString(true)))
+                            @(show.Guests.ToCommaSeparatedString(true).ToMarkupString())
                         }
                     </td>
                     <td>
@@ -89,13 +87,13 @@ else
                             var dateRoute = $"{date.Month:00}-{date.Day:00}-{date.Year}".Encrypt(ProtectionProvider!);
                             <button class="btn btn-sm btn-dotnet"
                                     @onclick='@(_ => Navigation.NavigateTo($"/request/{dateRoute}"))'>
-                                <span class="pr-2 oi oi-envelope-closed"></span> Submit a topic
+                                <i class="pr-2 fas fa-envelope-open-text"></i> Submit a topic
                             </button>
                         }
                         else
                         {
                             <a href="@(show.AddToGoogleCalendar())" class="btn btn-sm btn-dotnet" target="_blank">
-                                <span class="pr-2 oi oi-plus"></span> Add to calendar
+                                <i class="pr-2 fas fa-plus"></i> Add to calendar
                             </a>
                         }
                     </td>

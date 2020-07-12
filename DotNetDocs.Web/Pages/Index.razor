@@ -25,7 +25,7 @@ else
     {
         <div class="text-center pb-4">
             <button class="btn btn-lg btn-dotnet" type="button" data-toggle="collapse" data-target="#collapsable" aria-expanded="false" aria-controls="collapsable">
-                <span class="pr-2 oi oi-calendar"></span> Upcoming Schedule
+                <i class="pr-2 fas fa-calendar"></i> Upcoming Schedule
             </button>
         </div>
         <div class="collapse" id="collapsable">
@@ -37,12 +37,12 @@ else
                     <label @onclick="@(_ => OrderFutureShowsDescending = false)"
                            class="btn clickable btn-sm btn-secondary @(OrderFutureShowsDescending ? "" : "active")">
                         <input type="radio" name="options" id="option2"
-                               autocomplete="off" checked="@(!OrderFutureShowsDescending)"> Ascending <span class="pl-2 oi oi-chevron-top"></span>
+                               autocomplete="off" checked="@(!OrderFutureShowsDescending)"> Ascending <i class="pl-2 fas fa-chevron-up"></i>
                     </label>
                     <label @onclick="@(_ => OrderFutureShowsDescending = true)"
                            class="btn clickable btn-sm btn-secondary @(OrderFutureShowsDescending ? "active" : "")">
                         <input type="radio" name="options" id="option1"
-                               autocomplete="off" checked="@(OrderFutureShowsDescending)"> Descending <span class="pl-2 oi oi-chevron-bottom"></span>
+                               autocomplete="off" checked="@(OrderFutureShowsDescending)"> Descending <i class="pl-2 fas fa-chevron-down"></i>
                     </label>
                 </div>
             </div>
@@ -81,7 +81,7 @@ else
     <div class="text-center pb-4">
         <a class="btn btn-lg btn-dotnet" href="https://www.youtube.com/channel/UCIy_nKrwrd-naf_MPWtXdLA"
            role="button" target="_blank" rel="nofollow noreferrer">
-            <span class="pr-2 oi oi-thumb-up"></span> All Episodes
+            <i class="pr-2 far fa-thumbs-up"></i> All Episodes
         </a>
     </div>
 }

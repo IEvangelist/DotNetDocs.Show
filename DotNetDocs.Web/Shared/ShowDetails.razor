@@ -1,6 +1,4 @@
-﻿@using DotNetDocs.Web.Extensions
-
-@inject NavigationManager Navigation
+﻿@inject NavigationManager Navigation
 
 <div class="card mb-4">
     <a href="@Show.Url" title='Watch the "@(Show.Title)" episode'>
@@ -36,7 +34,7 @@
         <AuthorizeView>
             <button class="btn btn-sm btn-secondary float-right ml-2" title='Edit "@(Show.Title)"?'
                     @onclick="@(_ => Navigation.NavigateTo($"/admin/show/{Show.Id}"))">
-                <span class="oi oi-pencil"></span>
+                <i class="fas fa-edit"></i>
             </button>
         </AuthorizeView>
 
@@ -44,7 +42,7 @@
         {
             <a href="@(Show.AddToGoogleCalendar())" target="_blank"
                class="float-right btn btn-sm btn-dotnet ml-2">
-                <span class="pr-2 oi oi-plus"></span> Add to calendar
+                <i class="pr-2 fas fa-plus-square"></i> Add to calendar
             </a>
         }
         else if (Show.IsNew)

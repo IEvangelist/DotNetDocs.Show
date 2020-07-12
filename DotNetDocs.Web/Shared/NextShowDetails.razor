@@ -1,8 +1,4 @@
-﻿@using DotNetDocs.Services.Models
-@using DotNetDocs.Web.Extensions
-@using DotNetDocs.Web.Interop
-
-@inject IJSRuntime JavaScript
+﻿@inject IJSRuntime JavaScript
 
 <div class="jumbotron" id="@Id">
     <div class="container text-center text-lg-left">
@@ -41,7 +37,7 @@
                         <div class="col-md-4">
                             <span class="text-center pb-2 d-inline-block">
                                 <a class="btn btn-dotnet btn-lg w-100" href="@(Show.AddToGoogleCalendar())" target="_blank" role="button">
-                                    <span class="oi oi-plus"></span> &nbsp; Add to calendar
+                                    <i class="pr-2 fas fa-plus-square"></i> Add to calendar
                                 </a>
                             </span>
                             <span>

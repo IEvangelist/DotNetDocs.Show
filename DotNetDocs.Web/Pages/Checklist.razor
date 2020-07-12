@@ -1,5 +1,4 @@
 ﻿@page "/checklist"
-@using DotNetDocs.Web.Extensions
 
 @attribute [AllowAnonymous]
 
@@ -41,13 +40,13 @@
             <tbody>
                 <tr>
                     <th scope="row">1</th>
-                    <td><a href="https://www.twitch.tv/p/legal/community-guidelines" target="_blank">Twitch.tv - Community Guidelines <span class="oi oi-sm oi-external-link"></span></a></td>
-                    <td><a href="https://www.twitch.tv/thedotnetdocs" target="_blank">The .NET Docs Show on Twitch <span class="oi oi-sm oi-external-link"></span></a></td>
+                    <td><a href="https://www.twitch.tv/p/legal/community-guidelines" target="_blank">Twitch.tv - Community Guidelines <i class="fas fa-sm fa-external-link-square-alt"></i></a></td>
+                    <td><a href="https://www.twitch.tv/thedotnetdocs" target="_blank">The .NET Docs Show on Twitch <i class="fas fa-sm fa-external-link-square-alt"></i></a></td>
                 </tr>
                 <tr>
                     <th scope="row">2</th>
-                    <td><a href="https://www.youtube.com/howyoutubeworks/policies/community-guidelines/" target="_blank">YouTube - Community Guidelines <span class="oi oi-sm oi-external-link"></span></a></td>
-                    <td><a href="https://www.youtube.com/channel/UCIy_nKrwrd-naf_MPWtXdLA" target="_blank">The .NET Docs Show on YouTube <span class="oi oi-sm oi-external-link"></span></a></td>
+                    <td><a href="https://www.youtube.com/howyoutubeworks/policies/community-guidelines/" target="_blank">YouTube - Community Guidelines <i class="fas fa-sm fa-external-link-square-alt"></i></a></td>
+                    <td><a href="https://www.youtube.com/channel/UCIy_nKrwrd-naf_MPWtXdLA" target="_blank">The .NET Docs Show on YouTube <i class="fas fa-sm fa-external-link-square-alt"></i></a></td>
                 </tr>
             </tbody>
         </table>
@@ -66,10 +65,10 @@
 @code {
     protected IDictionary<int, MarkupString> Tasks = new Dictionary<int, MarkupString>
     {
-        [1] = new MarkupString("💻 <b>Reboot</b> your machine"),
-        [2] = new MarkupString("🔕 Silence (<i>or</i> temporarily disable notifications)"),
-        [3] = new MarkupString("💀 Set status as \"Do not disturb\""),
-        [4] = new MarkupString("🕥 Arrive 15 minutes early - 10:45 AM US/Central"),
-        [5] = new MarkupString("Follow the <a href='https://streamyard.com/resources/docs/guest-instructions/' target='_blank'>Guest Instructions <span class='oi oi-sm oi-external-link'></span></a> from Stream<b>Yard</b>.")
+        [1] = "💻 <b>Reboot</b> your machine".ToMarkupString(),
+        [2] = "🔕 Silence (<i>or</i> temporarily disable notifications)".ToMarkupString(),
+        [3] = "💀 Set status as \"Do not disturb\"".ToMarkupString(),
+        [4] = "🕥 Arrive 15 minutes early - 10:45 AM US/Central".ToMarkupString(),
+        [5] = "Follow the <a href='https://streamyard.com/resources/docs/guest-instructions/' target='_blank'>Guest Instructions <i class='fas fa-sm fa-external-link-square-alt'></i></a> from Stream<b>Yard</b>.".ToMarkupString()
     };
 }

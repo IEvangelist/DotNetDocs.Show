@@ -82,7 +82,7 @@ namespace DotNetDocs.Web.Extensions
         public static string ToTwitterUrl(this string twitterHandle)
         {
             string? name = twitterHandle.Substring(1);
-            return $"<a href=\"https://twitter.com/{name}\" target=\"_blank\">{twitterHandle} <span class='oi oi-sm oi-external-link'></span></a>";
+            return $"<a href=\"https://twitter.com/{name}\" target=\"_blank\">{twitterHandle} <i class='fas fa-sm fa-external-link-square-alt'></i></a>";
         }
 
         internal static MarkupString ToTwitterMarkupString(this string twitterHandle) =>
