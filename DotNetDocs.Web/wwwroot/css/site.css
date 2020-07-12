@@ -10,6 +10,16 @@ html, body {
     font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace !important;
 }
 
+#next-show .col-lg-8 a:not(.btn) {
+    color: #d2b4ff !important;
+}
+
+.next-show {
+    font-size: 1.5rem;
+    text-decoration: underline;
+    color: #5405c7!important;
+}
+
 .badge-success-a11y {
     color: white;
     background-color: #01731b;

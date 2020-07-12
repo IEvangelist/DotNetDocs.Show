@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetDocs.Web.Tests", "Dot
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazing.ReCaptcha", "Blazing.ReCaptcha\Blazing.ReCaptcha.csproj", "{53339DB0-7736-43A1-BCE5-992F1002E6F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetDocs.Extensions", "DotNetDocs.Extensions\DotNetDocs.Extensions.csproj", "{1BE0E62D-3F94-45DC-B326-0CF18AD11BD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetDocs.Extensions", "DotNetDocs.Extensions\DotNetDocs.Extensions.csproj", "{1BE0E62D-3F94-45DC-B326-0CF18AD11BD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

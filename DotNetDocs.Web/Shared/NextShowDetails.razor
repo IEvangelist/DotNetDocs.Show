@@ -1,6 +1,6 @@
 ﻿@inject IJSRuntime JavaScript
 
-<div class="jumbotron" id="@Id">
+<div class="jumbotron bg-dark text-monospace text-light" id="@Id">
     <div class="container text-center text-lg-left">
         <div class="row">
             @if (IsShowStarting)
@@ -36,7 +36,7 @@
                         </div>
                         <div class="col-md-4">
                             <span class="text-center pb-2 d-inline-block">
-                                <a class="btn btn-dotnet btn-lg w-100" href="@(Show.AddToGoogleCalendar())" target="_blank" role="button">
+                                <a class="btn btn-dotnet w-100" href="@(Show.AddToGoogleCalendar())" target="_blank" role="button">
                                     <i class="pr-2 fas fa-plus-square"></i> Add to calendar
                                 </a>
                             </span>
