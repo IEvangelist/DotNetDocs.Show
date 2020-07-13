@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DotNetDocs.Services;
 using DotNetDocs.Services.Models;
+using DotNetDocs.Web.Extensions;
 using DotNetDocs.Web.PageModels;
 using DotNetDocs.Web.Workers;
 using Microsoft.AspNetCore.Components;
@@ -44,6 +45,8 @@ namespace DotNetDocs.Web.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            Navigation.TryGetQueryString("filter", out _filterOption);
+
             if (Cache != null && ScheduleService != null)
             {
                 var utcNow = DateTime.UtcNow;
@@ -63,6 +66,12 @@ namespace DotNetDocs.Web.Pages
             }
         }
 
+        void UpdateFilter(FilterOption filter)
+        {
+            _filterOption = filter;
+            Navigation.NavigateTo($"schedule?filter={_filterOption}");
+        }
+
         string ToDisplayName(FilterOption option) => option switch
         {
             FilterOption.AllShows => "All shows",
@@ -71,7 +80,5 @@ namespace DotNetDocs.Web.Pages
             FilterOption.OnlyRequestable => "Available dates",
             _ => throw new Exception("WTF?!")
         };
-
-
     }
 }
