@@ -79,7 +79,7 @@ else
                             <Tags TagValues="@show.ToShowTags()" />
                         }
                     </td>
-                    <td>@($"{show.Date:MMM dd, yyyy hh:mm (zzzz)}")</td>
+                    <td>@($"{show.Date:MMM dd, yyyy hh:mm} (UTC{show.Date:zzzz})")</td>
                     <td>
                         @if (isPlaceholder)
                         {

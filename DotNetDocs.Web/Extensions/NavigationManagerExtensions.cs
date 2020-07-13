@@ -14,7 +14,9 @@ namespace DotNetDocs.Web.Extensions
             if (QueryHelpers.ParseQuery(uri.Query).TryGetValue(key, out var valueFromQueryString))
             {
                 var type = typeof(T);
-                if (type.IsEnum && Enum.TryParse<T>(valueFromQueryString, out var valueAsEnum))
+                if (type.IsEnum &&
+                    Enum.IsDefined(type, valueFromQueryString) &&
+                    Enum.TryParse<T>(valueFromQueryString, out var valueAsEnum))
                 {
                     value = valueAsEnum;
                     return true;
