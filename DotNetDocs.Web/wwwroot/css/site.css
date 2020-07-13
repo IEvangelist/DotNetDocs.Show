@@ -6,10 +6,6 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-.badge {
-    font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace !important;
-}
-
 #next-show .col-lg-8 a:not(.btn) {
     color: #d2b4ff !important;
 }
