@@ -81,7 +81,7 @@ namespace DotNetDocs.Web.Extensions
 
         public static string ToTwitterUrl(this string twitterHandle)
         {
-            string? name = twitterHandle.Substring(1);
+            string? name = twitterHandle.StartsWith("@") ? twitterHandle.Substring(1) : twitterHandle;
             return $"<a href=\"https://twitter.com/{name}\" target=\"_blank\">{twitterHandle} <i class='fas fa-sm fa-external-link-square-alt'></i></a>";
         }
 
