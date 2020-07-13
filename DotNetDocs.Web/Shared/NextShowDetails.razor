@@ -1,6 +1,6 @@
 ﻿@inject IJSRuntime JavaScript
 
-<div class="jumbotron bg-dark text-monospace text-light" id="@Id">
+<div class="jumbotron dotnet-border bg-dark text-monospace text-light" id="@Id">
     <div class="container text-center text-lg-left">
         <div class="row">
             @if (IsShowStarting)
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 align-items-center d-flex">
-                    <img src='@(Show.ShowImage ?? "default-thumb.png")' alt="Thumbnail of episode" class="img-fluid">
+                    <img src='@(Show.ShowImage ?? "default-thumb.png")' alt="Thumbnail of episode" class="img-fluid shadow-lg">
                 </div>
             }
         </div>
