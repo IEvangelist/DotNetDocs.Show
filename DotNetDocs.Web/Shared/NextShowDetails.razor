@@ -22,7 +22,15 @@
                         <div class="col-md-6 pb-2">
                             <CountDownTimer ShowTime="@Show.Date!.Value.DateTime" ShowIsStarting="OnShowIsStarting" />
                         </div>
-                        <div class="col-md-2 pb-2">
+                        <div class="col-md-4 pb-2">
+                            <span class="text-center pb-2 d-inline-block">
+                                <a class="btn btn-lg btn-dotnet" href="@(Show.AddToGoogleCalendar())"
+                                   title="Add to calendar" target="_blank" role="button">
+                                    <i class="pr-2 fas fa-bell"></i> Remind me
+                                </a>
+                            </span>
+                        </div>
+                        <div class="col-md-2">
                             @{
                                 var guest = Show.Guests.First();
                                 if (guest.ImageUrl != null)
@@ -34,21 +42,15 @@
                                 }
                             }
                         </div>
-                        <div class="col-md-4">
-                            <span class="text-center pb-2 d-inline-block">
-                                <a class="btn btn-dotnet w-100" href="@(Show.AddToGoogleCalendar())" target="_blank" role="button">
-                                    <i class="pr-2 fas fa-plus-square"></i> Add to calendar
-                                </a>
-                            </span>
-                            <span>
-                                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large"
-                                   data-text="@TweetText" data-url="https://dotnetdocs.dev/" data-show-count="false">Tweet</a>
-                            </span>
-                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4 align-items-center d-flex">
-                    <img src='@(Show.ShowImage ?? "default-thumb.png")' alt="Thumbnail of episode" class="img-fluid shadow-lg">
+                <div class="col-lg-4 align-items-center d-flex flex-column">
+                    <div class="pt-5 pb-4">
+                        <img src='@(Show.ShowImage ?? "default-thumb.png")' alt="Thumbnail of episode" class="img-fluid shadow-lg">
+                    </div>
+                    <div class="justify-content-center">
+                        <SocialShare Show="Show" />
+                    </div>
                 </div>
             }
         </div>
@@ -66,7 +68,7 @@
 
     IDictionary<string, string> Tags => Show.ToShowTags();
 
-    string TweetText => Show.ToTweetText();
+    string TweetText => Show.ToSocialText();
 
     protected override async Task OnAfterRenderAsync(bool firstRender) =>
         await Utilities.NudgeTwitterAsync(JavaScript);

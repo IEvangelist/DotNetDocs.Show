@@ -6,6 +6,7 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+#show .col-lg-8 a:not(.btn),
 #next-show .col-lg-8 a:not(.btn) {
     color: #d2b4ff !important;
 }
@@ -18,7 +19,7 @@ html, body {
 .next-show {
     font-size: 1.5rem;
     text-decoration: underline;
-    color: #5405c7!important;
+    color: #5405c7 !important;
 }
 
 .badge-success-a11y {
@@ -42,13 +43,13 @@ a {
         color: #6e31c8;
     }
 
-a.light {
-    color: lightcyan;
-}
-
-    a.light:hover {
-        color: cyan;
+    a.light {
+        color: lightcyan;
     }
+
+        a.light:hover {
+            color: cyan;
+        }
 
 span.badge > a {
     color: #fff !important;
@@ -62,6 +63,50 @@ a.nav-link.text-light.active {
     padding-left: 1rem !important;
 }
 
+.btn-social {
+    border-radius: 0;
+    background-color: rgba(0,0,0,.8);
+    font-size: 2rem;
+    transition: all ease-in-out .5s;
+    height: 1.8em;
+}
+
+.btn-email {
+    color: cyan;
+}
+
+    .btn-email:hover {
+        background-color: cyan;
+        color: initial;
+    }
+
+.btn-twitter {
+    color: #1da1f2;
+}
+
+    .btn-twitter:hover {
+        background-color: #1da1f2;
+        color: initial;
+    }
+
+.btn-linkedin {
+    color: #0077b5;
+}
+
+    .btn-linkedin:hover {
+        background-color: #0077b5;
+        color: initial;
+    }
+
+.btn-reddit {
+    color: #ff4500;
+}
+
+    .btn-reddit:hover {
+        background-color: #ff4500;
+        color: initial;
+    }
+
 .text-dotnet {
     color: var(--dotnet-color) !important;
 }
@@ -74,6 +119,16 @@ a.nav-link.text-light.active {
     color: #fff;
     background-color: var(--dotnet-color);
 }
+
+.btn-youtube {
+    color: #fff;
+    background-color: #ff0000;
+}
+
+    .btn-youtube:hover {
+        color: #fff;
+        background-color: #eb0000;
+    }
 
 .btn-dotnet {
     color: #fff;
@@ -90,11 +145,11 @@ a.nav-link.text-light.active {
 }
 
 .twitter-border {
-    border: 3px solid #6cadde;
+    border: 3px solid #1da1f2;
 }
 
 .bg-twitter {
-    background-color: #6cadde;
+    background-color: #1da1f2;
 }
 
 .badge-msft {

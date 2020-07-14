@@ -1,0 +1,75 @@
+﻿@page "/show/{showId}"
+@attribute [AllowAnonymous]
+
+@if (_show is null)
+{
+    <LoadingIndicator />
+}
+else
+{
+    <div class="jumbotron dotnet-border bg-dark text-light" id="show">
+        <div class="container text-center text-lg-left">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2 class="display-4">@_show.Title</h2>
+                    <p class="lead">
+                        @(_show.ToGeneralDescription())
+                    </p>
+                    <div class="row pb-4">
+                        <div class="col-md-6 pb-2">
+                            @if (_show.IsInFuture)
+                            {
+                                <CountDownTimer ShowTime="@_show.Date!.Value.DateTime" ShowIsStarting="OnShowIsStarting" />
+                            }
+                            else
+                            {
+                                <a href="https://docs.microsoft.com/en-us/contribute/dotnet/dotnet-contribute?WT.mc_id=devto-thedotnetdocs-dapine"
+                                   class="btn btn-lg btn-dotnet" target="_blank">
+                                    <i class="pr-2 fas fa-hands-helping"></i> Contribute to the docs!
+                                </a>
+                            }
+                        </div>
+                        <div class="col-md-4 pb-2">
+                            <span class="text-center pb-2 d-inline-block">
+                                @if (_show.IsInFuture)
+                                {
+                                    <a class="btn btn-lg btn-dotnet" href="@(_show.AddToGoogleCalendar())"
+                                       title="Add to calendar" target="_blank" role="button">
+                                        <i class="pr-2 fas fa-bell"></i> Remind me
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-lg btn-youtube" href="@(_show.Url)"
+                                       title="Add to calendar" target="_blank" role="button">
+                                        <i class="pr-2 fab fa-youtube"></i> Watch
+                                    </a>
+                                }
+                            </span>
+                        </div>
+                        <div class="col-md-2">
+                            @{
+                                var guest = _show.Guests.First();
+                                if (guest.ImageUrl != null)
+                                {
+                                    <a href="https://twitter.com/@(guest.TwitterHandle)" target="_blank" class="d-none d-lg-inline">
+                                        <img alt="@($"{guest.FirstName} {guest.LastName}")"
+                                             class="circle bg-twitter shadow twitter-border" src="@guest.ImageUrl">
+                                    </a>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 align-items-center d-flex flex-column">
+                    <div class="pt-5 pb-4">
+                        <img src='@(_show.ShowImage ?? "default-thumb.png")' alt="Thumbnail of episode" class="img-fluid shadow-lg">
+                    </div>
+                    <div class="justify-content-center">
+                        <SocialShare Show="_show" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

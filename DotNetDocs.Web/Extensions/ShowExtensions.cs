@@ -104,7 +104,7 @@ namespace DotNetDocs.Web.Extensions
                         .Select(p => (tag: "MSFT 🏢", color: "badge-msft")))
                 .ToDictionary(t => t.tag, t => t.color);
 
-        public static string ToTweetText(this DocsShow show)
+        public static string ToSocialText(this DocsShow show)
         {
             var builder = new StringBuilder();
             builder.AppendLine($"Tune in to The .NET Docs Show: {show.Title} - {show.Guests.First().TwitterHandle}");

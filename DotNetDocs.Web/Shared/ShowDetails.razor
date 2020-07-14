@@ -38,11 +38,15 @@
             </button>
         </AuthorizeView>
 
+        <a href="/show/@(Show.Id)"
+           class="float-right btn btn-sm btn-info ml-2" title="See show details">
+            <i class="fas fa-info-circle"></i>
+        </a>
         @if (Show.IsInFuture)
         {
             <a href="@(Show.AddToGoogleCalendar())" target="_blank"
-               class="float-right btn btn-sm btn-dotnet ml-2">
-                <i class="pr-2 fas fa-plus-square"></i> Add to calendar
+               class="float-right btn btn-sm btn-dotnet ml-2" title="Add to calendar">
+                <i class="fas fa-bell"></i>
             </a>
         }
         else if (Show.IsNew)
