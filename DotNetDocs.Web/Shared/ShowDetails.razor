@@ -1,16 +1,25 @@
 ﻿@inject NavigationManager Navigation
 
 <div class="card mb-4 shadow">
-    <a href="@Show.Url" title='Watch the "@(Show.Title)" episode'>
+    <a href="@(Show.IsInFuture ? $"/show/{Show.Id}" : Show.Url)" title='See show details'>
         <object class="card-img-top img-fluid" data="@Show.ShowImage" type="@(ToMimeType(Show.ShowImage))" alt="Thumbnail of episode">
             <img class="card-img-top img-fluid" src="default-thumb.png" alt="Thumbnail of episode">
         </object>
     </a>
     <div class="card-body">
         <h5 class="card-title">
-            <a href="@Show.Url" title='Watch "@(Show.Title)" episode again'>
-                @Show.Title<br />
-            </a>
+            @if (Show.IsInFuture)
+            {
+                <a href="/show/@(Show.Id)" title='See show details'>
+                    @Show.Title<br />
+                </a>
+            }
+            else
+            {
+                <a href="@Show.Url" title='Watch "@(Show.Title)" episode again'>
+                    @Show.Title<br />
+                </a>
+            }
         </h5>
         <div class="lead">@ShowDateTimeString</div>
         <p class="card-text">
