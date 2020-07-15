@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
@@ -11,7 +10,7 @@ using Microsoft.JSInterop;
 
 namespace Blazing.ReCaptcha
 {
-    public partial class ReCaptcha
+    public sealed partial class ReCaptcha
     {
         [Inject]
         public IJSRuntime JavaScript { get; set; }
@@ -25,10 +24,7 @@ namespace Blazing.ReCaptcha
         [Parameter]
         public EventCallback<(bool IsValid, string[] Errors)> Evaluated { get; set; }
 
-        [Parameter]
-        public EventCallback Expired { get; set; }
-
-        string _elementId => "recaptcha";
+        string ReCaptchaElementId => "blazor-recaptcha";
         int _recaptchaId;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -39,7 +35,7 @@ namespace Blazing.ReCaptcha
                 _recaptchaId = await JsInterop.RenderReCaptchaAsync(
                     JavaScript,
                     this,
-                    _elementId,
+                    ReCaptchaElementId,
                     Options.CurrentValue.SiteKey);
             }
         }
@@ -84,9 +80,10 @@ namespace Blazing.ReCaptcha
         [JSInvokable]
         public async Task OnExpired()
         {
-            if (Expired.HasDelegate)
+            if (Evaluated.HasDelegate)
             {
-                await Expired.InvokeAsync(null);
+                await Evaluated.InvokeAsync(
+                    (IsValid: false, Errors: new string[] { "reCAPTCHA has expired, and would need to be reevaluated." }));
             }
         }
     }

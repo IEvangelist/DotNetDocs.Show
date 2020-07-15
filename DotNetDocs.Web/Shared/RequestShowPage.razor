@@ -77,7 +77,7 @@
         else
         {
             <div class="pb-4">
-                <ReCaptcha Evaluated="@(async tuple => await OnEvaluated(tuple))" Expired="@(async () => await OnExpired())" />
+                <ReCaptcha Evaluated="@(async tuple => await OnEvaluated(tuple))" />
             </div>
 
             <button type="button" class="btn btn-lg btn-secondary" @onclick="NavigateBack">Cancel</button>

@@ -85,8 +85,6 @@ namespace DotNetDocs.Web.Shared
             });
         }
 
-        async ValueTask OnExpired() => await InvokeAsync(() => IsReCaptchaValid = false);
-
         protected async ValueTask SubmitUpdatesAsync(EditContext context)
         {
             if (RequestShowService != null)

@@ -15,12 +15,18 @@ namespace DotNetDocs.Web.Pages
 
         bool _isShowStarting;
         DocsShow? _show;
+        bool _noShow;
 
         protected override async Task OnInitializedAsync()
         {
             if (ScheduleService != null && ShowId != null)
             {
                 _show = await ScheduleService.GetShowAsync(ShowId);
+            }
+
+            if (_show is null)
+            {
+                _noShow = true;
             }
         }
 

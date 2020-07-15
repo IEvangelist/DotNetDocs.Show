@@ -1,7 +1,11 @@
 ﻿@page "/show/{showId}"
 @attribute [AllowAnonymous]
 
-@if (_show is null)
+@if (_noShow)
+{
+    <NotFoundPage />
+}
+else if (_show is null)
 {
     <LoadingIndicator />
 }

@@ -50,7 +50,7 @@ namespace DotNetDocs.Web
             services.AddDotNetDocsShowServices(_configuration);
             services.AddHostedService<ScheduleWorker>();
             services.AddAutoMapper(_configuration);
-            services.AddBlazorRecaptcha(_configuration);
+            services.AddBlazorReCaptcha(_configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

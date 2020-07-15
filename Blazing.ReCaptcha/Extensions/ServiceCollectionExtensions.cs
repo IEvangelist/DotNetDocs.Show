@@ -6,10 +6,11 @@ namespace Blazing.ReCaptcha.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddBlazorRecaptcha(
+        public static IServiceCollection AddBlazorReCaptcha(
             this IServiceCollection services,
             IConfiguration configuration) =>
-        services.AddHttpClient()
-                .Configure<ReCaptchaOptions>(configuration.GetSection(nameof(ReCaptchaOptions)));
+            services.AddHttpClient()
+                    .Configure<ReCaptchaOptions>(
+                configuration.GetSection(nameof(ReCaptchaOptions)));
     }
 }
