@@ -1,5 +1,12 @@
 ﻿:root {
-    --dotnet-color: #783bd2;
+    --dotnet-purple-primary: #512bd4;
+    --dotnet-purple-gradient-9: #7014e8;
+    --dotnet-purple-gradient-100: #4931de;
+    --dotnet-purple-light: #dfd8f7;
+    --dotnet-purple-dark: #2b0b98;
+    --dotnet-gray-light: #e5e5e1;
+    --dotnet-gray: #969696;
+    --dotnet-gray-dark: #505050;
 }
 
 html, body {
@@ -13,7 +20,7 @@ html, body {
 
 .dotnet-border {
     border-radius: .5rem;
-    border: 10px solid var(--dotnet-color);
+    border: 10px solid var(--dotnet-purple-primary);
 }
 
 .next-show {
@@ -36,11 +43,11 @@ a, .btn-link {
 }
 
 a {
-    color: var(--dotnet-color);
+    color: var(--dotnet-purple-primary);
 }
 
     a:hover {
-        color: #6e31c8;
+        color: var(--dotnet-purple-dark);
     }
 
     a.light {
@@ -56,7 +63,7 @@ span.badge > a {
 }
 
 a.nav-link.text-light.active {
-    box-shadow: 0 4px 0 0 var(--dotnet-color);
+    box-shadow: 0 4px 0 0 var(--dotnet-purple-primary);
 }
 
 .list {
@@ -108,16 +115,16 @@ a.nav-link.text-light.active {
     }
 
 .text-dotnet {
-    color: var(--dotnet-color) !important;
+    color: var(--dotnet-purple-primary) !important;
 }
 
 .bg-dotnet {
-    background-color: var(--dotnet-color);
+    background-color: var(--dotnet-purple-primary);
 }
 
 .badge-dotnet {
     color: #fff;
-    background-color: var(--dotnet-color);
+    background-color: var(--dotnet-purple-primary);
 }
 
 .btn-youtube {
@@ -132,12 +139,12 @@ a.nav-link.text-light.active {
 
 .btn-dotnet {
     color: #fff;
-    background-color: var(--dotnet-color);
+    background-color: var(--dotnet-purple-primary);
 }
 
     .btn-dotnet:hover {
         color: #fff;
-        background-color: #591CB3;
+        background-color: var(--dotnet-purple-dark);
     }
 
 .circle {

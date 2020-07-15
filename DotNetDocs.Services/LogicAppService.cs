@@ -27,7 +27,8 @@ namespace DotNetDocs.Services
                 DateTimeOffset showTime = show.Date!.Value;
                 string bodyText =
                     $"<strong>🕚</strong> 30 mins before the show, work through the <a href='https://aka.ms/go-live-checklist'>go-live checklist</a>.<br>" +
-                    $"<strong>📺</strong> <a href='{show.GuestStreamUrl}'>Join the stream</a>.";
+                    $"<strong>📺</strong> <a href='{show.GuestStreamUrl}'>Join the stream</a>.<br>" +
+                    $"<strong>👋</strong> <a href='https://dotnetdocs.dev/show/{show.Id}'>Share your episode to help boost viewership</a>.";
 
                 string json = JsonConvert.SerializeObject(new
                 {
