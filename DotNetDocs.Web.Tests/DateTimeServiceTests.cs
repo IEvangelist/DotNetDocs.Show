@@ -74,7 +74,7 @@ namespace DotNetDocs.Web.Tests
             Assert.Single(segmentedShows.PastShows);
             Assert.Equal("Second show", segmentedShows.NextShow.Title);
             Assert.Equal(4, segmentedShows.FutureShows.Count());
-            Assert.Contains(segmentedShows.FutureShows, s => s.IsPlaceholder);
+            Assert.DoesNotContain(segmentedShows.FutureShows, s => s.IsPlaceholder);
 
             segmentedShows =
                 _systemUnderTest.GetSegmentedShows(
