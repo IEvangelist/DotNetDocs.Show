@@ -43,7 +43,10 @@ namespace DotNetDocs.Extensions
                         DateTimeOffset nextDate = previousDate.Add(expectedGap);
                         while (nextDate.Date < currentDate.Date)
                         {
-                            results.Add(adaptSelector(nextDate));
+                            if (filterPredicate?.Invoke(nextDate) ?? true)
+                            {
+                                results.Add(adaptSelector(nextDate));
+                            }
                             nextDate = nextDate.Add(expectedGap);
                         }
                         
