@@ -3,6 +3,8 @@ using DotNetDocs.Extensions;
 using System;
 using System.Runtime.InteropServices;
 using System.Linq;
+using DotNetDocs.Services.Models;
+using DotNetDocs.Web.Extensions;
 
 namespace DotNetDocs.Web.Tests
 {
@@ -83,6 +85,21 @@ namespace DotNetDocs.Web.Tests
             Assert.Equal(new DateTimeOffset(2020, 8, 18, 11, 0, 0, offset), result[7]);
             Assert.Equal(new DateTimeOffset(2020, 8, 25, 11, 0, 0, offset), result[8]);
             Assert.Equal(new DateTimeOffset(2020, 9,  1, 11, 0, 0, offset), result[9]);
+        }
+
+        [
+            Theory,
+            InlineData(
+                "https://www.youtube.com/watch?v=Crd-sP7ZJEU",
+                "https://www.youtube.com/embed/Crd-sP7ZJEU"),
+            InlineData(
+                "https://www.twitch.tv/videos/587473324",
+                "https://clips.twitch.tv/embed?clip=587473324&parent=dotnetdocs.dev"),
+        ]
+        public void ToEmbedUrlWorks(string sourceUrl, string expectedEmbedUrl)
+        {
+            var actualEmbedUrl = new DocsShow { Url = sourceUrl }.ToEmbedUrl();
+            Assert.Equal(expectedEmbedUrl, actualEmbedUrl);
         }
     }
 }

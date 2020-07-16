@@ -11,6 +11,30 @@ namespace DotNetDocs.Web.Extensions
 {
     public static class ShowExtensions
     {
+        private enum EmbedKind
+        {
+            YouTube,
+            Twitch
+        }
+
+        public static string ToEmbedUrl(this DocsShow show)
+        {
+            var uri = new Uri(show.Url);
+            static EmbedKind GetEmbedKind(string host) => host.ToLower() switch
+            {
+                "www.youtube.com" => EmbedKind.YouTube,
+                "www.twitch.tv" => EmbedKind.Twitch,
+
+                _ => throw new NotImplementedException(),
+            };
+
+            return GetEmbedKind(uri.Host) switch
+            {
+                EmbedKind.Twitch => $"https://clips.twitch.tv/embed?clip={uri.Segments[^1]}&parent=dotnetdocs.dev",
+                _ => $"https://www.youtube.com/embed/{uri.Query.Split("=")[1]}"
+            };
+        }
+
         public static string ToDateString(this DocsShow show)
         {
             if (!show.IsScheduled)
@@ -79,10 +103,10 @@ namespace DotNetDocs.Web.Extensions
             return $"{person.FirstName} {person.LastName}{twitterHandle}";
         }
 
-        public static string ToTwitterUrl(this string twitterHandle)
+        public static string ToTwitterUrl(this string? twitterHandle)
         {
-            string? name = twitterHandle.StartsWith("@") ? twitterHandle.Substring(1) : twitterHandle;
-            return $"<a href=\"https://twitter.com/{name}\" target=\"_blank\">{twitterHandle} <i class='fas fa-sm fa-external-link-square-alt'></i></a>";
+            string? name = (twitterHandle?.StartsWith("@") ?? false) ? twitterHandle.Substring(1) : twitterHandle;
+            return $"<a href=\"https://twitter.com/{name ?? "dotnetdocsshow"}\" target=\"_blank\">{twitterHandle ?? "dotnetdocsshow"} <i class='fas fa-sm fa-external-link-square-alt'></i></a>";
         }
 
         internal static MarkupString ToTwitterMarkupString(this string twitterHandle) =>

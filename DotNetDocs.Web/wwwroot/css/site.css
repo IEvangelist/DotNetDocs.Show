@@ -13,8 +13,8 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-#show .col-lg-8 a:not(.btn),
-#next-show .col-lg-8 a:not(.btn) {
+#show a:not(.btn),
+#next-show a:not(.btn) {
     color: #d2b4ff !important;
 }
 
