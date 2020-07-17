@@ -24,9 +24,12 @@ else
     if (_futureShows?.Any() ?? false)
     {
         <div class="text-center pb-4">
-            <button class="btn btn-lg btn-dotnet" type="button" data-toggle="collapse" data-target="#collapsable" aria-expanded="false" aria-controls="collapsable">
+            <button class="btn pr-2 btn-lg btn-dotnet" type="button" data-toggle="collapse" data-target="#collapsable" aria-expanded="false" aria-controls="collapsable">
                 <i class="pr-2 fas fa-calendar-day"></i> Upcoming Schedule
             </button>
+            <a class="btn btn-lg btn-dotnet" href="/submit">
+                <i class="pr-2 fas fa-bullhorn"></i> Submit idea
+            </a>
         </div>
         <div class="collapse" id="collapsable">
             <div class="text-center pb-4">
@@ -48,9 +51,9 @@ else
             </div>
             <div class="card-deck">
                 @foreach (var (show, index) in
-                  OrderFutureShowsDescending
-                      ? _futureShows.OrderByDescending(show => show.Date).Select((show, index) => (show, index))
-                      : _futureShows.OrderBy(show => show.Date).Select((show, index) => (show, index)))
+                 OrderFutureShowsDescending
+                     ? _futureShows.OrderByDescending(show => show.Date).Select((show, index) => (show, index))
+                     : _futureShows.OrderBy(show => show.Date).Select((show, index) => (show, index)))
                 {
                     if (show.IsPlaceholder)
                     {

@@ -1,7 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="main">
-    <nav class="navbar navbar-dark bg-dark sticky-top px-4">
+    <nav class="navbar navbar-dark bg-dark shadow-lg sticky-top px-4">
         <a class="navbar-brand align-items-center d-none d-lg-flex" href="#">
             <img src="docs-bot-head-lg.png" height="38"
                  class="d-inline-block align-top pr-2" alt="The .NET Docs Show"> The .NET Docs Show
@@ -13,6 +13,9 @@
             </NavLink>
             <NavLink class="nav-link text-light d-none d-md-inline" href="schedule">
                 <i class="pr-2 fas fa-calendar-day" aria-hidden="true"></i> Schedule
+            </NavLink>
+            <NavLink class="nav-link text-light d-none d-md-inline" href="submit">
+                <i class="pr-2 fas fa-lightbulb" aria-hidden="true"></i> Ideas
             </NavLink>
             <AuthorizeView>
                 <Authorized>

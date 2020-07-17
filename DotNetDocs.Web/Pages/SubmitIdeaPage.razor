@@ -1,0 +1,79 @@
+﻿@page "/submit"
+
+@attribute [AllowAnonymous]
+
+<div class="container">
+    <h2 class="text-center pb-2">💡 Ideas, we love 'em - include guest ideas as well! 💯</h2>
+
+    <EditForm Model="ShowIdea" OnValidSubmit="(async context => await SubmitUpdatesAsync(context))">
+        <DataAnnotationsValidator />
+        <ValidationSummary Model="ShowIdea" />
+
+        <div class="form-group">
+            <label for="idea">Idea</label>
+            <InputTextArea id="idea" @bind-Value="ShowIdea.Idea" class="form-control" />
+            <ValidationMessage For="() => ShowIdea.Idea" />
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col">
+                    <label for="first">First name</label>
+                    <InputText id="first" @bind-Value="ShowIdea.FirstName" class="form-control" />
+                    <ValidationMessage For="() => ShowIdea.FirstName" />
+                </div>
+                <div class="col">
+                    <label for="last">Last name</label>
+                    <InputText id="last" @bind-Value="ShowIdea.LastName" class="form-control" />
+                    <ValidationMessage For="() => ShowIdea.LastName" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col">
+                    <label for="email">Email</label>
+                    <InputText id="email" @bind-Value="ShowIdea.Email" class="form-control" />
+                    <ValidationMessage For="() => ShowIdea.Email" />
+                </div>
+                <div class="col">
+                    <label for="thumb">Twitter Handle (@@handle)</label>
+                    <div class="input-group">
+                        <InputText id="twitter" @bind-Value="ShowIdea.TwitterHandle" class="form-control" />
+                        <div class="input-group-append d-none d-lg-inline">
+                            @{
+                                var first = ShowIdea.FirstName;
+                                var last = ShowIdea.LastName;
+                                var twitterQuery = $"https://twitter.com/search?q={first}%20{last}";
+                            }
+                            <input type="button" class="btn btn-secondary" value="Search Twitter" disabled="@(first == null && last == null)"
+                                   onclick="@($"window.open('{twitterQuery}', '_blank')")" />
+                        </div>
+                        <br>
+                        <ValidationMessage For="() => ShowIdea.TwitterHandle" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (IsRequested)
+        {
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">🔥 Awesome!</h4>
+                <p>We have received your request. We will review it, and get back to you soon. Thank you!</p>
+                <hr>
+                <input type="button" class="btn btn-lg btn-dotnet" value="Done" @onclick="NavigateBack" />
+            </div>
+        }
+        else
+        {
+            <div class="pb-4">
+                <ReCaptcha Evaluated="@(async tuple => await OnEvaluated(tuple))" />
+            </div>
+
+            <button type="button" class="btn btn-lg btn-secondary" @onclick="NavigateBack">Cancel</button>
+            <button type="submit" class="btn btn-lg btn-dotnet float-right" disabled="@(IsFormInvalid || !IsReCaptchaValid)">
+                <i class="pr-2 fas fa-paper-plane"></i> Send
+            </button>
+        }
+    </EditForm>
+</div>

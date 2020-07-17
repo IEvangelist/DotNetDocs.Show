@@ -5,5 +5,7 @@
         public string PostCalendarUrl { get; set; } = null!;
 
         public string PostShowRequestUrl { get; set; } = null!;
+
+        public string PostShowIdeaUrl { get; set; } = null!;
     }
 }

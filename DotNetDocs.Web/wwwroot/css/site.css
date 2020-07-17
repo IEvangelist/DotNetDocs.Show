@@ -13,6 +13,10 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+*:not(img):not(.btn-sm):not(.circle):not(.badge) {
+    border-radius: 0;
+}
+
 #show a:not(.btn),
 #next-show a:not(.btn) {
     color: #d2b4ff !important;
