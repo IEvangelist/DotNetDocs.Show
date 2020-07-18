@@ -13,7 +13,7 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-*:not(img):not(.btn-sm):not(.circle):not(.badge) {
+*:not(img):not(.btn-sm):not(.circle):not(.badge):not(.spinner-border) {
     border-radius: 0;
 }
 
