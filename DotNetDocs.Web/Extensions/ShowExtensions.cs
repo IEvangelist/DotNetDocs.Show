@@ -11,6 +11,39 @@ namespace DotNetDocs.Web.Extensions
 {
     public static class ShowExtensions
     {
+        private enum LinkType
+        {
+            Unavailable,
+            DevTo
+        }
+
+        internal static (bool isSuccessful, string? url, MarkupString icon) TryGetTooLongDontReadUrl(this DocsShow show)
+        {
+            string? tldrUrl = show?.TldrUrl;
+            if (show is null || string.IsNullOrWhiteSpace(tldrUrl))
+            {
+                return (false, null, new MarkupString(null));
+            }
+
+            var uri = new Uri(tldrUrl);
+            static LinkType GetLinkType(string host) => host.ToLower() switch
+            {
+                "dev.to" => LinkType.DevTo,
+
+                _ => throw new NotImplementedException(),
+            };
+
+            static string GetFontAwesomeIcon(LinkType type) => type switch
+            {
+                LinkType.DevTo => "<i class='fab fa-dev'></i>",
+
+                _ => throw new NotImplementedException(),
+            };
+
+            LinkType type = GetLinkType(uri.Host);
+            return (true, show.TldrUrl, new MarkupString(GetFontAwesomeIcon(type)));
+        }
+
         private enum EmbedKind
         {
             YouTube,

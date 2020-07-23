@@ -47,6 +47,16 @@
             </button>
         </AuthorizeView>
 
+        @{
+            var (isSuccessful, url, iconMarkup) = Show.TryGetTooLongDontReadUrl();
+            if (isSuccessful)
+            {
+                <a href="@(url)" target="_blank"
+                   class="float-right btn btn-sm btn-dark ml-2" title="TL;DR;">
+                    @iconMarkup
+                </a>
+            }
+        }
         <a href="/show/@(Show.Id)"
            class="float-right btn btn-sm btn-info ml-2" title="See show details">
             <i class="fas fa-info-circle"></i>

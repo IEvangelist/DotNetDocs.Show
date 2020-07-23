@@ -34,6 +34,8 @@ namespace DotNetDocs.Services.Models
 
         public string Url { get; set; } = "https://www.twitch.tv/thedotnetdocs";
 
+        public string TldrUrl { get; set; } = null!;
+
         public string ShowImage { get; set; } = null!;
 
         public int? VideoId => this.GetVideoId();

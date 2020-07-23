@@ -45,6 +45,8 @@ namespace DotNetDocs.Web.PageModels
         [Required, Url]
         public string Url { get; set; } = null!;
 
+        public string TldrUrl { get; set; } = null!;
+
         public string ShowImage { get; set; } = null!;
 
         public int? VideoId { get; set; }

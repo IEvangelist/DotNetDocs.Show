@@ -82,6 +82,15 @@ a.nav-link.text-light.active {
     height: 1.8em;
 }
 
+.btn-dev-to {
+    color: white;
+}
+
+    .btn-dev-to:hover {
+        background-color: white;
+        color: initial;
+    }
+
 .btn-email {
     color: cyan;
 }

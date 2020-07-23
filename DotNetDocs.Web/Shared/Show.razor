@@ -40,13 +40,18 @@ else
             </div>
         </div>
         <div class="form-group">
+            <label for="url">Too long, don't read...URL</label>
+            <InputText id="url" @bind-Value="Episode.TldrUrl" class="form-control" />
+            <ValidationMessage For="() => Episode.TldrUrl" />
+        </div>
+        <div class="form-group">
             <label for="thumb">Thumbnail image</label>
             <div class="input-group">
                 <InputText id="thumb" @bind-Value="Episode.ShowImage" class="form-control" />
                 <div class="input-group-append">
                     @{
-                    var showId = Episode.VideoId;
-                    var isDisabled = !showId.HasValue;
+                        var showId = Episode.VideoId;
+                        var isDisabled = !showId.HasValue;
                     }
                     <input type="button" value="Select Thumbnail" class="btn btn-secondary" data-toggle="modal" data-target="#thumbnailModal"
                            disabled="@(!Episode.VideoId.HasValue)" @onclick="@(_ => OnSelectShowThumbnail())">
@@ -61,8 +66,8 @@ else
                     <br>
                     @foreach (var host in Episode.Hosts)
                     {
-                    <input type="button" value="@($"{host.FirstName} {host.LastName}")" class="btn btn-lg btn-dotnet"
-                           @onclick="@(_ => OnEditPerson(host.Email))">
+                        <input type="button" value="@($"{host.FirstName} {host.LastName}")" class="btn btn-lg btn-dotnet"
+                               @onclick="@(_ => OnEditPerson(host.Email))">
                     }
                 </div>
                 <div class="col">
@@ -70,8 +75,8 @@ else
                     <br>
                     @foreach (var guest in Episode.Guests)
                     {
-                    <input type="button" value="@($"{guest.FirstName} {guest.LastName}")" class="btn btn-lg btn-info"
-                           @onclick="@(_ => OnEditPerson(guest.Email))">
+                        <input type="button" value="@($"{guest.FirstName} {guest.LastName}")" class="btn btn-lg btn-info"
+                               @onclick="@(_ => OnEditPerson(guest.Email))">
                     }
                 </div>
             </div>

@@ -17,3 +17,11 @@
    href='@(BuildSocialUrl(SocialKind.Email))' target="_blank">
     <i class="fas fa-envelope"></i>
 </a>
+
+@if (!Show.IsInFuture && !string.IsNullOrWhiteSpace(Show.TldrUrl))
+{
+    <a class="btn btn-dev-to btn-social" title="Read the TL;DR; for @(Show.Title)"
+       href='@(Show.TldrUrl)' target="_blank">
+        <i class="fab fa-dev"></i>
+    </a>
+}
