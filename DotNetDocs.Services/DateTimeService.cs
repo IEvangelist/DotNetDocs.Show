@@ -38,7 +38,7 @@ namespace DotNetDocs.Services
 
         public bool IsHoliday(DateTime date) =>
             DateSystem.IsPublicHoliday(date, CountryCode.US) ||
-            date.Month == 12 && date.Day == 24; // Christmas eve is a holiday too
+            date.Month == 12 && (date.Day == 24 || date.Day == 31); // Christmas eve and New Year's eve
 
         public bool IsDaylightSavingTime(DateTime date) =>
             CentralTimeZone.IsDaylightSavingTime(date);
