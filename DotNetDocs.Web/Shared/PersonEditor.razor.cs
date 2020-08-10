@@ -70,7 +70,7 @@ namespace DotNetDocs.Web.Shared
             {
                 if (TwitterService != null &&
                     Person.TwitterHandle != null &&
-                    Person.ImageUrl is null)
+                    (Person.ImageUrl is null || Person.ImageUrl is { Length: 0 }))
                 {
                     string? imageUrl = TwitterService.GetUserProfileImage(Person.TwitterHandle);
                     if (!string.IsNullOrWhiteSpace(imageUrl))
