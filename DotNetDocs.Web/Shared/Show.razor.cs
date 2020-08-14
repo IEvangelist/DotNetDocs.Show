@@ -92,7 +92,12 @@ namespace DotNetDocs.Web.Shared
                     !_show.IsCalendarInviteSent &&
                     (_show.GuestStreamUrl?.StartsWith("https://streamyard.com/") ?? false))
                 {
-                    _show.IsCalendarInviteSent = await LogicAppService.CreateShowCalendarInviteAsync(_show);
+                    string? calendarId = await LogicAppService.CreateShowCalendarInviteAsync(_show);
+                    if (calendarId != null)
+                    {
+                        _show.CalendarInviteId = calendarId;
+                        _show.IsCalendarInviteSent = true;
+                    }
                 }
 
                 if (IsCreatingNewShow)
@@ -102,6 +107,21 @@ namespace DotNetDocs.Web.Shared
                 else
                 {
                     await ScheduleService.UpdateShowAsync(_show);
+
+                    bool didGuestUrlChange =
+                        context.IsModified(
+                            new FieldIdentifier(Episode, nameof(ShowModel.GuestStreamUrl)));
+
+                    if (LogicAppService != null &&
+                        _show.IsCalendarInviteSent &&
+                        _show.CalendarInviteId != null &&
+                        _show.IsPublished &&
+                        _show.IsInFuture &&
+                        _show.IsScheduled &&
+                        didGuestUrlChange)
+                    {
+                        await LogicAppService.UpdateShowCalendarInviteAsync(_show);
+                    }
                 }
 
                 // Update cache

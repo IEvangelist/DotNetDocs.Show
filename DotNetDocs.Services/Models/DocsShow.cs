@@ -22,6 +22,8 @@ namespace DotNetDocs.Services.Models
 
         public bool IsCalendarInviteSent { get; set; }
 
+        public string? CalendarInviteId { get; set; }
+
         public string GuestStreamUrl { get; set; } = null!;
 
         public IEnumerable<Person> Guests { get; set; } = new Person[] { Person.DotNetDocs };
