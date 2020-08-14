@@ -55,6 +55,8 @@ namespace DotNetDocs.Web.PageModels
 
         public bool IsCalendarInviteSent { get; set; }
 
+        public string? CalendarInviteId { get; set; }
+
         [Url]
         public string GuestStreamUrl { get; set; } = null!;
 
