@@ -49,6 +49,17 @@ namespace DotNetDocs.Web
                     new[] { MediaTypeNames.Application.Octet }));
             services.AddDotNetDocsShowServices(_configuration);
             services.AddHostedService<ScheduleWorker>();
+            services.AddDataProtection();
+
+            services.AddLettuceEncrypt(
+                options =>
+                {
+                    options.AcceptTermsOfService = true;
+                    options.DomainNames = new[] { "dotnetdocs.dev" };
+                    options.EmailAddress = "dotnetdocsshow@microsoft.com";
+                })
+                .PersistCertificatesToAzureKeyVault(options => options.AzureKeyVaultEndpoint = "https://dotnetdocswebvault.vault.azure.net/");
+
             services.AddAutoMapper(_configuration);
             services.AddBlazorReCaptcha(_configuration);
         }
