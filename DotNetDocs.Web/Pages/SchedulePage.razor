@@ -79,11 +79,11 @@ else
                             <Tags TagValues="@show.ToShowTags()" />
                         }
                     </td>
-                    <td>@($"{show.Date:MMM dd, yyyy hh:mm} (UTC{show.Date:zzzz})")</td>
+                    <td>@($"{show.Date!.Value.LocalDateTime:MMM dd, yyyy hh:mm} (UTC{show.Date:zzzz})")</td>
                     <td>
                         @if (isPlaceholder)
                         {
-                            var date = show.Date!.Value;
+                            var date = show.Date!.Value.LocalDateTime;
                             var dateRoute = $"{date.Month:00}-{date.Day:00}-{date.Year}".Encrypt(ProtectionProvider!);
                             <button class="btn btn-sm btn-dotnet"
                                     @onclick='@(_ => Navigation.NavigateTo($"/request/{dateRoute}"))'>
