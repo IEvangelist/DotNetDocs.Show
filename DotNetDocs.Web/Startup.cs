@@ -58,7 +58,9 @@ namespace DotNetDocs.Web
                     options.DomainNames = new[] { "dotnetdocs.dev" };
                     options.EmailAddress = "dotnetdocsshow@microsoft.com";
                 })
-                .PersistCertificatesToAzureKeyVault(options => options.AzureKeyVaultEndpoint = "https://dotnetdocswebvault.vault.azure.net/");
+                .PersistCertificatesToAzureKeyVault(
+                    options =>
+                        options.AzureKeyVaultEndpoint = "https://dotnetdocswebvault.vault.azure.net/");
 
             services.AddAutoMapper(_configuration);
             services.AddBlazorReCaptcha(_configuration);
