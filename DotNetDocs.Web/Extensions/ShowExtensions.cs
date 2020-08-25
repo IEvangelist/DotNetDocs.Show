@@ -124,6 +124,34 @@ namespace DotNetDocs.Web.Extensions
             return $"https://www.google.com/calendar/render?action=TEMPLATE&ctz={zone}&text={text}&dates={from}/{to}&details={location}&location={location}&sf=true&output=xml";
         }
 
+        internal static string ToRssDescription(this DocsShow show)
+        {
+            var builder = new StringBuilder();
+            if (show.IsInFuture)
+            {
+                builder.Append(
+                    $"Join {show.Guests.ToCommaSeparatedString(false)}, along with hosts {show.Hosts.ToCommaSeparatedString(false)} for a captivating conversation about .NET.");
+            }
+            else
+            {
+                builder.Append(
+                        $"In this episode of The .NET Docs Show {show.Guests.ToCommaSeparatedString(false)} discussed \"{show.Title}\". ");
+
+                if (!string.IsNullOrWhiteSpace(show.TldrUrl))
+                {
+                    builder.Append($"Show details: {show.TldrUrl}. ");
+                }
+
+                if (!string.IsNullOrWhiteSpace(show.Url))
+                {
+                    builder.Append($"Show recording: {show.Url}.");
+                }
+            }
+
+            return builder.ToString();
+        }
+            
+
         internal static MarkupString ToGeneralDescription(this DocsShow show) =>
             new MarkupString($"Join {show.Guests.ToCommaSeparatedString()}, along with hosts {show.Hosts.ToCommaSeparatedString(false)} for a captivating conversation about .NET.");
 

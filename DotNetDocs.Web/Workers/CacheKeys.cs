@@ -3,5 +3,6 @@
     static class CacheKeys
     {
         internal const string ShowSchedule = nameof(ShowSchedule);
+        internal const string RssFeed = nameof(RssFeed);
     }
 }

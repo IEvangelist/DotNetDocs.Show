@@ -58,7 +58,6 @@ else
                 }
                 else
                 {
-                    <h2 class="display-5 pb-2">@(_show.Title) (@(_show.Guests.First().TwitterHandle.ToTwitterMarkupString()))</h2>
                     <div class="embed-responsive embed-responsive-16by9">
                         <iframe src='@(_show.ToEmbedUrl())'
                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
