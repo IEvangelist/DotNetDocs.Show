@@ -31,7 +31,7 @@ namespace DotNetDocs.Web.Controllers
             Uri siteUri = new Uri(host);
             var feed = new SyndicationFeed(
                 "The .NET Docs Show",
-                "The RSS feed containing, past, pr",
+                "The RSS feed containing past, present and future episodes of The .NET Docs Show. You're weekly dose of the .NET #DeveloperCommunity.",
                 siteUri,
                 $"{host}/rss",
                 DateTime.UtcNow)
