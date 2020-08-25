@@ -10,6 +10,7 @@ using DotNetDocs.Services;
 using DotNetDocs.Services.Models;
 using DotNetDocs.Web.Extensions;
 using DotNetDocs.Web.Workers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -24,7 +25,7 @@ namespace DotNetDocs.Web.Controllers
             IMemoryCache cache, IScheduleService scheduleService) =>
             (_cache, _scheduleService) = (cache, scheduleService);
 
-        [HttpGet("rss"), ResponseCache(Duration = 1200)]
+        [AllowAnonymous, HttpGet("rss"), ResponseCache(Duration = 1200)]
         public async Task<IActionResult> Rss()
         {
             var host = $"{Request.Scheme}://{Request.Host.ToUriComponent()}";
