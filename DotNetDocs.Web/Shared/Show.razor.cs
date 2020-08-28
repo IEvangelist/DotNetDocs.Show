@@ -89,8 +89,7 @@ namespace DotNetDocs.Web.Shared
                     _show.IsPublished &&
                     _show.IsInFuture &&
                     _show.IsScheduled &&
-                    !_show.IsCalendarInviteSent &&
-                    (_show.GuestStreamUrl?.StartsWith("https://streamyard.com/") ?? false))
+                    !_show.IsCalendarInviteSent)
                 {
                     string? calendarId = await LogicAppService.CreateShowCalendarInviteAsync(_show);
                     if (calendarId != null)

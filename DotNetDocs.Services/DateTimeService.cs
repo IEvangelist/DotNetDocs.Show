@@ -36,9 +36,29 @@ namespace DotNetDocs.Services
             return currentOffset;
         }
 
-        public bool IsHoliday(DateTime date) =>
-            DateSystem.IsPublicHoliday(date, CountryCode.US) ||
-            date.Month == 12 && (date.Day == 24 || date.Day == 31); // Christmas eve and New Year's eve
+        public bool IsHoliday(DateTime date)
+        {
+            if (DateSystem.IsPublicHoliday(date, CountryCode.US | CountryCode.CA))
+            {
+                return true;
+            }
+
+            // No shows for Thanksgiving week.
+            var thanksgivingWeekMonday = DateSystem.FindDay(date.Year, 11, DayOfWeek.Monday, 4);
+            var thanksgivingWeekFriday = DateSystem.FindDay(date.Year, 11, DayOfWeek.Friday, 4);
+            if (date.IsBetween(thanksgivingWeekMonday, thanksgivingWeekFriday))
+            {
+                return true;
+            }
+
+            // True if Christmas eve or New Year's eve, else false
+            if (date.Month == 12 && (date.Day == 24 || date.Day == 31))
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         public bool IsDaylightSavingTime(DateTime date) =>
             CentralTimeZone.IsDaylightSavingTime(date);

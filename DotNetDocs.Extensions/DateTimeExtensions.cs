@@ -11,5 +11,9 @@ namespace DotNetDocs.Extensions
             int daysToAdd = ((int)day - (int)start.DayOfWeek + 7) % 7;
             return start.AddDays(daysToAdd);
         }
+
+        // https://stackoverflow.com/a/54713397/2410379
+        public static bool IsBetween(this DateTime source, DateTime start, DateTime end)
+            => source >= start && source <= end;
     }
 }
