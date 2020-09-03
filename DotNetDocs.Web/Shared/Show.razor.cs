@@ -149,6 +149,12 @@ namespace DotNetDocs.Web.Shared
         protected void OnEditPerson(string email) =>
             Navigation?.NavigateTo($"admin/show/{ShowId}/person/{email}");
 
+        protected void OnAddHost() =>
+            Navigation?.NavigateTo($"admin/show/{ShowId}/person/{AddPersonOption.Host}");
+
+        protected void OnAddGuest() =>
+            Navigation?.NavigateTo($"admin/show/{ShowId}/person/{AddPersonOption.Guest}");
+
         protected void NavigateBack() => Navigation?.NavigateTo("admin");
 
         public void Dispose() => _editContext!.OnFieldChanged -= OnModelChanged;

@@ -22,7 +22,7 @@ namespace DotNetDocs.Web.Tests
             InlineData(2, 7, 8, false)
         ]
         public void IsInRangeTest(int start, int end, int number, bool expected) =>
-            Assert.Equal(expected, (start..end).IsInRange(number));
+            Assert.Equal(expected, (start..end).Contains(number));
 
         [
             Theory,

@@ -52,7 +52,7 @@ namespace DotNetDocs.Services
             }
 
             // True if Christmas eve or New Year's eve, else false
-            if (date.Month == 12 && (date.Day == 24 || date.Day == 31))
+            if (date.Month == 12 && date.Day.IsInRange(20..31))
             {
                 return true;
             }

@@ -90,18 +90,18 @@ namespace DotNetDocs.Web.Extensions
             {
                 0 => CalculateSecString(dateTime, seconds),
                 1 => "Yesterday",
-                _ when (2..7).IsInRange(days) => string.Format("{0} days ago", days),
-                _ when (8..31).IsInRange(days) => string.Format("{0} weeks ago", Math.Ceiling((double)days / 7)),
+                _ when (2..7).Contains(days) => string.Format("{0} days ago", days),
+                _ when (8..31).Contains(days) => string.Format("{0} weeks ago", Math.Ceiling((double)days / 7)),
                 _ => $"{dateTime:MMM dd, yyyy}"
             };
 
             static string CalculateSecString(DateTimeOffset dateTime, int seconds) => seconds switch
             {
-                _ when (0..60).IsInRange(seconds) => "Just now",
-                _ when (61..120).IsInRange(seconds) => "1 minute ago",
-                _ when (121..3600).IsInRange(seconds) => string.Format("{0} minutes ago", Math.Floor((double)seconds / 60)),
-                _ when (3601..7200).IsInRange(seconds) => "1 hour ago",
-                _ when (7201..86400).IsInRange(seconds) => string.Format("{0} hours ago", Math.Floor((double)seconds / 3600)),
+                _ when (0..60).Contains(seconds) => "Just now",
+                _ when (61..120).Contains(seconds) => "1 minute ago",
+                _ when (121..3600).Contains(seconds) => string.Format("{0} minutes ago", Math.Floor((double)seconds / 60)),
+                _ when (3601..7200).Contains(seconds) => "1 hour ago",
+                _ when (7201..86400).Contains(seconds) => string.Format("{0} hours ago", Math.Floor((double)seconds / 3600)),
                 _ => $"{dateTime:MMM dd, yyyy}"
             };
 

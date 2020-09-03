@@ -84,9 +84,35 @@ else
             </div>
 
             <button type="button" class="btn btn-lg btn-secondary" @onclick="NavigateBack">Cancel</button>
+            <button type="button" class="btn btn-lg btn-danger" @onclick="@(_ => OnConfirmDelete())">
+                <i class="pr-2 far fa-trash-alt"></i> Delete
+            </button>
             <button type="submit" class="btn btn-lg btn-dotnet float-right" disabled="@IsFormInvalid">
                 <i class="pr-2 fas fa-save"></i> Save
             </button>
         </EditForm>
+    </div>
+}
+
+
+@if (_showModal)
+{
+    <div class="modal fade show" style="display:block" aria-modal="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm Delete?</h4>
+                    <button type="button" class="close" @onclick="@Cancel">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>🤬 Wow... are you serious right now?! Are you sure you want to delete the "@(_person.FirstName)"?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" @onclick="@Cancel">Cancel</button>
+                    <button type="button" class="btn btn-danger" @onclick=@(async _ => await PerformDelete())>Delete</button>
+                </div>
+
+            </div>
+        </div>
     </div>
 }

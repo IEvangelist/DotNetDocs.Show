@@ -42,6 +42,8 @@ namespace DotNetDocs.Web.Shared
         EditContext? _editContext;
         DocsShow? _show;
         Person? _person;
+        AddPersonOption _option;
+        bool _showModal = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -50,8 +52,17 @@ namespace DotNetDocs.Web.Shared
                 _show = await ScheduleService.GetShowAsync(ShowId);
                 if (_show != null)
                 {
-                    _person = _show.Guests.Concat(_show.Hosts).FirstOrDefault(p => p.Email == PersonEmail);
-                    Person = Mapper?.Map<PersonModel>(_person)!;
+                    if (Enum.TryParse(PersonEmail, out _option))
+                    {
+                        _person = new Person();
+                        Person = Mapper?.Map<PersonModel>(_person)!;
+                    }
+                    else
+                    {
+                        _person = _show.Guests.Concat(_show.Hosts).FirstOrDefault(p => p.Email == PersonEmail);
+                        Person = Mapper?.Map<PersonModel>(_person)!;
+                    }
+
                     _editContext = new EditContext(Person);
                     _editContext.OnFieldChanged += OnModelChanged;
                 }
@@ -62,6 +73,28 @@ namespace DotNetDocs.Web.Shared
         {
             IsFormInvalid = !_editContext?.Validate() ?? true;
             StateHasChanged();
+        }
+
+        async ValueTask PerformDelete()
+        {
+            if (ScheduleService != null && _show != null && _person != null)
+            {
+                static bool FindPerson(Person person, Person other) =>
+                    person.Email == other.Email &&
+                    person.FirstName == other.FirstName &&
+                    person.LastName == other.LastName;
+
+                _show.Hosts = _show.Hosts.Except(_show.Hosts.Where(person => FindPerson(person, _person)));
+                _show.Guests = _show.Guests.Except(_show.Guests.Where(person => FindPerson(person, _person)));
+
+                await ScheduleService.UpdateShowAsync(_show);
+
+                // Update cache
+                var shows = await ScheduleService.GetAllAsync(DateTime.Now.Date.AddDays(-(20 * 7)));
+                Cache.Set(CacheKeys.ShowSchedule, shows);
+            }
+
+            NavigateBack();
         }
 
         protected async ValueTask SubmitUpdatesAsync(EditContext context)
@@ -93,8 +126,30 @@ namespace DotNetDocs.Web.Shared
                     }
                 }
 
-                UpdateCollection(_show.Hosts);
-                UpdateCollection(_show.Guests);
+                IEnumerable<Person> AddToCollection(IEnumerable<Person> people)
+                {
+                    var peopleList = people.ToList();
+                    if (peopleList != null)
+                    {
+                        peopleList.Add(Mapper?.Map(Person, new Person())!);
+                    }
+                    return peopleList!;
+                }
+
+                if (_option == default)
+                {
+                    UpdateCollection(_show.Hosts);
+                    UpdateCollection(_show.Guests);
+                }
+                else
+                {
+                    _ = _option switch
+                    {
+                        AddPersonOption.Host => _show.Hosts = AddToCollection(_show.Hosts),
+                        AddPersonOption.Guest => _show.Guests = AddToCollection(_show.Guests),
+                        _ => throw new Exception("WTF")
+                    };
+                }
 
                 if (!(_show is null))
                 {
@@ -108,6 +163,10 @@ namespace DotNetDocs.Web.Shared
 
             NavigateBack();
         }
+
+        void OnConfirmDelete() => _showModal = true;
+
+        void Cancel() => _showModal = false;
 
         protected void NavigateBack()
         {

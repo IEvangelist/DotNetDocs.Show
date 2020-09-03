@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Threading.Tasks;
 using System.Timers;
 using DotNetDocs.Services;
 using Microsoft.AspNetCore.Components;

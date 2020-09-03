@@ -6,10 +6,10 @@ namespace DotNetDocs.Web
 {
     class Program
     {
-        public static async Task Main(string[] args) =>
-            await CreateHostBuilder(args).Build().RunAsync();
+        public static Task Main(string[] args) =>
+            CreateHostBuilder(args).Build().RunAsync();
 
-        private static IHostBuilder CreateHostBuilder(string[] args) =>
+        static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(config => config.ConfigureKeyVault())
                 .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
