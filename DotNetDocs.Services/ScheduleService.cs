@@ -1,8 +1,8 @@
-﻿using DotNetDocs.Repository;
-using DotNetDocs.Services.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DotNetDocs.Services.Models;
+using Microsoft.Azure.CosmosRepository;
 
 namespace DotNetDocs.Services
 {
@@ -19,7 +19,7 @@ namespace DotNetDocs.Services
         public ValueTask<DocsShow> DeleteShowAsync(string id) =>
             _showRepository.DeleteAsync(id);
 
-        public ValueTask<DocsShow?> GetShowAsync(string id) =>
+        public ValueTask<DocsShow> GetShowAsync(string id) =>
             _showRepository.GetAsync(id);
 
         public ValueTask<IEnumerable<DocsShow>> GetAllAsync(DateTime since) =>

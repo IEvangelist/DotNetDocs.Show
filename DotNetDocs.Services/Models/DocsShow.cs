@@ -1,7 +1,7 @@
-﻿using DotNetDocs.Repository;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.Azure.CosmosRepository;
 
 namespace DotNetDocs.Services.Models
 {

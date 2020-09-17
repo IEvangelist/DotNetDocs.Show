@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="IEvangelist.Azure.CosmosRepository" Version="0.0.1-preview" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.5" />
     <PackageReference Include="Nager.Date" Version="1.26.2" />
     <PackageReference Include="NodaTime" Version="3.0.0" />
@@ -14,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DotNetDocs.Extensions\DotNetDocs.Extensions.csproj" />
-    <ProjectReference Include="..\DotNetDocs.Repository\DotNetDocs.Repository.csproj" />
   </ItemGroup>
 
 </Project>

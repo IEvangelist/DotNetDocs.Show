@@ -1,5 +1,4 @@
-﻿using DotNetDocs.Repository.Extensions;
-using DotNetDocs.Services.Options;
+﻿using DotNetDocs.Services.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,7 +13,7 @@ namespace DotNetDocs.Services.Extensions
             services.AddHttpClient<TwitchService>();
             services.AddHttpClient<LogicAppService>();
 
-            return services.AddCosmosDbRepository(configuration)
+            return services.AddCosmosRepository(configuration)
                            .AddSingleton<IScheduleService, ScheduleService>()
                            .AddSingleton<DateTimeService>()
                            .Configure<TwitchOptions>(configuration.GetSection(nameof(TwitchOptions)))

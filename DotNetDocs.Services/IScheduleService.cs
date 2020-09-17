@@ -11,7 +11,7 @@ namespace DotNetDocs.Services
 
         ValueTask<IEnumerable<DocsShow>> GetAllAsync(DateTime since);
 
-        ValueTask<DocsShow?> GetShowAsync(string id);
+        ValueTask<DocsShow> GetShowAsync(string id);
 
         ValueTask<DocsShow> UpdateShowAsync(DocsShow show);
 
