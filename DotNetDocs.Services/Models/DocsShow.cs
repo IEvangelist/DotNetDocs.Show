@@ -6,7 +6,7 @@ using Microsoft.Azure.CosmosRepository;
 namespace DotNetDocs.Services.Models
 {
     [DebuggerDisplay("Date = {Date}, Title = {Title}, Published = {IsPublished}")]
-    public class DocsShow : Document
+    public class DocsShow : Item
     {
         public DateTimeOffset? Date { get; set; }
 
