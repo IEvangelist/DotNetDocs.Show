@@ -15,6 +15,6 @@ namespace DotNetDocs.Services
 
         ValueTask<DocsShow> UpdateShowAsync(DocsShow show);
 
-        ValueTask<DocsShow> DeleteShowAsync(string id);
+        ValueTask DeleteShowAsync(string id);
     }
 }

@@ -20,15 +20,13 @@ namespace DotNetDocs.Services
             return show;
         }
 
-        public async ValueTask<DocsShow> DeleteShowAsync(string id)
+        public async ValueTask DeleteShowAsync(string id)
         {
             string? showFileName = $"{id}.json";
             if (File.Exists(showFileName))
             {
                 await Task.Run(() => File.Delete(showFileName));
             }
-
-            return new DocsShow { Id = id };
         }
 
         public async ValueTask<IEnumerable<DocsShow>> GetAllAsync(DateTime since)

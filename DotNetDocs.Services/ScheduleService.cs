@@ -16,7 +16,7 @@ namespace DotNetDocs.Services
         public ValueTask<DocsShow> CreateShowAsync(DocsShow show) =>
             _showRepository.CreateAsync(show);
 
-        public ValueTask<DocsShow> DeleteShowAsync(string id) =>
+        public ValueTask DeleteShowAsync(string id) =>
             _showRepository.DeleteAsync(id);
 
         public ValueTask<DocsShow> GetShowAsync(string id) =>
