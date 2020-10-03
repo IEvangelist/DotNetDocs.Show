@@ -14,12 +14,12 @@ namespace DotNetDocs.Services.Extensions
             services.AddHttpClient<LogicAppService>();
 
             return services.AddCosmosRepository(configuration)
-                           .AddSingleton<IScheduleService, ScheduleService>()
-                           .AddSingleton<DateTimeService>()
                            .Configure<TwitchOptions>(configuration.GetSection(nameof(TwitchOptions)))
                            .Configure<TwitterOptions>(configuration.GetSection(nameof(TwitterOptions)))
-                           .AddSingleton<TwitterService>()
-                           .Configure<LogicAppOptions>(configuration.GetSection(nameof(LogicAppOptions)));
+                           .Configure<LogicAppOptions>(configuration.GetSection(nameof(LogicAppOptions)))
+                           .AddSingleton<IScheduleService, ScheduleService>()
+                           .AddSingleton<DateTimeService>()
+                           .AddSingleton<TwitterService>();
         }
     }
 }
