@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DotNetDocs.Services.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -11,32 +12,30 @@ namespace DotNetDocs.Services
     {
         readonly TwitterOptions? _twitterSettings;
         readonly ILogger<TwitterService> _logger;
+        readonly TwitterClient _twitterClient;
 
         public TwitterService(
             IOptions<TwitterOptions> options,
             ILogger<TwitterService> logger)
         {
-            _twitterSettings = options.Value;
+            _twitterSettings =
+                options.Value ?? throw new ArgumentNullException(
+                    nameof(options), "Twitter options are required.");
             _logger = logger;
 
-            if (_twitterSettings is null)
-            {
-                return;
-            }
-
-            Auth.SetUserCredentials(
+            _twitterClient = new TwitterClient(
                 _twitterSettings.ConsumerKey,
                 _twitterSettings.ConsumerSecret,
                 _twitterSettings.AccessToken,
                 _twitterSettings.AccessTokenSecret);
         }
 
-        public string? GetUserProfileImage(string twitterHandle)
+        public async Task<string?> GetUserProfileImageAsync(string twitterHandle)
         {
             try
             {
-                IUser? user = User.GetUserFromScreenName(twitterHandle);
-                return user?.ProfileImageUrlHttps;
+                IUser user = await _twitterClient.Users.GetUserAsync(twitterHandle);
+                return user?.ProfileImageUrl;
             }
             catch (Exception ex)
             {

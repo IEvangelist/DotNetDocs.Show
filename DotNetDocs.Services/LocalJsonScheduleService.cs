@@ -50,7 +50,7 @@ namespace DotNetDocs.Services
             return shows;
         }
 
-        public async ValueTask<DocsShow?> GetShowAsync(string id)
+        public async ValueTask<DocsShow> GetShowAsync(string id)
         {
             string? showFileName = $"{id}.json";
             if (File.Exists(showFileName))
@@ -59,7 +59,9 @@ namespace DotNetDocs.Services
                 return JsonConvert.DeserializeObject<DocsShow>(json);
             }
 
-            return default;
+            var placeholder = DocsShow.CreatePlaceholder(DateTimeOffset.Now);
+            placeholder.Id = id;
+            return placeholder;
         }
 
         public ValueTask<DocsShow> UpdateShowAsync(DocsShow show) => CreateShowAsync(show);

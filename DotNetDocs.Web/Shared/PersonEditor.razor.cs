@@ -105,7 +105,7 @@ namespace DotNetDocs.Web.Shared
                     Person.TwitterHandle != null &&
                     (Person.ImageUrl is null || Person.ImageUrl is { Length: 0 }))
                 {
-                    string? imageUrl = TwitterService.GetUserProfileImage(Person.TwitterHandle);
+                    string? imageUrl = await TwitterService.GetUserProfileImageAsync(Person.TwitterHandle);
                     if (!string.IsNullOrWhiteSpace(imageUrl))
                     {
                         Person.ImageUrl = imageUrl;
