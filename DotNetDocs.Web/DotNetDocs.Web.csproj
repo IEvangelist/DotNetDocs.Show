@@ -56,7 +56,7 @@
     <PackageReference Include="Microsoft.AspNetCore.ProtectedBrowserStorage" Version="0.1.0-alpha.19521.1" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
     <PackageReference Include="Microsoft.Azure.SignalR" Version="1.5.1" />
-    <PackageReference Include="NodaTime" Version="3.0.0" />
+    <PackageReference Include="NodaTime" Version="3.0.1" />
     <PackageReference Include="System.ServiceModel.Syndication" Version="4.7.0" />
   </ItemGroup>
 
