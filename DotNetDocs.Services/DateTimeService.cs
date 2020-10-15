@@ -78,7 +78,7 @@ namespace DotNetDocs.Services
             _logger.LogInformation($"start: {start}");
 
             var orderedShows = shows.OrderByDescending(show => show.Date);
-            var pastShows = orderedShows.Where(show => show.Date!.Value.DateTime <= start).Take(28);
+            var pastShows = orderedShows.Where(show => show.Date!.Value.DateTime <= start).Take(20);
             var futureShows = orderedShows.Where(show => show.Date!.Value.DateTime > start);
             var nextShow = futureShows.TakeLast(1).SingleOrDefault();
             var scheduledShows = futureShows.SkipLast(1);

@@ -28,7 +28,7 @@ namespace DotNetDocs.Web.Workers
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             // Twenty four previous weeks worth of episodes.
-            var sinceDate = DateTime.Now.Date.AddDays(-(24 * 7));
+            var sinceDate = DateTime.Now.Date.AddDays(-(20 * 7));
             DateTime evaluatedDate = default;
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -46,7 +46,7 @@ namespace DotNetDocs.Web.Workers
                 }
                 finally
                 {
-                    evaluatedDate = DateTime.Now.Date.AddDays(-(24 * 7));
+                    evaluatedDate = DateTime.Now.Date.AddDays(-(20 * 7));
                     await Task.Delay(FullCycleDelay);
                 }
             }
