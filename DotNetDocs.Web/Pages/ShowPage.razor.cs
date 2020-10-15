@@ -1,12 +1,17 @@
 ﻿using System.Threading.Tasks;
 using DotNetDocs.Services;
 using DotNetDocs.Services.Models;
+using DotNetDocs.Web.Interop;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace DotNetDocs.Web.Pages
 {
     public partial class ShowPage
     {
+        [Inject]
+        public IJSRuntime JavaScript { get; set; } = null!;
+
         [Inject]
         public IScheduleService? ScheduleService { get; set; }
 
@@ -29,6 +34,9 @@ namespace DotNetDocs.Web.Pages
                 _noShow = true;
             }
         }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender) =>
+            await JavaScript.LoadTwitterImagesAsync();
 
         async Task OnShowIsStarting(bool isStarting)
         {

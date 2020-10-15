@@ -15,5 +15,15 @@
         if (twttr && twttr.widgets) {
             twttr.widgets.load();
         }
+    },
+    loadTwitterImages: () => {
+        if ('loading' in HTMLImageElement.prototype) {
+            document.querySelectorAll('img[loading="lazy"]')
+                .forEach(img => img.src = img.dataset.src);
+        } else {
+            const lazyScript = document.createElement('script');
+            lazyScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.1.8/lazysizes.min.js';
+            document.body.appendChild(lazyScript);
+        }
     }
 };

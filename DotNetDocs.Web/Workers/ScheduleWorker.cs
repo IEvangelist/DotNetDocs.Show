@@ -22,19 +22,16 @@ namespace DotNetDocs.Web.Workers
             SlidingExpiration = SlidingExpiration
         };
 
-        public ScheduleWorker(IMemoryCache cache, IScheduleService scheduleService)
-        {
-            _cache = cache;
-            _scheduleService = scheduleService;
-        }
+        public ScheduleWorker(IMemoryCache cache, IScheduleService scheduleService) =>
+            (_cache, _scheduleService) = (cache, scheduleService);
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            // Twenty previous weeks worth of episodes.
-            var sinceDate = DateTime.Now.Date.AddDays(-(20 * 7));
+            // Twenty four previous weeks worth of episodes.
+            var sinceDate = DateTime.Now.Date.AddDays(-(24 * 7));
+            DateTime evaluatedDate = default;
             while (!stoppingToken.IsCancellationRequested)
             {
-                DateTime evaluatedDate = default;
                 try
                 {
                     if (evaluatedDate == default || sinceDate != evaluatedDate)
@@ -49,7 +46,7 @@ namespace DotNetDocs.Web.Workers
                 }
                 finally
                 {
-                    evaluatedDate = DateTime.Now.Date.AddDays(-(20 * 7));
+                    evaluatedDate = DateTime.Now.Date.AddDays(-(24 * 7));
                     await Task.Delay(FullCycleDelay);
                 }
             }

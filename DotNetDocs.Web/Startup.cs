@@ -60,7 +60,8 @@ namespace DotNetDocs.Web
                 })
                 .PersistCertificatesToAzureKeyVault(
                     options =>
-                        options.AzureKeyVaultEndpoint = "https://dotnetdocswebvault.vault.azure.net/");
+                        options.AzureKeyVaultEndpoint =
+                        "https://dotnetdocswebvault.vault.azure.net/");
 
             services.AddAutoMapper(_configuration);
             services.AddBlazorReCaptcha(_configuration);

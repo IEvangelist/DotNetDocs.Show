@@ -5,16 +5,21 @@ using System.Threading.Tasks;
 using DotNetDocs.Services;
 using DotNetDocs.Services.Models;
 using DotNetDocs.Web.Extensions;
+using DotNetDocs.Web.Interop;
 using DotNetDocs.Web.PageModels;
 using DotNetDocs.Web.Workers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.JSInterop;
 
 namespace DotNetDocs.Web.Pages
 {
     public partial class SchedulePage
     {
+        [Inject]
+        public IJSRuntime JavaScript { get; set; } = null!;
+
         [Inject]
         public NavigationManager Navigation { get; set; } = null!;
 
@@ -65,6 +70,9 @@ namespace DotNetDocs.Web.Pages
                 _shows = segmentedShows.FutureShows.Concat(new[] { segmentedShows.NextShow! });
             }
         }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender) =>
+            await JavaScript.LoadTwitterImagesAsync();
 
         void UpdateFilter(FilterOption filter)
         {

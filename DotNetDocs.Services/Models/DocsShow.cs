@@ -28,7 +28,8 @@ namespace DotNetDocs.Services.Models
 
         public IEnumerable<Person> Guests { get; set; } = new Person[] { Person.DotNetDocs };
 
-        public IEnumerable<Person> Hosts { get; set; } = new Person[] { Person.Cam, Person.Scott, Person.David };
+        public IEnumerable<Person> Hosts { get; set; } = new Person[] {
+            Person.Cam, Person.Scott, Person.David };
 
         public IEnumerable<string> Tags { get; set; } = new string[] { ".NET" };
 

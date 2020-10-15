@@ -35,10 +35,9 @@
                                 var guest = Show.Guests.First();
                                 if (guest.ImageUrl != null)
                                 {
-                                    <a href="https://twitter.com/@(guest.TwitterHandle)" target="_blank" class="d-none d-lg-inline">
-                                        <img alt="@($"{guest.FirstName} {guest.LastName}")"
-                                             class="circle bg-twitter shadow twitter-border" src="@guest.ImageUrl">
-                                    </a>
+                                    <div class="d-none d-lg-inline">
+                                        <TwitterAvatar Person="guest" />
+                                    </div>
                                 }
                             }
                         </div>
@@ -58,20 +57,23 @@
 </div>
 
 @code {
-    [Parameter]
-    public DocsShow Show { get; set; } = null!;
+        [Parameter]
+        public DocsShow Show { get; set; } = null!;
 
-    [Parameter]
-    public string Id { get; set; } = null!;
+        [Parameter]
+        public string Id { get; set; } = null!;
 
-    bool IsShowStarting = false;
+        bool IsShowStarting = false;
 
-    IDictionary<string, string> Tags => Show.ToShowTags();
+        IDictionary<string, string> Tags => Show.ToShowTags();
 
-    string TweetText => Show.ToSocialText();
+        string TweetText => Show.ToSocialText();
 
-    protected override async Task OnAfterRenderAsync(bool firstRender) =>
-        await Utilities.NudgeTwitterAsync(JavaScript);
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JavaScript.NudgeTwitterAsync();
+        await JavaScript.LoadTwitterImagesAsync();
+    }
 
     async Task OnShowIsStarting(bool isStarting)
     {

@@ -33,5 +33,18 @@ namespace DotNetDocs.Web.Interop
                 return s_nopTask.Value;
             }
         }
+
+        public static ValueTask LoadTwitterImagesAsync(
+            this IJSRuntime jSRuntime)
+        {
+            try
+            {
+                return jSRuntime?.InvokeVoidAsync("utilities.loadTwitterImages") ?? s_nopTask.Value;
+            }
+            catch
+            {
+                return s_nopTask.Value;
+            }
+        }
     }
 }

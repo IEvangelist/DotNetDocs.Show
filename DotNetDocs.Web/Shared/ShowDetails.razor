@@ -27,12 +27,9 @@
                 var guest = Show.Guests.First();
                 if (guest.ImageUrl != null)
                 {
-                    <a href="https://twitter.com/@(guest.TwitterHandle)" target="_blank">
-                        <div class="circle float-right p-1 m-2 bg-twitter">
-                            <img alt="@($"{guest.FirstName} {guest.LastName}")"
-                                 class="circle" src="@guest.ImageUrl">
-                        </div>
-                    </a>
+                    <div class="float-right p-1 m-2">
+                        <TwitterAvatar Person="guest" />
+                    </div>
                 }
             }
             @(Show.ToGeneralDescription())

@@ -1,0 +1,12 @@
+﻿<a href="https://twitter.com/@(Person.TwitterHandle)" target="_blank">
+    <img alt="@($"{Person.FirstName} {Person.LastName}")"
+         class="circle bg-twitter twitter-border"
+         loading="lazy"
+         src="default-twitter-img.png"
+         data-src="@($"https://twitimg.glitch.me/{Person.TwitterHandle}/bigger")">
+</a>
+
+@code {
+    [Parameter]
+    public Person Person { get; set; } = null!;
+}

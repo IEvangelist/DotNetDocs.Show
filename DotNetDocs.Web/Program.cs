@@ -6,7 +6,7 @@ namespace DotNetDocs.Web
 {
     class Program
     {
-        public static Task Main(string[] args) =>
+        static Task Main(string[] args) =>
             CreateHostBuilder(args).Build().RunAsync();
 
         static IHostBuilder CreateHostBuilder(string[] args) =>

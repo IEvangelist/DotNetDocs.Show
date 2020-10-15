@@ -59,10 +59,9 @@ else
                             var guest = show.Guests.First();
                             if (guest.ImageUrl != null)
                             {
-                                <a href="https://twitter.com/@(guest.TwitterHandle)" target="_blank" class="pr-2">
-                                    <img alt="@($"{guest.FirstName} {guest.LastName}")"
-                                         class="circle bg-twitter twitter-border" src="@guest.ImageUrl">
-                                </a>
+                                <div class="pr-2">
+                                    <TwitterAvatar Person="guest" />
+                                </div>
                             }
                             @(show.Guests.ToCommaSeparatedString(true).ToMarkupString())
                         }

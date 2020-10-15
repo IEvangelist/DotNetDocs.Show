@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using DotNetDocs.Services.Models;
 using DotNetDocs.Web.Extensions;
+using DotNetDocs.Web.Interop;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace DotNetDocs.Web.Shared
 {
     public partial class ShowDetails
     {
+        [Inject]
+        public IJSRuntime JavaScript { get; set; } = null!;
+
         [Parameter]
         public DocsShow Show { get; set; } = null!;
 
@@ -36,5 +42,8 @@ namespace DotNetDocs.Web.Shared
                 Path.GetExtension(filePath ?? ""), out string? mimeType)
                 ? mimeType
                 : null;
+
+        protected override async Task OnAfterRenderAsync(bool firstRender) =>
+            await JavaScript.LoadTwitterImagesAsync();
     }
 }
