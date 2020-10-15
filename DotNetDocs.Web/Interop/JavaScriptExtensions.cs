@@ -4,7 +4,7 @@ using Microsoft.JSInterop;
 
 namespace DotNetDocs.Web.Interop
 {
-    public static class Utilities
+    public static class JavaScriptExtensions
     {
         static readonly Lazy<ValueTask> s_nopTask = new Lazy<ValueTask>(() => new ValueTask());
 
