@@ -29,7 +29,7 @@ const fallBackImg = img => {
     img.src = img.dataset[`src${index}`];
     index++;
     img.dataset.index = index;
-    if (index === 3) {
+    if (index === 4) {
         img.onerror = null;
     }
 };
