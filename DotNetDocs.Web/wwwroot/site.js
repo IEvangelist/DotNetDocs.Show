@@ -24,10 +24,10 @@
     }
 };
 
-const fallBackImg = img => {
+const onImageError = img => {
     let index = +img.dataset.index;
     img.src = img.dataset[`src${index}`];
-    index++;
+    ++ index;
     img.dataset.index = index;
     if (index === 4) {
         img.onerror = null;
