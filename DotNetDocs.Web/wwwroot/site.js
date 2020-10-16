@@ -20,10 +20,16 @@
         if ('loading' in HTMLImageElement.prototype) {
             document.querySelectorAll('img[loading="lazy"]')
                 .forEach(img => img.src = img.dataset.src);
-        } else {
-            const lazyScript = document.createElement('script');
-            lazyScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.1.8/lazysizes.min.js';
-            document.body.appendChild(lazyScript);
         }
+    }
+};
+
+const fallBackImg = img => {
+    let index = +img.dataset.index;
+    img.src = img.dataset[`src${index}`];
+    index++;
+    img.dataset.index = index;
+    if (index === 3) {
+        img.onerror = null;
     }
 };

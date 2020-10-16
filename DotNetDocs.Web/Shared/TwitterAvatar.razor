@@ -3,7 +3,11 @@
          class="circle bg-twitter twitter-border"
          loading="lazy"
          src="default-twitter-img.png"
-         data-src="@($"http://twitimg.glitch.me/{Person.TwitterHandle}/bigger")">
+         onerror="fallBackImg(this);"
+         data-index="1"
+         data-src1="@($"http://twitimg.glitch.me/{Person.TwitterHandle}/bigger")"
+         data-src2="@Person.ImageUrl"
+         data-src3="default-twitter-img.png">
 </a>
 
 @code {
