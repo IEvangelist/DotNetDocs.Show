@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Blazing.ReCaptcha.Extensions;
 using Blazing.ReCaptcha.Options;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Options;
@@ -10,7 +12,7 @@ using Microsoft.JSInterop;
 
 namespace Blazing.ReCaptcha
 {
-    public sealed partial class ReCaptcha
+    public sealed partial class ReCaptcha : IDisposable
     {
         [Inject]
         public IJSRuntime JavaScript { get; set; }
@@ -25,18 +27,23 @@ namespace Blazing.ReCaptcha
         public EventCallback<(bool IsValid, string[] Errors)> Evaluated { get; set; }
 
         string ReCaptchaElementId => "blazor-recaptcha";
+        ReCaptchaOptions _options;
+        IDisposable _changeToken;
         int _recaptchaId;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
+                _options = Options.CurrentValue;
+                _changeToken = Options.OnChange(options => _options = options);
+
                 await JsInterop.LoadAsync(JavaScript);
                 _recaptchaId = await JsInterop.RenderReCaptchaAsync(
                     JavaScript,
                     this,
                     ReCaptchaElementId,
-                    Options.CurrentValue.SiteKey);
+                    _options.SiteKey);
             }
         }
 
@@ -48,11 +55,12 @@ namespace Blazing.ReCaptcha
         {
             if (Evaluated.HasDelegate)
             {
-                using (var content = new FormUrlEncodedContent(new Dictionary<string, string>
-                                     {
-                                         ["secret"] = Options.CurrentValue.SecretKey,
-                                         ["response"] = recaptchaResponse
-                                     }))
+                using (var content =
+                    new FormUrlEncodedContent(new Dictionary<string, string>
+                    {
+                        ["secret"] = _options.SecretKey,
+                        ["response"] = recaptchaResponse
+                    }))
                 {
                     HttpClient httpClient = ClientFactory.CreateClient();
                     HttpResponseMessage response =
@@ -62,7 +70,7 @@ namespace Blazing.ReCaptcha
                         response.EnsureSuccessStatusCode();
                     }
                     string json = await response.Content.ReadAsStringAsync();
-                    var verification = JsonSerializer.Deserialize<ReCaptchaVerificationResponse>(json);
+                    var verification = json.FromJson<ReCaptchaVerificationResponse>();
                     if (verification?.Success ?? false)
                     {
                         await Evaluated.InvokeAsync(
@@ -86,5 +94,7 @@ namespace Blazing.ReCaptcha
                     (IsValid: false, Errors: new string[] { "reCAPTCHA has expired, and would need to be reevaluated." }));
             }
         }
+
+        public void Dispose() => _changeToken?.Dispose();
     }
 }
