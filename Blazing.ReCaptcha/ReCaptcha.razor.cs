@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Blazing.ReCaptcha.Extensions;
 using Blazing.ReCaptcha.Options;
@@ -38,9 +37,8 @@ namespace Blazing.ReCaptcha
                 _options = Options.CurrentValue;
                 _changeToken = Options.OnChange(options => _options = options);
 
-                await JsInterop.LoadAsync(JavaScript);
-                _recaptchaId = await JsInterop.RenderReCaptchaAsync(
-                    JavaScript,
+                await JavaScript.LoadReCaptchaAsync();
+                _recaptchaId = await JavaScript.RenderReCaptchaAsync(
                     this,
                     ReCaptchaElementId,
                     _options.SiteKey);
@@ -48,7 +46,7 @@ namespace Blazing.ReCaptcha
         }
 
         public ValueTask<string> GetResponseAsync() =>
-            JsInterop.GetResponseAsync(JavaScript, _recaptchaId);
+            JavaScript.GetResponseAsync(_recaptchaId);
 
         [JSInvokable]
         public async Task OnEvaluated(string recaptchaResponse)

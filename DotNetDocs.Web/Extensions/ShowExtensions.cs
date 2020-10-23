@@ -17,7 +17,8 @@ namespace DotNetDocs.Web.Extensions
             DevTo
         }
 
-        internal static (bool isSuccessful, string? url, MarkupString icon) TryGetTooLongDontReadUrl(this DocsShow show)
+        internal static (bool isSuccessful, string? url, MarkupString icon)
+            TryGetTooLongDontReadUrl(this DocsShow show)
         {
             string? tldrUrl = show?.TldrUrl;
             if (show is null || string.IsNullOrWhiteSpace(tldrUrl))

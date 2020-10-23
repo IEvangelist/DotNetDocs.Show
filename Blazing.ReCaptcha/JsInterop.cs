@@ -3,14 +3,20 @@ using System.Threading.Tasks;
 
 namespace Blazing.ReCaptcha
 {
-    public class JsInterop
+    public static class JsInterop
     {
-        public static ValueTask LoadAsync(
-            IJSRuntime jsRuntime) =>
+        /// <summary>
+        /// Call before <see cref="RenderReCaptchaAsync{T}(IJSRuntime, T, string, string)"/>.
+        /// </summary>
+        public static ValueTask LoadReCaptchaAsync(
+            this IJSRuntime jsRuntime) =>
             jsRuntime.InvokeVoidAsync("recaptcha.load");
 
+        /// <summary>
+        /// Call after <see cref="LoadReCaptchaAsync(IJSRuntime)"/>
+        /// </summary>
         public static ValueTask<int> RenderReCaptchaAsync<T>(
-            IJSRuntime jsRuntime,
+            this IJSRuntime jsRuntime,
             T instance,
             string elementId,
             string siteKey) where T : class =>
@@ -18,7 +24,7 @@ namespace Blazing.ReCaptcha
                 "recaptcha.render", DotNetObjectReference.Create(instance), elementId, siteKey);
 
         public static ValueTask<string> GetResponseAsync(
-            IJSRuntime jSRuntime,
+            this IJSRuntime jSRuntime,
             int recaptchaId) =>
             jSRuntime.InvokeAsync<string>(
                 "recaptcha.getResponse", recaptchaId);

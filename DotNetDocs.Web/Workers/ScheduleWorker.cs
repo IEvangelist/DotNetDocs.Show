@@ -12,6 +12,8 @@ namespace DotNetDocs.Web.Workers
         readonly IMemoryCache _cache;
         readonly IScheduleService _scheduleService;
 
+        int DaysOfEpisodes => -(20 * 7); // Twenty weeks of past shows
+
         static readonly TimeSpan AbsoluteExpiration = TimeSpan.FromHours(12);
         static readonly TimeSpan SlidingExpiration = TimeSpan.FromHours(2);
         static readonly TimeSpan FullCycleDelay = TimeSpan.FromHours(6);
@@ -28,7 +30,7 @@ namespace DotNetDocs.Web.Workers
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             // Twenty four previous weeks worth of episodes.
-            var sinceDate = DateTime.Now.Date.AddDays(-(20 * 7));
+            var sinceDate = DateTime.Now.Date.AddDays(DaysOfEpisodes);
             DateTime evaluatedDate = default;
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -46,7 +48,7 @@ namespace DotNetDocs.Web.Workers
                 }
                 finally
                 {
-                    evaluatedDate = DateTime.Now.Date.AddDays(-(20 * 7));
+                    evaluatedDate = DateTime.Now.Date.AddDays(DaysOfEpisodes);
                     await Task.Delay(FullCycleDelay);
                 }
             }
