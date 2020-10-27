@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 
+/// Inspired by: https://github.com/sample-by-jsakamoto/Blazor-UseGoogleReCAPTCHA
 namespace Blazing.ReCaptcha
 {
     public sealed partial class ReCaptcha : IDisposable
