@@ -64,7 +64,7 @@ namespace DotNetDocs.Web.Pages
                 async _ =>
                 await ScheduleService!.GetAllAsync(centralTimeNow.AddDays(-(20 * 7))));
 
-            _shows = shows.Where(show => show.IsPublished);
+            _shows = shows.Where(show => show.IsPublished || show.IsPlaceholder);
             _segmentedShows = DateTimeService.GetSegmentedShows(
                 _shows,
                 utcNow,

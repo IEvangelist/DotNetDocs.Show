@@ -70,7 +70,7 @@ namespace DotNetDocs.Services
             IEnumerable<DocsShow> shows,
             DateTime segmentDate,
             bool? interleaveShowGaps = null,
-            int nearestOfMultiple = 4)
+            int nearestOfMultiple = 24)
         {
             _logger.LogInformation($"segmentDate: {segmentDate}");
 
@@ -104,7 +104,7 @@ namespace DotNetDocs.Services
             }
 
             var count = scheduledShows.Count();
-            (int remainder, int nearest) = count.RoundUpToNearest(nearestOfMultiple);
+            var (remainder, nearest) = count.RoundUpToNearest(nearestOfMultiple);
             futureShows = scheduledShows.Take(Math.Max(4, remainder == 0 ? nearest : nearest - 4));
 
             return new SegmentedShows(pastShows, nextShow, futureShows);

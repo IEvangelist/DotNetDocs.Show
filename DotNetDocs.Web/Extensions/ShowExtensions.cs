@@ -41,8 +41,14 @@ namespace DotNetDocs.Web.Extensions
                 _ => throw new NotImplementedException(),
             };
 
-            LinkType type = GetLinkType(uri.Host);
-            return (true, show.TldrUrl, new MarkupString(GetFontAwesomeIcon(type)));
+            return
+            (
+                isSuccessful: true,
+                url: show.TldrUrl,
+                icon: new MarkupString(
+                    GetFontAwesomeIcon(
+                        GetLinkType(uri.Host)))
+            );
         }
 
         private enum EmbedKind
@@ -76,7 +82,6 @@ namespace DotNetDocs.Web.Extensions
                 return "TBD";
             }
 
-            // TODO: fix this
             var dateTime = show.Date!.Value;
             var timeSpan = DateTimeOffset.Now.Subtract(dateTime);
             var dayDiff = (int)timeSpan.TotalDays;
@@ -151,7 +156,6 @@ namespace DotNetDocs.Web.Extensions
 
             return builder.ToString();
         }
-            
 
         internal static MarkupString ToGeneralDescription(this DocsShow show) =>
             new MarkupString($"Join {show.Guests.ToCommaSeparatedString()}, along with hosts {show.Hosts.ToCommaSeparatedString(false)} for a captivating conversation about .NET.");
