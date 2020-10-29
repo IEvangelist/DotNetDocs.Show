@@ -37,7 +37,7 @@ namespace DotNetDocs.Web.Tests
             };
 
             var segmentedShows =
-                _systemUnderTest.GetSegmentedShows(shows, utcDate.UtcDateTime.AddDays(15), true);
+                _systemUnderTest.GetSegmentedShows(shows, utcDate.UtcDateTime.AddDays(15), true, 4);
 
             Assert.NotNull(segmentedShows);
             Assert.NotNull(segmentedShows.PastShows);
@@ -68,7 +68,7 @@ namespace DotNetDocs.Web.Tests
 
             var segmentedShows =
                 _systemUnderTest.GetSegmentedShows(
-                    shows, utcDate.UtcDateTime.AddDays(7).AddSeconds(-7), true);
+                    shows, utcDate.UtcDateTime.AddDays(7).AddSeconds(-7), true, 4);
 
             Assert.NotNull(segmentedShows);
             Assert.Single(segmentedShows.PastShows);
@@ -78,7 +78,7 @@ namespace DotNetDocs.Web.Tests
 
             segmentedShows =
                 _systemUnderTest.GetSegmentedShows(
-                    shows, utcDate.UtcDateTime.AddDays(7), false);
+                    shows, utcDate.UtcDateTime.AddDays(7), false, 4);
 
             Assert.NotNull(segmentedShows);
             Assert.Equal(2, segmentedShows.PastShows.Count());
