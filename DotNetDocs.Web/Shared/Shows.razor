@@ -56,7 +56,7 @@ else
                     <button type="button" class="close" @onclick="@Cancel">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <p>🤬 Wow... are you serious right now?! Are you sure you want to delete the "@(_show.Title)"?</p>
+                    <p>🤬 Wow... are you serious right now?! Are you sure you want to delete the "@(_show?.Title)"?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn" @onclick="@Cancel">Cancel</button>

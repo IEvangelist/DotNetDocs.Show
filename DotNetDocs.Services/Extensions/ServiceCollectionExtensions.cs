@@ -13,7 +13,7 @@ namespace DotNetDocs.Services.Extensions
             services.AddHttpClient<TwitchService>();
             services.AddHttpClient<LogicAppService>();
 
-            return services.AddCosmosRepository(configuration)
+            return services.AddCosmosRepository()
                            .Configure<TwitchOptions>(configuration.GetSection(nameof(TwitchOptions)))
                            .Configure<TwitterOptions>(configuration.GetSection(nameof(TwitterOptions)))
                            .Configure<LogicAppOptions>(configuration.GetSection(nameof(LogicAppOptions)))
