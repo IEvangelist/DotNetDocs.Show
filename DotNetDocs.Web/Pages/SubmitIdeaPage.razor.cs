@@ -66,6 +66,11 @@ namespace DotNetDocs.Web.Pages
         {
             if (ShowIdeaService != null)
             {
+                if (!ShowIdea.TwitterHandle.StartsWith("@"))
+                {
+                    ShowIdea.TwitterHandle = $"@{ShowIdea.TwitterHandle}";
+                }
+
                 IsRequested = await ShowIdeaService.ProposeShowIdeaAsync(
                     ShowIdea.Idea,
                     ShowIdea.FirstName ?? "omitted",

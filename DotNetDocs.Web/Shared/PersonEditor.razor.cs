@@ -59,7 +59,7 @@ namespace DotNetDocs.Web.Shared
                     }
                     else
                     {
-                        _person = _show.Guests.Concat(_show.Hosts).FirstOrDefault(p => p.Email == PersonEmail);
+                        _person = _show.Guests.Concat(_show.Hosts).FirstOrDefault(p => p.Email.Contains(PersonEmail!, StringComparison.OrdinalIgnoreCase));
                         Person = Mapper?.Map<PersonModel>(_person)!;
                     }
 

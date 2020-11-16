@@ -31,6 +31,7 @@ else
                     <span class="all-devs" title="#IncludeEveryone"></span></span>
                 </th>
                 <th scope="col">Title / Tags</th>
+                <th scope="col">Status</th>
                 <th scope="col" class="clickable" @onclick="@(_ => _orderDescending = !_orderDescending)">
                     Date <i class='pl-2 fas fa-chevron-@(_orderDescending ? "down" : "up")'></i>
                 </th>
@@ -78,6 +79,7 @@ else
                             <Tags TagValues="@show.ToShowTags()" />
                         }
                     </td>
+                    <td>@(show.ToSubmissionStatus())</td>
                     <td>@($"{show.Date:MMM dd, yyyy hh:mm} (UTC{show.Date:zzzz})")</td>
                     <td>
                         @if (isPlaceholder)

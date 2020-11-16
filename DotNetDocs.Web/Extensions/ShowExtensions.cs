@@ -75,6 +75,13 @@ namespace DotNetDocs.Web.Extensions
             };
         }
 
+        public static string ToSubmissionStatus(this DocsShow show) =>
+            show.IsPlaceholder
+                ? "Placeholder"
+                : show.IsPublished
+                    ? "Confirmed"
+                    : "Under review";
+
         public static string ToDateString(this DocsShow show)
         {
             if (!show.IsScheduled)

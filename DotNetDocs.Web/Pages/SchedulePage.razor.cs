@@ -35,13 +35,14 @@ namespace DotNetDocs.Web.Pages
         [Inject]
         public DateTimeService DateTimeService { get; set; } = null!;
 
-        protected IEnumerable<DocsShow>? FilteredShows => _filterOption switch
+        protected IEnumerable<DocsShow> FilteredShows => _filterOption switch
         {
-            FilterOption.AllShows => _shows,
-            FilterOption.OnlyMicrosoft => _shows.Where(s => s.Guests.Any(g => g.IsBlueBadge)),
-            FilterOption.OnlyMvps => _shows.Where(s => s.Guests.Any(g => g.IsMicrosoftMvp)),
-            FilterOption.OnlyRequestable => _shows.Where(s => s.IsPlaceholder),
-            _ => null
+            FilterOption.AllShows => _shows ?? Enumerable.Empty<DocsShow>(),
+            FilterOption.OnlyMicrosoft => _shows?.Where(s => s.Guests.Any(g => g.IsBlueBadge)) ?? Enumerable.Empty<DocsShow>(),
+            FilterOption.OnlyMvps => _shows?.Where(s => s.Guests.Any(g => g.IsMicrosoftMvp)) ?? Enumerable.Empty<DocsShow>(),
+            FilterOption.OnlyRequestable => _shows?.Where(s => s.IsPlaceholder) ?? Enumerable.Empty<DocsShow>(),
+            FilterOption.OnlyUnderReview => _shows?.Where(s => !s.IsPlaceholder && !s.IsPublished) ?? Enumerable.Empty<DocsShow>(),
+            _ => Enumerable.Empty<DocsShow>()
         };
 
         IEnumerable<DocsShow>? _shows;
@@ -62,7 +63,7 @@ namespace DotNetDocs.Web.Pages
                     await ScheduleService!.GetAllAsync(centralTimeNow.AddYears(-1)));
                 
                 var segmentedShows = DateTimeService.GetSegmentedShows(
-                    shows.Where(show => show.IsPublished),
+                    shows,
                     utcNow,
                     true);
 
@@ -73,11 +74,8 @@ namespace DotNetDocs.Web.Pages
         protected override async Task OnAfterRenderAsync(bool firstRender) =>
             await JavaScript.LoadTwitterImagesAsync();
 
-        void UpdateFilter(FilterOption filter)
-        {
-            _filterOption = filter;
-            Navigation.NavigateTo($"schedule?filter={_filterOption}");
-        }
+        void UpdateFilter(FilterOption filter) =>
+            Navigation.NavigateTo($"schedule?filter={_filterOption = filter}");
 
         string ToDisplayName(FilterOption option) => option switch
         {
@@ -85,6 +83,7 @@ namespace DotNetDocs.Web.Pages
             FilterOption.OnlyMicrosoft => "Microsoft Employees",
             FilterOption.OnlyMvps => "Microsoft MVPs",
             FilterOption.OnlyRequestable => "Available dates",
+            FilterOption.OnlyUnderReview => "Under review",
             _ => throw new Exception("WTF?!")
         };
     }

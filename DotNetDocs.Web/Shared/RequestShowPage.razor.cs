@@ -89,6 +89,11 @@ namespace DotNetDocs.Web.Shared
         {
             if (RequestShowService != null)
             {
+                if (!RequestShow.TwitterHandle.StartsWith("@"))
+                {
+                    RequestShow.TwitterHandle = $"@{RequestShow.TwitterHandle}";
+                }
+
                 IsRequested = await RequestShowService.RequestShowAsync(
                     RequestShow.ShowDate,
                     RequestShow.TentativeTitle,

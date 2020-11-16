@@ -5,6 +5,7 @@
         AllShows,
         OnlyRequestable,
         OnlyMvps,
-        OnlyMicrosoft
+        OnlyMicrosoft,
+        OnlyUnderReview
     }
 }
