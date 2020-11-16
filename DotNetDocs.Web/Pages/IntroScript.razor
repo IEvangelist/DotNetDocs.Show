@@ -1,0 +1,25 @@
+﻿@page "/script"
+
+@attribute [AllowAnonymous]
+@inject NavigationManager Navigation
+
+<div class="container">
+    <div class="jumbotron">
+        <h2 class="display-4">Host: Intro script</h2>
+        <p class="lead font-italic">Feel free to generalize the messaging here.</p>
+        <hr class="my-4" />
+        <p>Welcome to 60 minutes of unscripted .NET entertainment!</p>
+        <p>As doctors of .NET, we prescribe healthy choices in .NET.</p>
+        <p>I'm your host, <code>{ Your Name }</code>, with co-host(s), <code>{ Other Host(s) }</code>.</p>
+        <p>I'd like to welcome today's guests, <code>{ Guest(s) }</code>.</p>
+        <p class="lead">
+            <button class="btn btn-lg btn-primary float-right" @onclick="GoHome">
+                <i class="pr-2 fas fa-home" aria-hidden="true"></i> Home
+            </button>
+        </p>
+    </div>
+</div>
+
+@code {
+    void GoHome() => Navigation.NavigateTo("/");
+}
