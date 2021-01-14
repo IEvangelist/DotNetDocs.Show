@@ -162,6 +162,8 @@ a.nav-link.text-light.active {
 
 .circle {
     border-radius: 50%;
+    max-height: 73px;
+    max-width: 73px;
 }
 
 .twitter-border {
