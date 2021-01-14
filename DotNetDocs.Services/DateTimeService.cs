@@ -38,7 +38,8 @@ namespace DotNetDocs.Services
 
         public bool IsHoliday(DateTime date)
         {
-            if (DateSystem.IsPublicHoliday(date, CountryCode.US | CountryCode.CA))
+            if (DateSystem.IsPublicHoliday(date, CountryCode.US) ||
+                DateSystem.IsPublicHoliday(date, CountryCode.CA))
             {
                 return true;
             }
@@ -78,7 +79,7 @@ namespace DotNetDocs.Services
             _logger.LogInformation($"start: {start}");
 
             var orderedShows = shows.OrderByDescending(show => show.Date);
-            var pastShows = orderedShows.Where(show => show.Date!.Value.DateTime <= start).Take(20);
+            var pastShows = orderedShows.Where(show => show.Date!.Value.DateTime <= start).Take(16);
             var futureShows = orderedShows.Where(show => show.Date!.Value.DateTime > start);
             var nextShow = futureShows.TakeLast(1).SingleOrDefault();
             var scheduledShows = futureShows.SkipLast(1);
@@ -100,14 +101,18 @@ namespace DotNetDocs.Services
                         date => !IsHoliday(date.DateTime))
                     .OrderByDescending(show => show.Date!.Value);
 
-                return new SegmentedShows(pastShows, nextShow, futureShows);
+                return new SegmentedShows(
+                    pastShows.OrderByDescending(show => show.Date!.Value).Take(16),
+                    nextShow, futureShows);
             }
 
-            var count = scheduledShows.Count();
+            var count = futureShows.Count();
             var (remainder, nearest) = count.RoundUpToNearest(nearestOfMultiple);
-            futureShows = scheduledShows.Take(Math.Max(4, remainder == 0 ? nearest : nearest - 4));
+            futureShows = futureShows.Take(Math.Max(4, remainder == 0 ? nearest : nearest - 4));
 
-            return new SegmentedShows(pastShows, nextShow, futureShows);
+            return new SegmentedShows(
+                pastShows.OrderByDescending(show => show.Date!.Value).Take(16),
+                nextShow, futureShows);
         }
     }
 }

@@ -70,6 +70,16 @@ namespace DotNetDocs.Web.Pages
                 utcNow,
                 Features?.CurrentValue?.InterleaveShowGaps);
 
+            var pastShows = _segmentedShows?.PastShows;
+            if (pastShows?.Any() ?? false)
+            {
+                var count = pastShows.Count();
+                if (count % 4 > 0)
+                {
+
+                }
+            }
+
             _pastShows = _segmentedShows?.PastShows;
             _nextShow = _segmentedShows?.NextShow;
             _futureShows = _segmentedShows?.FutureShows;
