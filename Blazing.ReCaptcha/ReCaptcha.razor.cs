@@ -61,24 +61,26 @@ namespace Blazing.ReCaptcha
                         ["response"] = recaptchaResponse
                     }))
                 {
-                    HttpClient httpClient = ClientFactory.CreateClient();
-                    HttpResponseMessage response =
-                        await httpClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
-                    if (response != null)
+                    using (HttpClient httpClient = ClientFactory.CreateClient())
                     {
-                        response.EnsureSuccessStatusCode();
-                    }
-                    string json = await response.Content.ReadAsStringAsync();
-                    var verification = json.FromJson<ReCaptchaVerificationResponse>();
-                    if (verification?.Success ?? false)
-                    {
-                        await Evaluated.InvokeAsync(
-                            (IsValid: true, Errors: new string[0]));
-                    }
-                    else
-                    {
-                        await Evaluated.InvokeAsync(
-                            (IsValid: false, Errors: verification.ErrorCodes.Select(err => err.Replace('-', ' ')).ToArray()));
+                        HttpResponseMessage response =
+                            await httpClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+                        if (response != null)
+                        {
+                            response.EnsureSuccessStatusCode();
+                        }
+                        string json = await response.Content.ReadAsStringAsync();
+                        var verification = json.FromJson<ReCaptchaVerificationResponse>();
+                        if (verification?.Success ?? false)
+                        {
+                            await Evaluated.InvokeAsync(
+                                (IsValid: true, Errors: new string[0]));
+                        }
+                        else
+                        {
+                            await Evaluated.InvokeAsync(
+                                (IsValid: false, Errors: verification.ErrorCodes.Select(err => err.Replace('-', ' ')).ToArray()));
+                        }
                     }
                 }
             }
