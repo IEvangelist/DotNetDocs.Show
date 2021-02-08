@@ -28,6 +28,7 @@ namespace DotNetDocs.Web.Tests
                 FirstName = "David",
                 LastName = "Pine",
                 TwitterHandle = "@davidpine7",
+                Pronoun = "he",
                 IsBlueBadge = true
             };
 
@@ -42,6 +43,7 @@ namespace DotNetDocs.Web.Tests
             Assert.Equal(person.FirstName, personModel.FirstName);
             Assert.Equal(person.LastName, personModel.LastName);
             Assert.Equal(person.TwitterHandle, personModel.TwitterHandle);
+            Assert.Equal(person.Pronoun, personModel.Pronoun);
             Assert.Equal(person.IsBlueBadge, personModel.IsBlueBadge);
             Assert.Equal(person.MicrosoftMvpId, personModel.MicrosoftMvpId);
         }
@@ -55,6 +57,7 @@ namespace DotNetDocs.Web.Tests
                 FirstName = "David",
                 LastName = "Pine",
                 TwitterHandle = "@davidpine7",
+                Pronoun = "he",
                 IsBlueBadge = true
             };
 
@@ -68,6 +71,7 @@ namespace DotNetDocs.Web.Tests
             Assert.Equal(personModel.FirstName, person.FirstName);
             Assert.Equal(personModel.LastName, person.LastName);
             Assert.Equal(personModel.TwitterHandle, person.TwitterHandle);
+            Assert.Equal(personModel.Pronoun, person.Pronoun);
             Assert.Equal(personModel.IsBlueBadge, person.IsBlueBadge);
             Assert.Equal(personModel.MicrosoftMvpId, person.MicrosoftMvpId);
         }

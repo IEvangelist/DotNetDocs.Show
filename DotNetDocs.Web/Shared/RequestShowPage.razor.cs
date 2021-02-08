@@ -117,7 +117,8 @@ namespace DotNetDocs.Web.Shared
                                 FirstName = RequestShow.FirstName,
                                 LastName = RequestShow.LastName,
                                 Email = RequestShow.Email,
-                                TwitterHandle = RequestShow.TwitterHandle
+                                TwitterHandle = RequestShow.TwitterHandle,
+                                Pronoun = RequestShow.Pronoun
                             }
                         }
                     });

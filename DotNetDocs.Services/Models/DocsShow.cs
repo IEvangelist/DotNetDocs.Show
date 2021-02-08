@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Microsoft.Azure.CosmosRepository;
 
 namespace DotNetDocs.Services.Models
@@ -28,8 +29,7 @@ namespace DotNetDocs.Services.Models
 
         public IEnumerable<Person> Guests { get; set; } = new Person[] { Person.DotNetDocs };
 
-        public IEnumerable<Person> Hosts { get; set; } = new Person[] {
-            Person.Cam, Person.Scott, Person.David };
+        public IEnumerable<Person> Hosts { get; set; } = Person.RandomHosts.ToArray();
 
         public IEnumerable<string> Tags { get; set; } = new string[] { ".NET" };
 

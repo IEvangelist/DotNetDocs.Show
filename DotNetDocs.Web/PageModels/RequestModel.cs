@@ -24,5 +24,7 @@ namespace DotNetDocs.Web.PageModels
 
         [Required(ErrorMessage = "A valid twitter handle is required (include @)")]
         public string TwitterHandle { get; set; } = null!;
+
+        public string? Pronoun { get; set; } = null!;
     }
 }

@@ -8,6 +8,9 @@ namespace DotNetDocs.Extensions
     {
         static readonly Random s_random = new Random((int)DateTime.Now.Ticks);
 
+        public static IEnumerable<T> Random<T>(this IEnumerable<T> source, int count) =>
+            source?.OrderBy(_ => s_random.Next())?.Take(count) ?? Array.Empty<T>();
+
         public static T RandomElement<T>(IReadOnlyList<T> array) =>
             array[s_random.Next(array.Count)];
 

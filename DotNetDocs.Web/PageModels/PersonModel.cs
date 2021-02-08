@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DotNetDocs.Web.PageModels
 {
@@ -16,6 +15,8 @@ namespace DotNetDocs.Web.PageModels
 
         [Required(ErrorMessage = "A valid twitter handle is required (include @)")]
         public string TwitterHandle { get; set; } = null!;
+
+        public string? Pronoun { get; set; } = null!;
 
         public string ImageUrl { get; set; } = null!;
 

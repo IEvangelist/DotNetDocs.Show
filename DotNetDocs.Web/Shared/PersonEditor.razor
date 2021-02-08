@@ -53,6 +53,13 @@ else
                 </div>
             </div>
             <div class="form-group">
+                <label for="pronoun">Pronoun (optional)</label>
+                <InputText id="pronoun" @bind-Value="Person.Pronoun"
+                    class="form-control" placeholder="Examples: https://pronoun.is/all-pronouns"
+                    title="If provided, these pronouns will be visible only to the show's hosts." />
+                <ValidationMessage For="() => Person.Pronoun" />
+            </div>
+            <div class="form-group">
                 <label for="profileImage">Image URL</label>
                 <InputText id="profileImage" @bind-Value="Person.ImageUrl" class="form-control" />
                 <ValidationMessage For="() => Person.ImageUrl" />
