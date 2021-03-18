@@ -199,6 +199,7 @@ namespace DotNetDocs.Web.Extensions
                     show.Guests
                         .Where(p => p.IsBlueBadge)
                         .Select(p => (tag: "MSFT 🏢", color: "badge-msft")))
+                .Distinct()
                 .ToDictionary(t => t.tag, t => t.color);
 
         public static string ToSocialText(this DocsShow show)
