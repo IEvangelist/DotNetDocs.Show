@@ -68,7 +68,7 @@ namespace DotNetDocs.Web.Pages
                              .Select(id => id!)
                              .ToArray();
 
-                    if (showYouTubeVideoIds is { Length: > 0 })
+                    if (showYouTubeVideoIds?.Length > 0)
                     {
                         _videos = await YouTube.GetVideosAsync(showYouTubeVideoIds);
 
