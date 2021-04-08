@@ -17,9 +17,11 @@ namespace DotNetDocs.Services.Extensions
                            .Configure<TwitchOptions>(configuration.GetSection(nameof(TwitchOptions)))
                            .Configure<TwitterOptions>(configuration.GetSection(nameof(TwitterOptions)))
                            .Configure<LogicAppOptions>(configuration.GetSection(nameof(LogicAppOptions)))
+                           .Configure<YouTubeOptions>(configuration.GetSection(nameof(YouTubeOptions)))
                            .AddSingleton<IScheduleService, ScheduleService>()
                            .AddSingleton<DateTimeService>()
-                           .AddSingleton<TwitterService>();
+                           .AddSingleton<TwitterService>()
+                           .AddSingleton<YouTubeVideoService>();
         }
     }
 }

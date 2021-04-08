@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.51.0.2287" />
     <PackageReference Include="IEvangelist.Azure.CosmosRepository" Version="2.1.5" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="Nager.Date" Version="1.28.0" />

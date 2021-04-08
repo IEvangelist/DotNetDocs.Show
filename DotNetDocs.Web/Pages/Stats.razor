@@ -1,0 +1,117 @@
+﻿@page "/stats"
+@attribute [Authorize]
+
+    <div class="container">
+        <EditForm class="inline-form" Model="Model"
+                  OnValidSubmit="(async context => await RequestStatsAsync(context))">
+            <div class="form-group">
+                <label for="date">Show status starting back on:</label>
+                <InputDate id="date" @bind-Value="Model.SinceDate" class="form-control" />
+                <ValidationMessage For="() => Model.SinceDate" />
+            </div>
+            <button type="button" class="btn btn-lg btn-secondary"
+                    @onclick="NavigateBack">
+                <i class="pr-2 fas fa-home"></i> Home
+            </button>
+            <button type="submit" class="btn btn-lg btn-dotnet float-right"
+                disabled="@(IsLoading)">
+                @if (IsLoading)
+                {
+                    <i class="fa fa-cog fa-spin fa-fw"></i> <span>Loading</span>
+                }
+                else
+                {
+                    <i class="pr-2 fas fa-flag"></i> <span>Fetch</span>
+                }
+            </button>
+        </EditForm>
+        <br />
+        <div class="card-deck pb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Source</h5>
+                    <h1 class="card-text display-3">
+                        <i style="color: red;" class="fab fa-youtube"></i>
+                    </h1>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Powered by YouTube, total likes @($"{TotalLikes:#,0}")</small>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Views</h5>
+                    <h1 class="card-text display-3">@($"{TotalViews:#,0}")</h1>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">An average of @($"{AverageViews:#,0}") per video.</small>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Video Count</h5>
+                    <h1 class="card-text display-3">@($"{NumberOfVideos:#,0}")</h1>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">A total of @($"{TotalWeeks:#,0}") weeks in this range.</small>
+                </div>
+            </div>
+        </div>
+
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse"
+                                data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <i class="fas fa-chart-line pr-2"></i> Individual Stats
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        @if (_videos is null || _videos is { Count: 0 })
+                        {
+                            <span>No video stats 😬</span>
+                        }
+                        else
+                        {
+                            <table class="table table-hover pt-4">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Show</th>
+                                        <th scope="col"><i class="far fa-eye pr-2"></i> Views</th>
+                                        <th scope="col"><i class="fas fa-thumbs-up pr-2"></i>Likes</th>
+                                        <th scope="col"><i class="far fa-comment pr-2"></i> Comments</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var video in _videos)
+                                    {
+                                        var stats = video.Statistics;
+                                        var link = $"https://www.youtube.com/watch?v={video.Id}";
+                                        var title = video.Snippet.Title;
+
+                                        <tr>
+                                            <td>
+                                                <a href="@(link)" target="_blank">@(title)</a>
+                                            </td>
+                                            <td>
+                                                @($"{stats.ViewCount.GetValueOrDefault():#,0}")
+                                            </td>
+                                            <td>
+                                                @($"{stats.LikeCount.GetValueOrDefault():#,0}")
+                                            </td>
+                                            <td>
+                                                @($"{stats.CommentCount.GetValueOrDefault():#,0}")
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
