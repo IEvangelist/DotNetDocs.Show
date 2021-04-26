@@ -5,7 +5,7 @@
         <EditForm class="inline-form" Model="Model"
                   OnValidSubmit="(async context => await RequestStatsAsync(context))">
             <div class="form-group">
-                <label for="date">Show status starting back on:</label>
+                <label for="date">Show stats beginning on this date, up until now:</label>
                 <InputDate id="date" @bind-Value="Model.SinceDate" class="form-control" />
                 <ValidationMessage For="() => Model.SinceDate" />
             </div>

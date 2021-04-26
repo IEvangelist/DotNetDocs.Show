@@ -5,22 +5,43 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h2 class="display-4">Host: Intro script</h2>
-        <p class="lead font-italic">Feel free to generalize the messaging here.</p>
-        <hr class="my-4" />
-        <p>Welcome to 60 minutes of unscripted .NET entertainment!</p>
-        <p>As doctors of .NET, we prescribe healthy choices in .NET.</p>
-        <p>I'm your host, <code>{ Your Name }</code>, with co-host(s), <code>{ Other Host(s) }</code>.</p>
-        <p>I'd like to welcome today's guest(s), <code>{ Guest(s) }</code>.</p>
-
-        <h2 class="display-4">Host: Outro script</h2>
-        <p class="lead font-italic">Feel free to generalize the messaging here.</p>
-        <hr class="my-4" />
-        <p>Thank you everyone for watching The .NET Docs Show.</p>
-        <p>Check out show recordings, upcoming topics, and more at dotnetdocs.dev.</p>
-        <p>Tune in next week, when { Guest(s) } will join the show to talk about { Topic }.</p>
-
-        <p class="lead">
+        <p class="lead font-italic pb-2">Feel free to generalize the messaging here.</p>
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Host: Intro script
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <p>Welcome to 60 minutes of unscripted .NET entertainment!</p>
+                        <p>As doctors of .NET, we prescribe healthy choices in .NET.</p>
+                        <p>I'm your host, <code>{ Your Name }</code>, with co-host(s), <code>{ Other Host(s) }</code>.</p>
+                        <p>I'd like to welcome today's guest(s), <code>{ Guest(s) }</code>.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Host: Outro script
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        <p>Thank you everyone for watching The .NET Docs Show.</p>
+                        <p>Check out show recordings, upcoming topics, and more at dotnetdocs.dev.</p>
+                        <p>Tune in next week, when <code>{ Guest(s) }</code> will join the show to talk about <code>{ Topic }</code>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="lead pt-3">
             <button class="btn btn-lg btn-primary float-right" @onclick="GoHome">
                 <i class="pr-2 fas fa-home" aria-hidden="true"></i> Home
             </button>
