@@ -90,7 +90,7 @@
                                     {
                                         var stats = video.Statistics;
                                         var link = $"https://www.youtube.com/watch?v={video.Id}";
-                                        var title = video.Snippet.Title;
+                                        var title = video.Snippet.Title.Replace("The .NET Docs Show - ", "");
 
                                         <tr>
                                             <td>
