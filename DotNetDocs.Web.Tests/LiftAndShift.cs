@@ -8,13 +8,13 @@ using Microsoft.Azure.CosmosRepository.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Xunit;
+// using Xunit;
 
 namespace DotNetDocs.Web.Tests
 {
     public class LiftAndShift
     {
-        [Fact]
+        // [Fact]
         public async Task ReadExistingDataAndSaveItToNewDatabase()
         {
             var configuration = new ConfigurationBuilder()
