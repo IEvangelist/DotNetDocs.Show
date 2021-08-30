@@ -131,7 +131,7 @@ namespace DotNetDocs.Web.Extensions
             var from = UrlEncode($"{date:yyyyMMddTHHmmss}");
             var to = UrlEncode($"{date.AddHours(1):yyyyMMddTHHmmss}");
             var text = UrlEncode($"The .NET docs show - live with {show.Guests.ToCommaSeparatedString(false)}.");
-            var location = UrlEncode("https://www.twitch.tv/thedotnetdocs");
+            var location = UrlEncode("https://www.twitch.tv/visualstudio");
             var zone = UrlEncode("America/Chicago");
 
             return $"https://www.google.com/calendar/render?action=TEMPLATE&ctz={zone}&text={text}&dates={from}/{to}&details={location}&location={location}&sf=true&output=xml";

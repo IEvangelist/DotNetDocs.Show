@@ -83,7 +83,7 @@ namespace DotNetDocs.Web.Tests
             {
                 Date = DateTimeOffset.Parse("2020-07-02T11:00:00-05:00"),
                 Title = "The amazing .NET docs show",
-                Url = "https://www.twitch.tv/thedotnetdocs",
+                Url = "https://www.twitch.tv/visualstudio",
                 ShowImage = "https://bitrebels.com/wp-content/uploads/2018/06/programming-languages-learn-header-image.jpg"
             };
 
@@ -115,7 +115,7 @@ namespace DotNetDocs.Web.Tests
             var showModel = new ShowModel
             {
                 Title = "The amazing .NET docs show",
-                Url = "https://www.twitch.tv/thedotnetdocs/7",
+                Url = "https://www.twitch.tv/visualstudio/7",
                 ShowImage = "https://bitrebels.com/wp-content/uploads/2018/06/programming-languages-learn-header-image.jpg",
                 VideoId = 7,
                 Tags = new[] { "WinForms", "WPF" },
