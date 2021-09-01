@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 env:
-  AZURE_WEBAPP_NAME: DotNetDocsWeb
+  AZURE_WEBAPP_NAME: DotNetDocsWeb20210603100656
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root:
   DOTNET_VERSION: '3.1.402'           # set this to the dot net version to use
 
@@ -38,6 +38,7 @@ jobs:
     - uses: azure/webapps-deploy@v2
       name: Deploy
       with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }} 
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        slot-name: production
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_0c7f5c03c233452f83860e5657819dc0 }}
         package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dotnetdocsshow'
