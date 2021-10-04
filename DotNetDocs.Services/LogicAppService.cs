@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +29,7 @@ namespace DotNetDocs.Services
 
             var calendarId = await ReadPostJsonAsync(new
             {
-                to = string.Join(";", show.Guests.Select(g => g.Email).Concat(new[] { "dotnetdocsshow@microsoft.com" })),
+                to = show.ToGuestAndHostEmailString(),
                 title = $"The .NET Docs Show: {show.Title}",
                 body = bodyText,
                 startTime = $"{showTime:yyyy-MM-ddThh:mm:ss}",
@@ -52,7 +51,7 @@ namespace DotNetDocs.Services
             return PostJsonAsync(new
             {
                 id = show.CalendarInviteId,
-                to = string.Join(";", show.Guests.Select(g => g.Email).Concat(new[] { "dotnetdocsshow@microsoft.com" })),
+                to = show.ToGuestAndHostEmailString(),
                 title = $"The .NET Docs Show: {show.Title}",
                 body = bodyText,
                 startTime = $"{showTime:yyyy-MM-ddThh:mm:ss}",

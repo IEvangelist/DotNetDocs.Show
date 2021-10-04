@@ -17,5 +17,17 @@ namespace DotNetDocs.Services.Models
 
             return int.TryParse(showId, out int id) ? id : default;
         }
+
+        public static string ToGuestAndHostEmailString(this DocsShow show)
+        {
+            var emailString =
+                string.Join(";",
+                    show.Guests
+                        .Select(g => g.Email)
+                        .Concat(show.Hosts.Select(h => h.Email))
+                        .Concat(new[] { "dotnetdocsshow@microsoft.com" }));
+
+            return emailString;
+        }
     }
 }
