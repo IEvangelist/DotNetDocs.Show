@@ -48,7 +48,7 @@ namespace DotNetDocs.Services.Models
         {
             FirstName = nameof(Maira),
             LastName = "Wenzel",
-            Email = "maira.wenzel@microsoft.com",
+            Email = "mairaw@microsoft.com",
             TwitterHandle = "@mairacw",
             IsBlueBadge = true
         };
