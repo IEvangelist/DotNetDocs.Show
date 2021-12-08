@@ -30,9 +30,8 @@ namespace DotNetDocs.Services.Models
         {
             FirstName = nameof(Cecil),
             LastName = "Phillip",
-            Email = "cecil.phillip@microsoft.com",
-            TwitterHandle = "@cecilphillip",
-            IsBlueBadge = true
+            Email = "cecilphillip@gmail.com",
+            TwitterHandle = "@cecilphillip"
         };
 
         public static readonly Person Luis = new Person
